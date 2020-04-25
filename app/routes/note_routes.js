@@ -37,7 +37,7 @@ module.exports = function(app,dbCollection){
         const item = request.body;
         console.log("Editing item: ", itemId, " to be ", item);
     
-        dbCollection.updateOne({ id: itemId }, { $set: item }, (error, result) => {
+        dbCollection.update({ id: itemId }, { $set: item }, (error, result) => {
             if (error) throw error;
             // send back entire updated list, to make sure frontend data is up-to-date
             dbCollection.find().toArray(function(_error, _result) {
