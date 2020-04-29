@@ -1,0 +1,55 @@
+.outlet-section{
+  padding: 100px 20px 20px 20px;
+  color: $cl_primary;
+  font-family: Roboto;
+}
+.outlet-titleWrapper{
+  text-align: center;
+  margin-bottom: 30px;
+}
+.outlet-title{
+  margin: 0;
+}
+
+.outlet-grid{
+  margin-bottom: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.outlet-gridItem{
+  flex-basis: 25%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.outlet-gridItemInner{
+  max-width: 270px;
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+}
+.gridItemImage{
+  text-align: center;
+}
+.gridItemImage > img {
+  width: 250px;
+  height: 185px;
+}
+
+.outlet-locationName{
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+.outlet-locationAddress{
+  font-size: 14px;
+  margin: 0;
+}
+.outlet-phone{
+  font-size: 14px;
+}
+
+.map-container{
+  max-width: 1100px;
+  margin: auto;
+}

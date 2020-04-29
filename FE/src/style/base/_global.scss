@@ -1,0 +1,43 @@
+@font-face {
+  font-family: 'coveslight';
+  src: url('../fonts/coves-light/coves_light-webfont.woff2') format('woff2'),
+       url('../fonts/coves-light/coves_light-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'coveslight';
+  src: url('../fonts/coves-bold/coves_bold-webfont.woff2') format('woff2'),
+      url('../fonts/coves-bold/coves_bold-webfont.woff') format('woff');
+      font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Myriad Pro';
+  src: local('Myriad Pro Regular'), url('../fonts/myriad-pro/MYRIADPRO-REGULAR.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Myriad Pro';
+  src: local('Myriad Pro Bold'), url('../fonts/myriad-pro/MYRIADPRO-BOLD.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+*,::after,::before{
+  box-sizing: border-box;
+}
+body{
+  font-family: "coveslight","covesbold",Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  margin: 0;
+  padding: 0;
+}
+a{
+  text-decoration: none;
+  color: blue;
+  cursor: pointer;
+}
+h2,h3,h4,h5,h6,p{
+  margin-top: 0;
+}
