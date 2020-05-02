@@ -9,5 +9,11 @@
   * adb devices (check if device connected)
   * npx react-native run-android
 2. IOS
-  * ????
-  * npx react-native run-ios
+  * npx pod-install ios => react-navigation requirement
+  * List devices:
+    1. xcrun instruments -s devices
+  * npx react-native run-ios --device "<device_name>"
+
+
+# List Icon
+1. MaterialCommunityIcons: <https://cdn.materialdesignicons.com/4.0.96/>
