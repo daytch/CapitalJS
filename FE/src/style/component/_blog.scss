@@ -1,6 +1,11 @@
 .blog-section{
   padding: 80px 20px 20px 20px;
 }
+.blog-section .pagination-container{
+  justify-content: flex-end;
+  margin-top: 50px;
+}
+
 .blog-container{
   max-width: 900px;
   margin: auto;

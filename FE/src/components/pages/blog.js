@@ -2,6 +2,8 @@ import React from 'react';
 import {public_path} from '../../utils/common';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
+import Pagination from '../pagination';
+
 function BlogItem(props){
   return(
     <div className="blog-gridItem">
@@ -35,6 +37,7 @@ function Blog(props){
             <BlogItem url="/assets/img/blog-cake1.png" description="Capital bakery edisi imlek" />
             </div>
           </div>
+          <Pagination totalPage={3} />
         </div>
       </section>
     </div>

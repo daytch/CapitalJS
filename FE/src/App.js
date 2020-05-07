@@ -12,9 +12,9 @@ import {
   NotFound
 } from './components/pages';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faPlus,faSortDown,faArrowRight,faMinus } from '@fortawesome/free-solid-svg-icons'
+import { faPlus,faSortDown,faArrowRight,faArrowLeft,faMinus } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faPlus,faSortDown,faArrowRight,faMinus);
+library.add(faPlus,faSortDown,faArrowRight,faArrowLeft,faMinus);
 
 function App() {
   return (

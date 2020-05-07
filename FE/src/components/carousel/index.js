@@ -12,7 +12,7 @@ const CarouselWrapper = (props) => {
     emulateTouch: true
   };
   return (
-    <Carousel {...props} {...settings}>
+    <Carousel {...settings} {...props}>
       {props.children}
     </Carousel>
   );

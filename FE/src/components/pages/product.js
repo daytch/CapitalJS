@@ -3,6 +3,8 @@ import {public_path, rupiah} from '../../utils/common';
 import history from '../../utils/history';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
+import Pagination from '../pagination';
+
 function ProductItem(props){
   return (
     <div className="product-item" onClick={props.onClick}>
@@ -26,13 +28,24 @@ function ProductItem(props){
 }
 
 function Product(props){
+  const productSectionRef = React.useRef(null)
+  const scrollToProduct = () => window.scrollTo({
+    top: productSectionRef.current.offsetTop,
+    behavior: 'smooth'
+  })
+  // const [currentPage, setCurrentPage] = React.useState(1);
+  // const onPageChange = (nextPage) => {
+  //   if(currentPage === nextPage) return;
+  //   setCurrentPage(nextPage);
+  //   // scrollToProduct(); // TODO
+  // }
   const goToDetail = () => history.push('/product/detail');
   return(
     <div className="product-container">
       <section className="product-banner">
         <img src={public_path('/assets/img/product-banner.png')} alt=""/>
       </section>
-      <section className="product-content">
+      <section ref={productSectionRef} className="product-content">
         <div className="product-contentContainer">
           <div className="product-nameContainer">
             <h1 className="product-categoryName"><span>Birthday Cake</span></h1>
@@ -49,6 +62,7 @@ function Product(props){
             <ProductItem url="/assets/img/product-kue7.png" name="NUTTY BEAR CAKE" price="170000" onClick={goToDetail}/>
             <ProductItem url="/assets/img/product-kue8.png" name="OREO DELIGHT CAKE" price="170000" onClick={goToDetail}/>
             <ProductItem url="/assets/img/product-kue9.png" name="BLACKFOREST" price="170000" onClick={goToDetail}/>
+            <Pagination totalPage={3} />
           </div>
         </div>
       </section>

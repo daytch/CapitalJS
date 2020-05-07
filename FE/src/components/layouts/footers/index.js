@@ -63,6 +63,14 @@ function Footer(){
               <div className="footer-socialMediaItem"><img src={public_path('/assets/icon/instagram.svg')} /></div>
               <div className="footer-socialMediaItem"><img src={public_path('/assets/icon/youtube.svg')} /></div>
             </div>
+            <div className="footer-apps">
+              <div className="footer-appstore">
+                <img src={public_path('/assets/img/app-store.svg')} alt=""/>
+              </div>
+              <div className="footer-playstore">
+                <img src={public_path('/assets/img/google-play.svg')} alt=""/>
+              </div>
+            </div>
           </div>
         </div>
       </div>

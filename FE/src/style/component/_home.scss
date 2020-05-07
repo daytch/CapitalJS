@@ -17,12 +17,18 @@
   color: #fffad4;
 }
 .home-leftContainer{
-  padding: 35px 20px 30px 20px;
+  position: relative;
+  padding-top: 35px;
+  padding-right: 20px;
+  padding-left: 20px;
 }
 .home-rightContent{
   flex-basis: 55%;
 }
-.home-rightContent > img{
+.home-rightContent * {
+  height: 100%;
+}
+.home-rightContent img{
   display: block;
   width: 100%;
   height: 100%;
@@ -41,16 +47,31 @@
   padding-top: 20px;
   margin-bottom: 60px;
 }
-
 .home-categoryItem{
   padding: 0 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  cursor: pointer;
+  color: #755036;
+  font-weight: bold;
+}
+.home-categoryItem.active{
+  color: #fffad4;
+}
+
+.home-cakeContentContainer{
+  text-align: left;
+}
+.home-cakeContentContainer .carousel .slide{
+  background: none;
 }
 .home-cakeContent{
+  text-align: left;
   display: flex;
+  flex-wrap: wrap;
   padding-bottom: 20px;
+  height: 100%;
   border-bottom: thin solid #fffad4;
 }
 .home-cakeName{
@@ -61,10 +82,15 @@
   flex: 1;
 }
 .home-buttonContainer{
+  position:relative;
   padding-top: 20px;
+  padding-bottom: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.home-buttonContainer > .control-dots{
+  bottom: 15px;
 }
 .home-buttonItem{
   display: flex;
@@ -94,7 +120,9 @@
 
 @media(min-width: 480px){
   .home-leftContainer{
-    padding: 35px 50px 30px 50px;
+    padding-top: 35px;
+    padding-right: 50px;
+    padding-left: 50px;
   }
 }
 

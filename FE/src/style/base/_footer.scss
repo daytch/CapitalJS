@@ -20,6 +20,7 @@ footer{
   flex-direction: column;
 }
 .footer-leftContent{
+  width: 100%;
   display: flex;
 }
 .footer-leftContentInner{
@@ -51,6 +52,7 @@ footer{
 }
 
 .footer-rightContent{
+  width: 100%;
   text-align: left;
 }
 .footer-address{
@@ -63,10 +65,19 @@ footer{
 .footer-socialMedia{
   display: flex;
   justify-content: flex-start;
+  margin: 10px 0;
 }
 .footer-socialMediaItem > img{
   width: 30px;
   margin-right: 10px;
+}
+
+.footer-apps{
+  display: flex;
+  justify-content: flex-start;
+}
+.footer-appstore{
+  margin-right: 15px;
 }
 
 @media(min-width: 480px){
@@ -84,7 +95,6 @@ footer{
   }
   .footer-leftContent{
     margin-left: 240px;
-    margin-right: 40px;
   }
   .footer-leftContentInner{
     max-width: 585px;
@@ -95,10 +105,21 @@ footer{
   .footer-socialMedia{
     justify-content: flex-end;
   }
+  .footer-apps{
+    justify-content: flex-end;
+  }
 }
 
 @media(min-width: 900px){
   .footer-leftImageContainer{
     display: flex;
+  }
+}
+@media(min-width: 901px) and (max-width: 987px){
+  .footer-apps{
+    flex-direction: column;
+  }
+  .footer-appstore{
+    margin: 0;
   }
 }
