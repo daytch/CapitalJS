@@ -1,0 +1,114 @@
+.delivery-container{
+  font-family: "Myriad Pro", Roboto;
+  color: #ad9f72;
+}
+.delivery-banner > img{
+  width: 100%;
+  display: block;
+}
+.delivery-content{
+  padding: 20px;
+  margin-bottom: 50px;
+}
+.delivery-title{
+  color: black;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 30px;
+  font-weight: 400;
+}
+.delivery-desc1{
+  margin-bottom: 30px;
+}
+
+.delivery-methodListWrapper{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+.delivery-methodListWrapper > ul{
+  margin-top: 0;
+  line-height: 2;
+}
+.delivery-info{
+  font-size: 15px;
+}
+
+.delivery-methodWrapper{
+  display: flex;
+  margin-bottom: 40px;
+  flex-direction: column;
+}
+.delivery-methodItem{
+  flex: 1;
+  margin-bottom: 20px;
+}
+.delivery-methodItemInner{
+  display: flex;
+  flex-direction: column;
+}
+.delivery-methodName{
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+.delivery-methodItemInner > ul {
+  margin: 0;
+}
+
+.delivery-tabContainer{
+  max-width: 900px;
+  margin: auto;
+}
+.delivery-tabItemContainer{
+  display: flex;
+  flex-wrap: wrap;
+  color: black;
+  border-bottom: 1px solid #dedede;
+  margin-bottom: 5px;
+}
+.delivery-tabItem{
+  border: 1px solid #dedede;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.delivery-tabItem.active{
+  background: #f4f4f4;
+}
+.delivery-tabItemText{
+  display: block;
+  padding: 10px;
+}
+.delivery-tabContentContainer{
+  width: 100%;
+}
+.delivery-table{
+  border-color: #e3e3e4;
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+.delivery-table.table, .delivery-table tr, .delivery-table td{
+  border: 2px solid #e3e3e4;
+}
+.delivery-table > thead > tr > td{
+  padding: 5px 0;
+}
+.delivery-table > tbody > tr > td{
+  padding: 15px 0;
+}
+
+@media(min-width: 600px){
+  .delivery-methodWrapper{
+    flex-direction: row;
+  }
+  .delivery-methodItem{
+    margin-bottom: 0;
+  }
+}
+
+@media(min-width: 767px){
+}
+
+@media(min-width: 960px){
+  
+}

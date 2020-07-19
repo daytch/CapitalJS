@@ -1,0 +1,17 @@
+// base style
+@import 'base/vars';
+@import 'base/global';
+@import 'base/header';
+@import 'base/main';
+@import 'base/footer';
+
+// page style
+@import 'component/home';
+@import 'component/about';
+@import 'component/product';
+@import 'component/productDetail';
+@import 'component/outlet';
+@import 'component/blog';
+@import 'component/delivery';
+
+// component style
