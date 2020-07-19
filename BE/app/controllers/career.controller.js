@@ -1,31 +1,34 @@
 const config = require("../config/auth.config");
 const db = require("../models");
-const User = db.user;
+const Career = db.career;
 
-exports.getUser = (req, res) => {
+var jwt = require("jsonwebtoken");
+var bcrypt = require("bcryptjs");
+
+exports.getCareer = (req, res) => {
   if (req.body.id) {
-    User.findOne({ id: req.body.id }).exec((err, user) => {
+    Career.findOne({ _id: req.body.id, rowstatus: true }).exec((err, career) => {
       if (err) {
         res.status(500).send({ message: err });
         return;
       } else {
-        res.status(200).send(user);
+        res.status(200).send(career);
       }
     });
   } else {
-    User.find().exec((err, users) => {
+    Career.find({ rowstatus: true }).exec((err, careers) => {
       if (err) {
         res.status(500).send({ message: err });
         return;
       } else {
-        res.status(200).send(users);
+        res.status(200).send(careers);
       }
     })
   }
 };
 
-exports.saveUser = (req, res) => {
-  const user = new User({
+exports.saveCareer = (req, res) => {
+  const career = new Career({
     title: req.body.title,
     description: req.body.description,
     status: req.body.status,
@@ -35,37 +38,39 @@ exports.saveUser = (req, res) => {
     modifiedby: req.userId,
     rowstatus: true,
   });
-  user.save((err, user) => {
+  career.save((err, career) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
     } else {
-      res.status(200).send({ message: "User was saved successfully!" });
+      res.status(200).send({ message: "Career was saved successfully!" });
     }
   });
 };
 
-exports.updateUser = (req, res) => {
+exports.updateCareer = (req, res) => {
   const itemId = req.params.id;
+  req.body.modified = new Date();
+  req.body.modifiedby = req.userId;
   const item = req.body;
-
-  User.update({ id: itemId }, { $set: item }, (err, result) => {
+  
+  Career.updateOne({ _id: itemId }, { $set: item }, (err, result) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
     } else {
       // send back entire updated list, to make sure frontend data is up-to-date
-      // User.find().toArray(function (_error, _result) {
+      // Career.find().toArray(function (_error, _result) {
       //   if (_error) throw _error;
       //   res.status(200).send(_result);
       // });
-      res.status(200).send({ message: "User was updated successfully!" });
+      res.status(200).send({ message: "Career was updated successfully!" });
     }
   });
 
 };
 
-exports.deleteUser = (req, res) => {
+exports.deleteCareer = (req, res) => {
   const itemId = req.params.id;
   const item = {
     modified: new Date(),
@@ -73,12 +78,12 @@ exports.deleteUser = (req, res) => {
     rowstatus: false
   };
 
-  User.update({ id: itemId }, { $set: item }, (err, result) => {
+  Career.update({ _id: itemId }, { $set: item }, (err, result) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
     } else {
-      res.status(200).send({ message: "User was deleted successfully!" });
+      res.status(200).send({ message: "Career was deleted successfully!" });
     }
   });
 }
