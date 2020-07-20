@@ -1,0 +1,46 @@
+// Here you can add other styles
+
+// GENERAL
+.ck-editor__editable{
+  min-height: 300px;
+}
+
+.toaster-success .toast-header,
+.toaster-success .toast-body{
+  background-color: #28a745;
+  color: #fff;
+}
+.toaster-info .toast-header,
+.toaster-info .toast-body{
+  background-color: #17a2b8;
+  color: #fff;
+}
+.toaster-error .toast-header,
+.toaster-error .toast-body{
+  background-color: #dc3545;
+  color: #fff;
+}
+.toaster-warning .toast-header,
+.toaster-warning .toast-body{
+  background-color: #ffc107;
+  color: #343a40;
+}
+
+// Company Profile
+.cp_inputfile{
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+// Slider-Website
+.sw_table__image{
+  max-width: 350px;
+}
+.icon-wrapper{
+  padding: 3px;
+  display: inline-block;
+  cursor: pointer;
+}
+.icon-wrapper:not(:last-child){
+  padding-right: 5px;
+}

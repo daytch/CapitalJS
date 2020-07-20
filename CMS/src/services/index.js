@@ -1,0 +1,125 @@
+import axios from 'axios';
+import {getHeader, getHeaderToken} from './common';
+import {globalAction} from '../redux/actions';
+import store from '../redux/store';
+
+export function POST(url, body, header=getHeaderToken()) {
+  return axios
+    .post(url, body, header)
+    .then(res => {
+      if (res.status === 201 || res.status === 200) {
+        return res.data;
+      } else if (res.status === 401) {
+        store.dispatch(globalAction.toastWarning("Unauthorized", {autoHide: 0}))
+        return res.data;
+      }
+    })
+    .catch(err => {
+      if (err.response.status === 401) {
+        store.dispatch(globalAction.toastWarning("Unauthorized", {autoHide: 0}))
+        // swals({
+        //   title: 'Info',
+        //   text: err.response.statusText,
+        //   type: 'info',
+        //   allowOutsideClick: false,
+        //   confirmButtonText: 'Ya'
+        // }).then(function(confirm) {
+        //   // actionLogout()
+        // });
+      }
+      return err;
+    });
+}
+
+export function GET(url, header=getHeaderToken()) {
+  return axios
+    .get(url, header)
+    .then(res => {
+      if (res.status === 200) {
+        return res.data;
+      } else if (res.status === 401) {
+        store.dispatch(globalAction.toastWarning("Unauthorized", {autoHide: 0}))
+        return res.data;
+      }
+      // else {
+      //     res.data
+      // }
+    })
+    .catch(err => {
+      if (err.response.status === 401) {
+        store.dispatch(globalAction.toastWarning("Unauthorized", {autoHide: 0}))
+        // swals({
+        //   title: 'Info',
+        //   text: err.response.statusText,
+        //   type: 'info',
+        //   allowOutsideClick: false,
+        //   confirmButtonText: 'Ya'
+        // }).then(function(confirm) {
+        //   // actionLogout()
+        // });
+      }
+      return err;
+    });
+}
+
+export function PUT(url, body, header=getHeaderToken()) {
+  return axios
+    .put(url, body, header)
+    .then(res => {
+      if (res.status === 200) {
+        return res.data;
+      } else if (res.status === 401) {
+        store.dispatch(globalAction.toastWarning("Unauthorized", {autoHide: 0}))
+        return res.data;
+      }
+      // else {
+      //     res.data
+      // }
+    })
+    .catch(err => {
+      if (err.response.status === 401) {
+        store.dispatch(globalAction.toastWarning("Unauthorized", {autoHide: 0}))
+        // swals({
+        //   title: 'Info',
+        //   text: err.response.statusText,
+        //   type: 'info',
+        //   allowOutsideClick: false,
+        //   confirmButtonText: 'Ya'
+        // }).then(function(confirm) {
+        //   // actionLogout()
+        // });
+      }
+      return err;
+    });
+}
+
+export function DELETE(url, header=getHeaderToken()) {
+  return axios
+    .delete(url, header)
+    .then(res => {
+      if (res.status === 200) {
+        return res.data;
+      } else if (res.status === 401) {
+        store.dispatch(globalAction.toastWarning("Unauthorized", {autoHide: 0}))
+        return res.data;
+      }
+      // else {
+      //     res.data
+      // }
+    })
+    .catch(err => {
+      if (err.response.status === 401) {
+        store.dispatch(globalAction.toastWarning("Unauthorized", {autoHide: 0}))
+        // swals({
+        //   title: 'Info',
+        //   text: err.response.statusText,
+        //   type: 'info',
+        //   allowOutsideClick: false,
+        //   confirmButtonText: 'Ya'
+        // }).then(function(confirm) {
+        //   // actionLogout()
+        // });
+      }
+      return err;
+    });
+}

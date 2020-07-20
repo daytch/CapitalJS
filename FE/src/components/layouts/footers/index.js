@@ -22,7 +22,6 @@ function Footer(){
                 <a className="footer-link">PAYMENT METHODS</a>
                 <a className="footer-link">ORDER BY WEBSITE</a>
                 <Link to="/delivery" className="footer-link">DELIVERY</Link>
-                <a className="footer-link">FIND US</a>
               </div>
               <div className="footer-leftImageContainer">
                 <div className="footer-leftImage">
