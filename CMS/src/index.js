@@ -12,9 +12,9 @@ import { Provider } from 'react-redux'
 import store from './redux/store';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faTrash,faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faTrash);
+library.add(faTrash,faTimesCircle);
 
 React.icons = icons
 
