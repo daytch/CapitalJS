@@ -42,7 +42,13 @@ app.get("/", (req, res) => {
 // routes
 require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
-require("./app/routes/career.routes")(app);
+require("./app/routes/companyProfile.routes")(app);
+require("./app/routes/uploadImage.routes")(app);
+require("./app/routes/masterStatus.routes")(app);
+require("./app/routes/sliderwebsite.routes")(app);
+require("./app/routes/blogCategory.routes")(app);
+require("./app/routes/blog.routes")(app);
+require("./app/routes/branch.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

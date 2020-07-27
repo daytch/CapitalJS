@@ -1,6 +1,7 @@
 const { authJwt } = require("../middlewares");
 const controller = require("../controllers/user.controller");
 
+
 module.exports = function(app) {
   app.use(function(req, res, next) {
     res.header(
@@ -10,11 +11,27 @@ module.exports = function(app) {
     next();
   });
 
-  app.get("/api/user", [authJwt.verifyToken], controller.getUser);
+  app.get("/api/test/all", controller.allAccess);
 
-  app.post("/api/user", [authJwt.verifyToken], controller.saveUser);
+  app.get("/api/test/user", [authJwt.verifyToken], controller.userBoard);
 
-  app.put( "/api/user/:id", [authJwt.verifyToken], controller.updateUser);
+  app.get(
+    "/api/test/mod",
+    [authJwt.verifyToken, authJwt.isModerator],
+    controller.moderatorBoard
+  );
 
-  app.delete("/api/user/:id", [authJwt.verifyToken], controller.deleteUser);
+  app.get(
+    "/api/test/admin",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.adminBoard
+  );
+
+  app.get(
+    "/api/test/testing",
+    (req, res) => {
+      console.log('server get *');
+      res.send('Server is working. Please post at "/contact" to submit a message.')}
+  );
+
 };

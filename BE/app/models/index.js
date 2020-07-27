@@ -7,7 +7,12 @@ db.mongoose = mongoose;
 
 db.user = require("./user.model");
 db.role = require("./role.model");
-db.career = require("./career.model");
+db.companyProfile = require("./companyProfileConfig.model");
+db.masterStatus = require("./masterStatus.model");
+db.sliderWebsite = require("./sliderWebsite.Model");
+db.blogCategory = require("./blogCategory.model");
+db.blog = require('./blog.model');
+db.branch = require('./branch.model');
 
 db.ROLES = ["user", "admin", "moderator"];
 
