@@ -13,6 +13,7 @@ db.sliderWebsite = require("./sliderWebsite.Model");
 db.blogCategory = require("./blogCategory.model");
 db.blog = require('./blog.model');
 db.branch = require('./branch.model');
+db.faq = require('./faq.model');
 
 db.ROLES = ["user", "admin", "moderator"];
 
