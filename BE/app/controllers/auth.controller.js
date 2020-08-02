@@ -59,7 +59,7 @@ exports.signup = (req, res) => {
           res.send({ message: "User was registered successfully!" });
         });
       });
-      
+
     }
   });
 };
@@ -71,12 +71,18 @@ exports.signin = (req, res) => {
     .populate("roles", "-__v")
     .exec((err, user) => {
       if (err) {
-        res.status(500).send({ message: err });
+        res.status(500).send({
+          message: err,
+          isError: 1
+        });
         return;
       }
 
       if (!user) {
-        return res.status(404).send({ message: "User Not found." });
+        return res.status(200).send({
+          message: "User Not found.",
+          isError: 1
+        });
       }
 
       var passwordIsValid = bcrypt.compareSync(
