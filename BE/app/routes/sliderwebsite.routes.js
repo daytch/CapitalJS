@@ -12,12 +12,12 @@ module.exports = function(app){
     });
 
 
-app.get("/api/sliderWebsite/load", controller.load);
+app.get("/api/sliderWebsite/load",[authJwt.verifyToken], controller.load);
 
 
 
-app.post("/api/sliderWebsite/save", controller.save);
+app.post("/api/sliderWebsite/save",[authJwt.verifyToken], controller.save);
 
-app.post("/api/sliderWebsite/delete", controller.delete);
+app.post("/api/sliderWebsite/delete",[authJwt.verifyToken], controller.delete);
 
 };

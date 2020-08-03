@@ -12,9 +12,9 @@ module.exports = function(app) {
     next();
   });
 
-  app.post("/api/companyprofile/save", controller.SaveConfig);
+  app.post("/api/companyprofile/save", [authJwt.verifyToken],controller.SaveConfig);
 
-  app.post("/api/companyprofile/loadconfig", controller.LoadConfig);
+  app.post("/api/companyprofile/loadconfig",[authJwt.verifyToken], controller.LoadConfig);
 //   app.get("/api/companyprofile/test", (req, res) => {
 //     console.log('server get *');
 //     res.send('Server is working. Please post at "/contact" to submit a message.')});

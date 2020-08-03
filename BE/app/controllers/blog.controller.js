@@ -112,7 +112,7 @@ exports.load = (req, res)=>{
     if (req.body._id != null && req.body._id != "") {
         Blog.findById(req.body._id,(err, result)=>{
             if (err) {
-                return res.status(200).send({Message: "Error, Data is Not Found"});
+                return res.status(500).send({Message: "Error, Data is Not Found"});
             }
             else if (result != null) {
                 return res.status(200).send(result);

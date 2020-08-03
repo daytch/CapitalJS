@@ -12,11 +12,11 @@ module.exports = function(app) {
     next();
   });
 
-  app.post("/api/masterstatus/sliderconfig", controller.SliderConfig);
+  app.post("/api/masterstatus/sliderconfig", [authJwt.verifyToken],controller.SliderConfig);
 
-  app.get("/api/masterstatus/blogconfig", controller.BlogConfig);
+  app.get("/api/masterstatus/blogconfig",[authJwt.verifyToken], controller.BlogConfig);
 
-  app.get("/api/masterstatus/branchconfig", controller.BranchConfig);
+  app.get("/api/masterstatus/branchconfig",[authJwt.verifyToken], controller.BranchConfig);
   // app.post("/api/masterStatus/SaveConfig", controller.SaveConfig);
 
   

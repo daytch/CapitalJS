@@ -12,12 +12,12 @@ module.exports = function(app){
     });
 
 
-app.get("/api/blog/load", controller.load);
+app.get("/api/blog/load",[authJwt.verifyToken], controller.load);
 
 
 
-app.post("/api/blog/save", controller.save);
+app.post("/api/blog/save",[authJwt.verifyToken], controller.save);
 
-app.post("/api/blog/delete", controller.delete);
+app.post("/api/blog/delete",[authJwt.verifyToken], controller.delete);
 
 };

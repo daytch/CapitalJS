@@ -12,12 +12,12 @@ module.exports = function(app){
     });
 
 
-app.get("/api/branch/load", controller.load);
+app.get("/api/branch/load",[authJwt.verifyToken], controller.load);
 
 
 
-app.post("/api/branch/save", controller.save);
+app.post("/api/branch/save",[authJwt.verifyToken], controller.save);
 
-app.post("/api/branch/delete", controller.delete);
+app.post("/api/branch/delete",[authJwt.verifyToken], controller.delete);
 
 };
