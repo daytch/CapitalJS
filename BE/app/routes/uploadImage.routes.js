@@ -12,7 +12,7 @@ module.exports = function(app) {
     next();
   });
 
-  app.post("/api/UploadImage/Save", controller.SaveImage);
+  app.post("/api/UploadImage/Save",[authJwt.verifyToken], controller.SaveImage);
 //   app.get("/api/companyprofile/test", (req, res) => {
 //     console.log('server get *');
 //     res.send('Server is working. Please post at "/contact" to submit a message.')});
