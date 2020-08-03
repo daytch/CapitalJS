@@ -49,6 +49,7 @@ require("./app/routes/sliderwebsite.routes")(app);
 require("./app/routes/blogCategory.routes")(app);
 require("./app/routes/blog.routes")(app);
 require("./app/routes/branch.routes")(app);
+require("./app/routes/faq.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
