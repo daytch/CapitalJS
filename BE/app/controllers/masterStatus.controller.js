@@ -7,17 +7,17 @@ const MasterStatus = db.masterStatus;
 exports.SliderConfig = (req, res)=>{
     MasterStatus.find({RowStatus: true, ConfigStatus: "SliderConfig"},(err, masterStatus)=>{
                 if (err) {
-                    return res.status(200).send({Message: "Error, Data is Not Found"});
+                    return res.status(200).send({message: "Error, Data is Not Found", isError:1});
                 }
-                else if (masterStatus != null) {
-                    return res.status(200).send(masterStatus);
+                else  {
+                    return res.status(200).send({masterStatus, isError:0});
                 }
-               else{
-                return res.status(200).send({Message: "Data is Not Found"});
-               }
+            //    else{
+            //     return res.status(200).send({Message: "Data is Not Found"});
+            //    }
            });
 
-    
+
     // CompanyProfile.find({}, (err, companyProfile)=>{
     //     if (err) {
     //         return res.status(500).send("Opps, Error while load Company Profile");
@@ -32,17 +32,17 @@ exports.SliderConfig = (req, res)=>{
 exports.BlogConfig = (req, res)=>{
     MasterStatus.find({RowStatus: true, ConfigStatus: "BlogConfig"},(err, masterStatus)=>{
                 if (err) {
-                    return res.status(200).send({Message: "Error, Data is Not Found"});
+                    return res.status(200).send({message: "Error, Data is Not Found", isError:1});
                 }
-                else if (masterStatus != null) {
-                    return res.status(200).send(masterStatus);
+                else {
+                    return res.status(200).send({masterStatus, isError:0});
                 }
-               else{
-                return res.status(200).send({Message: "Data is Not Found"});
-               }
+            //    else{
+            //     return res.status(200).send({Message: "Data is Not Found"});
+            //    }
            });
 
-    
+
     // CompanyProfile.find({}, (err, companyProfile)=>{
     //     if (err) {
     //         return res.status(500).send("Opps, Error while load Company Profile");
@@ -56,14 +56,14 @@ exports.BlogConfig = (req, res)=>{
 exports.BranchConfig = (req, res) =>{
     MasterStatus.find({RowStatus: true, ConfigStatus: "BranchConfig"},(err, masterStatus)=>{
         if (err) {
-            return res.status(200).send({Message: "Error, Data is Not Found"});
+            return res.status(200).send({message: "Error, Data is Not Found", isError:1});
         }
-        else if (masterStatus != null) {
-            return res.status(200).send(masterStatus);
+        else {
+            return res.status(200).send({masterStatus, isError:0});
         }
-       else{
-        return res.status(200).send({Message: "Data is Not Found"});
-       }
+    //    else{
+    //     return res.status(200).send({Message: "Data is Not Found"});
+    //    }
    });
 }
 
@@ -80,7 +80,7 @@ exports.BranchConfig = (req, res) =>{
 //             return;
 //         }
 //             res.status(200).send({message: "Add Success", masterStatus});
-            
+
 //             return;
 //     });
 // }

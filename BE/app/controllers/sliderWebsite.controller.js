@@ -17,15 +17,15 @@ exports.save = (req, res)=>{
        sliderWebsite.Description = req.body.description;
        sliderWebsite.MasterStatus = req.body.masterStatus;
        sliderWebsite.Modified = Date.now();
-       sliderWebsite.ModifiedBy = "test";
+       sliderWebsite.ModifiedBy = req.userId;
 
         sliderWebsite.findOneAndUpdate({_id: req.body._id}, sliderWebsite, {new :false, userfindAndModify:false},
             (err, sliderWebsite)=>{
                 if (err) {
-                    return res.status(500).send({message:err});
+                    return res.status(500).send({message:err, isError:1});
                 }
                 else{
-                    return res.status(200).send({message: "Update Sucess"});
+                    return res.status(200).send({message: "Update Sucess", isError:0});
                 }
             });
             // const sliderWebsite = new SliderWebsite({
@@ -60,16 +60,16 @@ exports.save = (req, res)=>{
             sliderWebsite.Description = req.body.description;
             sliderWebsite.MasterStatus = req.body.masterStatus;
             sliderWebsite.Created = Date.now();
-            sliderWebsite.CreatedBy = "";
+            sliderWebsite.CreatedBy = req.userId;
             sliderWebsite.Modified = null;
             sliderWebsite.ModifiedBy = "";
             sliderWebsite.RowStatus = true;
             sliderWebsite.save((err, sliderWebsite)=>{
                 if (err) {
-                    return res.status(500).send({message: err});
+                    return res.status(500).send({message: err, isError:1});
                 }
                 else{
-                    return res.status(200).send({message:"Add Success"});
+                    return res.status(200).send({message:"Add Success", isError:0});
                 }
             })
             //    const sliderWebsite = new SliderWebsite({
@@ -104,14 +104,14 @@ exports.save = (req, res)=>{
 exports.load = (req, res)=>{
     SliderWebsite.find({RowStatus: true},(err, sliderWebsite)=>{
                 if (err) {
-                    return res.status(200).send({Message: "Error, Data is Not Found"});
+                    return res.status(200).send({message: "Error, Data is Not Found", isError:1});
                 }
-                else if (sliderWebsite != null) {
-                    return res.status(200).send(sliderWebsite);
+                else  {
+                    return res.status(200).send({sliderWebsite, isError:0});
                 }
-               else{
-                return res.status(200).send({Message: "Data is Not Found"});
-               }
+            //    else{
+            //     return res.status(200).send({Message: "Data is Not Found"});
+            //    }
            });
     // CompanyProfile.find({}, (err, companyProfile)=>{
     //     if (err) {
@@ -129,7 +129,7 @@ exports.delete = (req,res)=>{
     var sliderWebsite = new SliderWebsite();
     sliderWebsite._id = req.body.id
     sliderWebsite.Modified = Date.now();
-    sliderWebsite.ModifiedBy = "";
+    sliderWebsite.ModifiedBy = req.userId;
     sliderWebsite.RowStatus = false;
 
     // sliderWebsite.findOneAndUpdate({_id: req.body._id}, sliderWebsite, {new :false, userfindAndModify:false},
@@ -145,10 +145,10 @@ exports.delete = (req,res)=>{
         
         (err)=>{
             if (err) {
-                return res.status(500).send({message:err});
+                return res.status(500).send({message:err, isError:1});
             }
             else{
-                return res.status(200).send({message: "Delete Success"});
+                return res.status(200).send({message: "Delete Success", isError:0});
             }
         });
     

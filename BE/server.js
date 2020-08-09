@@ -2,12 +2,17 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const dbConfig = require("./app/config/db.config");
-
+const swaggerJsDOC = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 const app = express();
 
 var corsOptions = {
   origin: "http://localhost:8081"
 };
+
+
+
+
 
 app.use(cors(corsOptions));
 
@@ -51,6 +56,9 @@ require("./app/routes/blog.routes")(app);
 require("./app/routes/branch.routes")(app);
 require("./app/routes/faq.routes")(app);
 
+
+
+
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
@@ -92,3 +100,28 @@ function initial() {
     }
   });
 }
+
+
+if (dbConfig.swagger) {
+  // Extended : https://swagger.io/specification/#infoObject
+const swaggerOptions = {
+  swaggerDefinition: {
+      info: { 
+          title: 'CapitalJS API',
+          description: 'CapitalJS API Information',
+          contact: {
+              name: 'Uang Panas Developer'
+          },
+       servers: ["localhost:8080"]
+      },
+      host: 'localhost:8080',
+      
+  },
+  apis: ["./app/routes//*.routes.js"]
+}
+
+const swaggerDocs = swaggerJsDOC(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+}
+
+

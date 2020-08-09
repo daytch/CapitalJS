@@ -12,12 +12,133 @@ module.exports = function(app){
     });
 
 
+
+    /**
+* @swagger
+* /api/blogcategory/load:
+
+*   post:
+*     tags:
+*       - Blog Category
+*     name: Load
+*     summary: Load Blog Category
+*     description:  ketika isinya {} atau object kosong maka akan load semua,<br> untuk load salah satu gunakan {"_id" &#58; value}
+*     consumes:
+*       - application/json
+*     parameters:
+*       - name: x-access-token
+*         in: header
+*       - name: request
+*         in : body
+*         type: object
+
+
+*         schema:
+*           "$ref": "#/definitions/inBody"
+
+*     responses:
+*       200:
+*         description: User found and logged in successfully
+*       401:
+*         description: Bad username, not found in db
+*       500:
+*         description: something error on system
+*definitions:
+*   inBody:
+*       type: object
+*       properties:
+*           _id:
+*               type: string
+*               example: 5f1c548bf377ad2b40d5b1a5
+*/
 app.get("/api/blogcategory/load",[authJwt.verifyToken], controller.load);
+app.post("/api/blogcategory/load", controller.load);
+
+   /**
+* @swagger
+* /api/blogcategory/save:
+
+*   post:
+*     tags:
+*       - Blog Category
+*     name: Save
+*     summary: Save Blog Category
+*     description: hilangkan "_id" untuk save record baru 
+*     consumes:
+*       - application/json
+*     parameters:
+*       - name: x-access-token
+*         in: header
+*       - name: request
+*         in : body
+*         type: object
 
 
+*         schema:
+*           "$ref": "#/definitions/inBody"
+
+*     responses:
+*       200:
+*         description: User found and logged in successfully
+*       401:
+*         description: Bad username, not found in db
+*       500:
+*         description: something error on system
+*definitions:
+*   inBody:
+*       type: object
+*       properties:
+*           _id:
+*               type: string
+*               example: 5f1c548bf377ad2b40d5b1a5
+*           name:
+*               type: string 
+*           description:
+*               type: string
+*               example: blog untuk kategory makanan manis
+*/
 
 app.post("/api/blogcategory/save",[authJwt.verifyToken], controller.save);
 
+
+   /**
+* @swagger
+* /api/blogcategory/delete:
+
+*   post:
+*     tags:
+*       - Blog Category
+*     name: Delete
+*     summary: Delete Blog Category
+*     description: Delete
+*     consumes:
+*       - application/json
+*     parameters:
+*       - name: x-access-token
+*         in: header
+*       - name: request
+*         in : body
+*         type: object
+
+
+*         schema:
+*           "$ref": "#/definitions/inBody"
+
+*     responses:
+*       200:
+*         description: User found and logged in successfully
+*       401:
+*         description: Bad username, not found in db
+*       500:
+*         description: something error on system
+*definitions:
+*   inBody:
+*       type: object
+*       properties:
+*           _id:
+*               type: string
+*               example: 5f1c548bf377ad2b40d5b1a5
+*/
 app.post("/api/blogcategory/delete",[authJwt.verifyToken], controller.delete);
 
 };

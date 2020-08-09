@@ -11,6 +11,39 @@ module.exports = function(app) {
     );
     next();
   });
+/**
+* @swagger
+* /api/UploadImage/Save:
+*   post:
+*     tags:
+*       - Upload Image
+*     name: Upload
+*     summary: Upload Image 
+*     description: Upload
+*     consumes:
+*       - application/json
+*     parameters:
+*       - name: x-access-token
+*         in : body
+*         type: object
+*         schema:
+*           "$ref": "#/definitions/inBody"
+
+*     responses:
+*       200:
+*         description: User found and logged in successfully
+*       401:
+*         description: Bad username, not found in db
+*       500:
+*         description: something error on system
+*definitions:
+*   inBody:
+*       type: object
+*       properties:
+*           file:
+*               type: string
+*               example: binary image
+*/
 
   app.post("/api/UploadImage/Save",[authJwt.verifyToken], controller.SaveImage);
 //   app.get("/api/companyprofile/test", (req, res) => {

@@ -1,5 +1,5 @@
 const { authJwt } = require("../middlewares");
-const controller = require("../controllers/branch.controller");
+const controller = require("../controllers/sliderWebsite.controller");
 
 
 module.exports = function(app){
@@ -11,15 +11,16 @@ module.exports = function(app){
         next();
     });
 
+
     /**
 * @swagger
-* /api/branch/load:
+* /api/sliderWebsite/load:
 
 *   post:
 *     tags:
-*       - Branch
+*       - Slider Website
 *     name: Load
-*     summary: Load Branch
+*     summary: Load Slider Website 
 *     description:  ketika isinya {} atau object kosong maka akan load semua,<br> untuk load salah satu gunakan {"_id" &#58; value}
 *     consumes:
 *       - application/json
@@ -49,18 +50,17 @@ module.exports = function(app){
 *               type: string
 *               example: 5f1c548bf377ad2b40d5b1a5
 */
-app.get("/api/branch/load",[authJwt.verifyToken], controller.load);
-app.post("/api/branch/load",[authJwt.verifyToken], controller.load);
+app.get("/api/sliderWebsite/load", controller.load);
+app.post("/api/sliderWebsite/load", controller.load);
 
-   /**
+  /**
 * @swagger
-* /api/branch/save:
-
+* /api/sliderWebsite/save:
 *   post:
 *     tags:
-*       - Branch
+*       - Slider Website
 *     name: Save
-*     summary: Save Branch
+*     summary: Save - Slider Website 
 *     description: hilangkan "_id" untuk save record baru 
 *     consumes:
 *       - application/json
@@ -70,11 +70,10 @@ app.post("/api/branch/load",[authJwt.verifyToken], controller.load);
 *       - name: request
 *         in : body
 *         type: object
-
-
 *         schema:
 *           "$ref": "#/definitions/inBody"
-
+*         example:      
+*           _id: 5f1c548bf377ad2b40d5b1a5
 *     responses:
 *       200:
 *         description: User found and logged in successfully
@@ -89,34 +88,29 @@ app.post("/api/branch/load",[authJwt.verifyToken], controller.load);
 *           _id:
 *               type: string
 *               example: 5f1c548bf377ad2b40d5b1a5
-*           telephone:
-*               type: string
-*               example: 081123321180
-*           address:
-*               type: string
-*               example: Sunter Agung
-*           maps:
-*               type: string
-*               example: https://www.google.com/
+*           picture: 
+*               type: string 
+*               example: http://www/image.google.com
+*           description:
+*               type: string 
+*               example: Uang Panas 
 *           masterStatusId:
 *               type: string
-*               example: 5f1c548bf377ad2b40d5b1a5
-*           picture:
-*               type: string
-*               example: https://www.google.com/
+*               example: 5f1c548bf377ad2b40d5b1a5 
+*          
 */
-app.post("/api/branch/save",[authJwt.verifyToken], controller.save);
+app.post("/api/sliderWebsite/save", controller.save);
 
-    /**
+
+ /**
 * @swagger
-* /api/branch/delete:
-
+* /api/sliderWebsite/delete:
 *   post:
 *     tags:
-*       - Branch
-*     name: Load
-*     summary: Delete Branch
-*     description:  Delete Branch
+*       - Slider Website
+*     name: Delet
+*     summary: Delete - Slider Website 
+*     description: Delete
 *     consumes:
 *       - application/json
 *     parameters:
@@ -125,11 +119,10 @@ app.post("/api/branch/save",[authJwt.verifyToken], controller.save);
 *       - name: request
 *         in : body
 *         type: object
-
-
 *         schema:
 *           "$ref": "#/definitions/inBody"
-
+*         example:      
+*           _id: 5f1c548bf377ad2b40d5b1a5
 *     responses:
 *       200:
 *         description: User found and logged in successfully
@@ -145,6 +138,7 @@ app.post("/api/branch/save",[authJwt.verifyToken], controller.save);
 *               type: string
 *               example: 5f1c548bf377ad2b40d5b1a5
 */
-app.post("/api/branch/delete",[authJwt.verifyToken], controller.delete);
+
+app.post("/api/sliderWebsite/delete",[authJwt.verifyToken], controller.delete);
 
 };

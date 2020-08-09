@@ -18,17 +18,17 @@ exports.save = (req, res) => {
         blog.Body = req.body.body;
         blog.MasterStatusID = req.body.masterStatusId;
         blog.HeaderBlogLink = req.body.headerBlogLink;
-
+        
         blog.Modified = Date.now();
-        blog.ModifiedBy = req.body.username;
+        blog.ModifiedBy = req.userId;
 
         Blog.findOneAndUpdate({ _id: req.body._id }, blog, { new: false, userfindAndModify: false },
             (err, sliderWebsite) => {
                 if (err) {
-                    return res.status(500).send({ message: err });
+                    return res.status(500).send({ message: err, isError: 1 });
                 }
                 else {
-                    return res.status(200).send({ message: "Update Sucess" });
+                    return res.status(200).send({ message: "Update Sucess" ,  isError: 0});
                 }
             });
         // const sliderWebsite = new SliderWebsite({
@@ -60,23 +60,23 @@ exports.save = (req, res) => {
 
         var blog = new Blog();
 
-        blog.BlogCategoryID = req.body.BlogCategoryID;
+        blog.BlogCategoryID = req.body.blogCategoryId;
         blog.Title = req.body.title;
         blog.Body = req.body.body;
-        blog.MasterStatusID = req.body.masterStatus;
+        blog.MasterStatusID = req.body.masterStatusId;
         blog.HeaderBlogLink = req.body.headerBlogLink;
         blog.Created = Date.now();
-        blog.CreatedBy = req.body.username;
+        blog.CreatedBy = req.userId;
         blog.Modified = null;
         blog.ModifiedBy = null;
         blog.RowStatus = true;
 
         blog.save((err, blog) => {
             if (err) {
-                return res.status(500).send({ message: err });
+                return res.status(500).send({ message: err , isError: 1});
             }
             else {
-                return res.status(200).send({ message: "Add Success" });
+                return res.status(200).send({ message: "Add Success" , isError: 0});
             }
         })
         //    const sliderWebsite = new SliderWebsite({
@@ -109,30 +109,26 @@ exports.save = (req, res) => {
 
 
 exports.load = (req, res) => {
+  
     if (req.body._id != null && req.body._id != "") {
         Blog.findById(req.body._id, (err, result) => {
             if (err) {
-                return res.status(200).send({ Message: "Error, Data is Not Found" });
-            }
-            else if (result != null) {
-                return res.status(200).send(result);
+                return res.status(500).send({ message: "Error, Data is Not Found" ,  isError: 1});
             }
             else {
-                return res.status(200).send({ Message: "Data is Not Found" });
+                return res.status(200).send({result, isError: 0});
             }
         });
     }
     else {
         Blog.find({ RowStatus: true }, (err, result) => {
             if (err) {
-                return res.status(200).send({ Message: "Error, Data is Not Found" });
+                return res.status(500).send({ message: "Error, Data is Not Found", isError: 1 });
             }
-            else if (result.length > 0) {
-                return res.status(200).send(result);
+            else  {
+                return res.status(200).send({result, isError: 0,req : JSON.stringify(req.originalUrl)});
             }
-            else {
-                return res.status(200).send({ Message: "Data is Not Found" });
-            }
+           
         });
     }
     // CompanyProfile.find({}, (err, companyProfile)=>{
@@ -152,7 +148,7 @@ exports.delete = (req, res) => {
     var blog = new Blog();
     blog._id = req.body.id
     blog.Modified = Date.now();
-    blog.ModifiedBy = "";
+    blog.ModifiedBy = req.userId;
     blog.RowStatus = false;
 
     // sliderWebsite.findOneAndUpdate({_id: req.body._id}, sliderWebsite, {new :false, userfindAndModify:false},
@@ -168,10 +164,10 @@ exports.delete = (req, res) => {
 
         (err) => {
             if (err) {
-                return res.status(500).send({ message: err });
+                return res.status(500).send({ message: err , isError: 1});
             }
             else {
-                return res.status(200).send({ message: "Delete Success" });
+                return res.status(200).send({ message: "Delete Success", isError: 0 });
             }
         });
 

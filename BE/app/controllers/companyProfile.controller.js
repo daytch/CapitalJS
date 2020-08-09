@@ -36,16 +36,16 @@ exports.SaveConfig = (req, res)=>{
                         TwitterLink: req.body.twitterLink,
                         LogoCapitalLink: req.body.logoCapitalLink,
                         Created: Date.now(),
-                        CreatedBy: req.body.username,
+                        CreatedBy: req.userId,
                         RowStatus: true
                     });
                     CompanyProfile.findOneAndUpdate({_id:req.body._id}, companyProfile, {new :true, useFindAndModify:false},
                         (err, companyProfile)=>{
                             if (err) {
-                                res.status(500).send({Message :err});
+                                res.status(500).send({message :err, isError:1});
                                 return;
                             }
-                            res.status(200).send({message: "Update Success"});
+                            res.status(200).send({message: "Update Success", isError:0});
                             return;
                         });
         }
@@ -63,14 +63,14 @@ exports.SaveConfig = (req, res)=>{
                 TwitterLink: req.body.twitterLink,
                 LogoCapitalLink: req.body.logoCapitalLink,
                 Modified: Date.now(),
-                ModifiedBy: req.body.username,
+                ModifiedBy: req.userId,
                 })
                 companyProfile.save((err,companyProfile)=>{
                     if (err) {
-                        res.status(500).send({message:err});
+                        res.status(500).send({message:err, isError:1});
                         return;
                     }
-                        res.status(200).send({message: "Add Success", companyProfile});
+                        res.status(200).send({message: "Add Success", isError:0});
                         
                         return;
                 });
@@ -83,14 +83,12 @@ exports.SaveConfig = (req, res)=>{
 exports.LoadConfig = (req, res)=>{
     CompanyProfile.findOne({RowStatus: true},(err, companyProfile)=>{
                 if (err) {
-                    return res.status(200).send({Message: "Error, Data is Not Found"});
+                    return res.status(200).send({message: "Error, Data is Not Found", isError:1});
                 }
-                else if (companyProfile != null) {
-                    return res.status(200).send(companyProfile);
+                else {
+                    return res.status(200).send({companyProfile, isError:0});
                 }
-               else{
-                return res.status(200).send({Message: "Data is Not Found"});
-               }
+              
            });
     // CompanyProfile.find({}, (err, companyProfile)=>{
     //     if (err) {
