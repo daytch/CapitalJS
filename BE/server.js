@@ -7,7 +7,7 @@ const swaggerUi = require('swagger-ui-express');
 const app = express();
 
 var corsOptions = {
-  origin: "http://localhost:8081"
+  origin: ["http://localhost:8081", "http://localhost:3000"]
 };
 
 
@@ -21,6 +21,8 @@ app.use(bodyParser.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use('/images', express.static('images'))
 
 const db = require("./app/models");
 const Role = db.role;
