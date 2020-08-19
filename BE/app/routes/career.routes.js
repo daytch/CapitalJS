@@ -11,19 +11,43 @@ module.exports = function (app) {
   });
 
 
+  /**
+* @swagger
+* /api/career:
+
+*   get:
+*     tags:
+*       - Career
+*     name: Get
+*     summary: Save Career
+
+*     consumes:
+*       - application/json
+*     parameters:
+*       - name: x-access-token
+*         in: header
+*         schema:
+*           type: string
+*     responses:
+*       200:
+*         description: User found and logged in successfully
+*       401:
+*         description: Bad username, not found in db
+*       500:
+*         description: something error on system
+*/
   app.get("/api/career", [authJwt.verifyToken], controller.getCareer);
  
 
   /**
 * @swagger
 * /api/career:
-
 *   post:
 *     tags:
 *       - Career
 *     name: Save
-*     summary: Save Career 
-*     description:  save
+*     summary: Save Career
+
 *     consumes:
 *       - application/json
 *     parameters:
@@ -32,11 +56,19 @@ module.exports = function (app) {
 *       - name: request
 *         in : body
 *         type: object
-
-
 *         schema:
-*           "$ref": "#/definitions/inBody"
-
+*           $ref: '#/definitions/Career'
+*           type: object
+*           properties:
+*             title:
+*               type: string
+*             description:
+*               type: string
+*             status:
+*               type: string
+*         required:
+*           - title
+*           - description
 *     responses:
 *       200:
 *         description: User found and logged in successfully
@@ -58,20 +90,17 @@ module.exports = function (app) {
 *               type: string
 *               example: status
 */
-  
-
   app.post("/api/career", [authJwt.verifyToken], controller.saveCareer);
+
 
    /**
 * @swagger
 * /api/career/:
-
 *   put:
 *     tags:
 *       - Career
 *     name: Save
-*     summary: Save Career 
-*     description:  save
+*     summary: Save Career
 *     consumes:
 *       - application/json
 *     parameters:
@@ -82,11 +111,18 @@ module.exports = function (app) {
 *       - name: request
 *         in : body
 *         type: object
-
-
 *         schema:
-*           "$ref": "#/definitions/inBody"
-
+*           $ref: '#/definitions/Career'
+*           type: object
+*           properties:
+*             title:
+*               type: string
+*             description:
+*               type: string
+*             status:
+*               type: string
+*     required:
+*       - id
 *     responses:
 *       200:
 *         description: User found and logged in successfully
@@ -94,23 +130,10 @@ module.exports = function (app) {
 *         description: Bad username, not found in db
 *       500:
 *         description: something error on system
-*definitions:
-*   inBody:
-*       type: object
-*       properties:
-*           title:
-*               type: string
-*               example: Pilot
-*           description:
-*               type: string
-*               example: deskripsi
-*           status:
-*               type: string
-*               example: status
 */
-
   app.put( "/api/career/:id", [authJwt.verifyToken], controller.updateCareer);
 
+  
   /**
 * @swagger
 * /api/career/:
@@ -118,9 +141,8 @@ module.exports = function (app) {
 *   delete:
 *     tags:
 *       - Career
-*     name: Save
-*     summary: Save Career 
-*     description:  save
+*     name: Delete Career
+*     summary: Delete Career
 *     consumes:
 *       - application/json
 *     parameters:
@@ -128,8 +150,6 @@ module.exports = function (app) {
 *         in: header
 *       - name: id
 *         in: query
-
-
 *     responses:
 *       200:
 *         description: User found and logged in successfully
@@ -137,20 +157,7 @@ module.exports = function (app) {
 *         description: Bad username, not found in db
 *       500:
 *         description: something error on system
-*definitions:
-*   inBody:
-*       type: object
-*       properties:
-*           title:
-*               type: string
-*               example: Pilot
-*           description:
-*               type: string
-*               example: deskripsi
-*           status:
-*               type: string
-*               example: status
 */
-
   app.delete("/api/career/:id", [authJwt.verifyToken], controller.deleteCareer);
+
 };

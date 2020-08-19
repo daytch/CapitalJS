@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const dbConfig = require("./app/config/db.config");
-const swaggerJsDOC = require('swagger-jsdoc');
+const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const app = express();
 
@@ -10,9 +10,40 @@ var corsOptions = {
   origin: "http://localhost:8081"
 };
 
+if (dbConfig.swagger) {
+  const swaggerDefinition = {
+    info: {
+      title: 'CapitalJS API',
+      description: 'CapitalJS API Information',
+      contact: {
+        name: 'Uang Panas Developer'
+      },
+      servers: ["localhost:8080"]
+    },
+    host: 'localhost:8080',
+    basePath: '/',
+    securityDefinitions: {
+      ApiKeyAuth: {
+        type: 'apiKey',
+        name: 'X-API-Key',
+        scheme: 'x-access-token',
+        in: 'header'
+      }
+    }
+  }
 
+  const options = {
+    swaggerDefinition,
+    apis: ["./app/routes/**.js"]
+  }
 
-
+  const swaggerSpec = swaggerJSDoc(options);
+  app.get('/swagger.json', function (req, res) {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(swaggerSpec);
+  });
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+}
 
 app.use(cors(corsOptions));
 
@@ -100,28 +131,3 @@ function initial() {
     }
   });
 }
-
-
-if (dbConfig.swagger) {
-  // Extended : https://swagger.io/specification/#infoObject
-const swaggerOptions = {
-  swaggerDefinition: {
-      info: { 
-          title: 'CapitalJS API',
-          description: 'CapitalJS API Information',
-          contact: {
-              name: 'Uang Panas Developer'
-          },
-       servers: ["localhost:8080"]
-      },
-      host: 'localhost:8080',
-      
-  },
-  apis: ["./app/routes//*.routes.js"]
-}
-
-const swaggerDocs = swaggerJsDOC(swaggerOptions);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-}
-
-

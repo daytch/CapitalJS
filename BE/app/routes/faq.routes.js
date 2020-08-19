@@ -10,32 +10,62 @@ module.exports = function (app) {
     next();
   });
 
-  app.get("/api/faq", [authJwt.verifyToken], controller.getFaq);
-
- 
-/**
+  /**
 * @swagger
 * /api/faq:
 
+*   get:
+*     tags:
+*       - FAQ
+*     name: Get
+*     summary: Get All FAQs
+*     consumes:
+*       - application/json
+*     parameters:
+*       - name: x-access-token
+*         in: header
+*         schema:
+*           type: string
+*     responses:
+*       200:
+*         description: User found and logged in successfully
+*       401:
+*         description: Bad username, not found in db
+*       500:
+*         description: something error on system
+*/
+  app.get("/api/faq", [authJwt.verifyToken], controller.getFaq);
+
+  /**
+* @swagger
+* /api/faq:
 *   post:
 *     tags:
 *       - FAQ
 *     name: Save
 *     summary: Save FAQ
-*     description:  Save FAQ
 *     consumes:
 *       - application/json
 *     parameters:
 *       - name: x-access-token
 *         in: header
-
 *       - name: request
 *         in : body
 *         type: object
-
 *         schema:
-*           "$ref": "#/definitions/inBody"
-
+*           $ref: '#/definitions/Faq'
+*           type: object
+*           properties:
+*             sequence:
+*               type: string
+*             question:
+*               type: string
+*             answer:
+*               type: string
+*         required:
+*           - sequence
+*           - question
+*           - answer
 *     responses:
 *       200:
 *         description: User found and logged in successfully
@@ -51,27 +81,24 @@ module.exports = function (app) {
 *               type: string
 *               example: 1
 *           question:
-*               type: string 
-*               example: question
+*               type: string
+*               example: Question
 *           answer:
-*               type: string 
-*               example: answer
+*               type: string
+*               example: Answer
 */
   app.post("/api/faq", [authJwt.verifyToken], controller.saveFaq);
 
-   
+  
 
-
-/**
+   /**
 * @swagger
 * /api/faq/:
-
 *   put:
 *     tags:
 *       - FAQ
-*     name: Update
-*     summary: Update FAQ
-*     description:  Update FAQ
+*     name: Save FAQ
+*     summary: Save FAQ
 *     consumes:
 *       - application/json
 *     parameters:
@@ -82,10 +109,18 @@ module.exports = function (app) {
 *       - name: request
 *         in : body
 *         type: object
-
 *         schema:
-*           "$ref": "#/definitions/inBody"
-
+*           $ref: '#/definitions/Faq'
+*           type: object
+*           properties:
+*             sequence:
+*               type: string
+*             question:
+*               type: string
+*             answer:
+*               type: string
+*         required:
+*           -id
 *     responses:
 *       200:
 *         description: User found and logged in successfully
@@ -93,33 +128,18 @@ module.exports = function (app) {
 *         description: Bad username, not found in db
 *       500:
 *         description: something error on system
-*definitions:
-*   inBody:
-*       type: object
-*       properties:
-*           sequence:
-*               type: string
-*               example: 1
-*           question:
-*               type: string 
-*               example: question
-*           answer:
-*               type: string 
-*               example: answer
 */
   app.put( "/api/faq/:id", [authJwt.verifyToken], controller.updateFaq);
 
 
-   /**
+  /**
 * @swagger
-* /api/delete/:
-
+* /api/faq/:
 *   delete:
 *     tags:
 *       - FAQ
-*     name: Delete
-*     summary: Delete FAQ 
-*     description:  Delete
+*     name: Delete FAQ
+*     summary: Delete FAQ
 *     consumes:
 *       - application/json
 *     parameters:
@@ -127,8 +147,6 @@ module.exports = function (app) {
 *         in: header
 *       - name: id
 *         in: query
-
-
 *     responses:
 *       200:
 *         description: User found and logged in successfully
@@ -136,7 +154,6 @@ module.exports = function (app) {
 *         description: Bad username, not found in db
 *       500:
 *         description: something error on system
-
 */
   app.delete("/api/faq/:id", [authJwt.verifyToken], controller.deleteFaq);
 };

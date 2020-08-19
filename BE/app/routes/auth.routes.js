@@ -10,6 +10,54 @@ module.exports = function(app) {
     next();
   });
 
+  
+  /**
+* @swagger
+* /api/auth/signup:
+
+*   post:
+*     tags:
+*       - Authentication
+*     name: Authentication
+*     summary: Register User
+*     consumes:
+*       - application/json
+*     parameters:
+*       - name: request
+*         in : body
+*         type: object
+*         schema:
+*           $ref: '#/definitions/Auth'
+*           type: object
+*           properties:
+*             username:
+*               type: string
+*             email:
+*               type: string
+*             password:
+*               type: string
+*               format: password
+*         required:
+*           - username
+*           - password
+*     responses:
+*       200:
+*         description: User found and logged in successfully
+*       401:
+*         description: Bad username, not found in db
+*       500:
+*         description: something error on system
+*   definitions:
+*   inBody:
+*       type: object
+*       properties:
+*           username:
+*               type: string
+*               example: Daytch
+*           password:
+*               type: string
+*               example: 123
+*/
   app.post(
     "/api/auth/signup",
     [
@@ -19,5 +67,51 @@ module.exports = function(app) {
     controller.signup
   );
 
+
+  /**
+* @swagger
+* /api/auth/signin:
+
+*   post:
+*     tags:
+*       - Authentication
+*     name: Authentication
+*     summary: Log In to application
+*     consumes:
+*       - application/json
+*     parameters:
+*       - name: request
+*         in : body
+*         type: object
+*         schema:
+*           $ref: '#/definitions/Auth'
+*           type: object
+*           properties:
+*             username:
+*               type: string
+*             password:
+*               type: string
+*               format: password
+*         required:
+*           - username
+*           - password
+*     responses:
+*       200:
+*         description: User found and logged in successfully
+*       401:
+*         description: Bad username, not found in db
+*       500:
+*         description: something error on system
+*   definitions:
+*   inBody:
+*       type: object
+*       properties:
+*           username:
+*               type: string
+*               example: Daytch
+*           password:
+*               type: string
+*               example: 123
+*/
   app.post("/api/auth/signin", controller.signin);
 };

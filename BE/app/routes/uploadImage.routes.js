@@ -1,5 +1,5 @@
 
-
+const { authJwt } = require("../middlewares");
 const controller = require("../controllers/uploadImage.Controller");
 
 
