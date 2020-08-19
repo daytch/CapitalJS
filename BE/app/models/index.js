@@ -14,6 +14,7 @@ db.blogCategory = require("./blogCategory.model");
 db.blog = require('./blog.model');
 db.branch = require('./branch.model');
 db.faq = require('./faq.model');
+db.applicant = require('./faq.applicant');
 
 db.ROLES = ["user", "admin", "moderator"];
 
