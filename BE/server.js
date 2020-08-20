@@ -88,6 +88,7 @@ require("./app/routes/blogCategory.routes")(app);
 require("./app/routes/blog.routes")(app);
 require("./app/routes/branch.routes")(app);
 require("./app/routes/faq.routes")(app);
+require("./app/routes/career.routes")(app);
 
 
 

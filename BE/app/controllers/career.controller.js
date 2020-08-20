@@ -53,7 +53,7 @@ exports.updateCareer = (req, res) => {
   req.body.modified = new Date();
   req.body.modifiedby = req.userId;
   const item = req.body;
-  
+
   Career.updateOne({ _id: itemId }, { $set: item }, (err, result) => {
     if (err) {
       res.status(500).send({ message: err });

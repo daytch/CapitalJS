@@ -93,7 +93,7 @@ module.exports = function (app) {
 
    /**
 * @swagger
-* /api/faq/:
+* /api/faq/{id}:
 *   put:
 *     tags:
 *       - FAQ
@@ -105,7 +105,7 @@ module.exports = function (app) {
 *       - name: x-access-token
 *         in: header
 *       - name: id
-*         in: query
+*         in: path
 *       - name: request
 *         in : body
 *         type: object
@@ -134,7 +134,7 @@ module.exports = function (app) {
 
   /**
 * @swagger
-* /api/faq/:
+* /api/faq/{id}:
 *   delete:
 *     tags:
 *       - FAQ
@@ -146,7 +146,7 @@ module.exports = function (app) {
 *       - name: x-access-token
 *         in: header
 *       - name: id
-*         in: query
+*         in: path
 *     responses:
 *       200:
 *         description: User found and logged in successfully
