@@ -32,7 +32,7 @@ module.exports = function(app){
 
 
 *         schema:
-*           "$ref": "#/definitions/inBody"
+*           "$ref": "#/definitions/branchLoad"
 
 *     responses:
 *       200:
@@ -42,7 +42,7 @@ module.exports = function(app){
 *       500:
 *         description: something error on system
 *definitions:
-*   inBody:
+*   branchLoad:
 *       type: object
 *       properties:
 *           _id:
@@ -73,7 +73,7 @@ app.post("/api/branch/load",[authJwt.verifyToken], controller.load);
 
 
 *         schema:
-*           "$ref": "#/definitions/inBody"
+*           "$ref": "#/definitions/branch"
 
 *     responses:
 *       200:
@@ -83,12 +83,15 @@ app.post("/api/branch/load",[authJwt.verifyToken], controller.load);
 *       500:
 *         description: something error on system
 *definitions:
-*   inBody:
+*   branch:
 *       type: object
 *       properties:
 *           _id:
 *               type: string
 *               example: 5f1c548bf377ad2b40d5b1a5
+*           name: 
+*               type: string
+*               example: branch a
 *           telephone:
 *               type: string
 *               example: 081123321180
@@ -128,7 +131,7 @@ app.post("/api/branch/save",[authJwt.verifyToken], controller.save);
 
 
 *         schema:
-*           "$ref": "#/definitions/inBody"
+*           "$ref": "#/definitions/branchLoad"
 
 *     responses:
 *       200:
@@ -137,13 +140,7 @@ app.post("/api/branch/save",[authJwt.verifyToken], controller.save);
 *         description: Bad username, not found in db
 *       500:
 *         description: something error on system
-*definitions:
-*   inBody:
-*       type: object
-*       properties:
-*           _id:
-*               type: string
-*               example: 5f1c548bf377ad2b40d5b1a5
+
 */
 app.post("/api/branch/delete",[authJwt.verifyToken], controller.delete);
 

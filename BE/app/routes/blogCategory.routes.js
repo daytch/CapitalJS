@@ -34,7 +34,7 @@ module.exports = function(app){
 
 
 *         schema:
-*           "$ref": "#/definitions/inBody"
+*           "$ref": "#/definitions/blogCategoryLoad"
 
 *     responses:
 *       200:
@@ -44,7 +44,7 @@ module.exports = function(app){
 *       500:
 *         description: something error on system
 *definitions:
-*   inBody:
+*   blogCategoryLoad:
 *       type: object
 *       properties:
 *           _id:
@@ -75,7 +75,7 @@ app.post("/api/blogcategory/load", controller.load);
 
 
 *         schema:
-*           "$ref": "#/definitions/inBody"
+*           "$ref": "#/definitions/blogCategorySave"
 
 *     responses:
 *       200:
@@ -85,7 +85,7 @@ app.post("/api/blogcategory/load", controller.load);
 *       500:
 *         description: something error on system
 *definitions:
-*   inBody:
+*   blogCategorySave:
 *       type: object
 *       properties:
 *           _id:
@@ -122,7 +122,7 @@ app.post("/api/blogcategory/save",[authJwt.verifyToken], controller.save);
 
 
 *         schema:
-*           "$ref": "#/definitions/inBody"
+*           "$ref": "#/definitions/blogCategoryLoad"
 
 *     responses:
 *       200:
@@ -131,13 +131,7 @@ app.post("/api/blogcategory/save",[authJwt.verifyToken], controller.save);
 *         description: Bad username, not found in db
 *       500:
 *         description: something error on system
-*definitions:
-*   inBody:
-*       type: object
-*       properties:
-*           _id:
-*               type: string
-*               example: 5f1c548bf377ad2b40d5b1a5
+
 */
 app.post("/api/blogcategory/delete",[authJwt.verifyToken], controller.delete);
 

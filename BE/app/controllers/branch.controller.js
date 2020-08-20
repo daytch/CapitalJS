@@ -10,6 +10,7 @@ exports.save = (req, res)=>{
    if(null !=req.body._id && req.body._id != ""){
        var branch = new Branch();
        branch._id = req.body._id;
+       branch.Name = req.name;
        branch.Telephone = req.body.telephone;
        branch.Address = req.body.address;
        branch.Maps = req.body.maps;
@@ -33,7 +34,7 @@ exports.save = (req, res)=>{
         else{
             
             var branch = new Branch();
-       
+            branch.Name = req.body.name;
             branch.Telephone = req.body.telephone;
             branch.Address = req.body.address;
             branch.Maps = req.body.maps;

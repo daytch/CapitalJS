@@ -33,7 +33,7 @@ module.exports = function(app){
 
 
 *         schema:
-*           "$ref": "#/definitions/inBody"
+*           "$ref": "#/definitions/sliderLoad"
 
 *     responses:
 *       200:
@@ -43,7 +43,7 @@ module.exports = function(app){
 *       500:
 *         description: something error on system
 *definitions:
-*   inBody:
+*   sliderLoad:
 *       type: object
 *       properties:
 *           _id:
@@ -71,7 +71,7 @@ app.post("/api/sliderWebsite/load", controller.load);
 *         in : body
 *         type: object
 *         schema:
-*           "$ref": "#/definitions/inBody"
+*           "$ref": "#/definitions/sliderSave"
 *     responses:
 *       200:
 *         description: User found and logged in successfully
@@ -80,7 +80,7 @@ app.post("/api/sliderWebsite/load", controller.load);
 *       500:
 *         description: something error on system
 *definitions:
-*   inBody:
+*   sliderSave:
 *       type: object
 *       properties:
 *           _id:
@@ -88,7 +88,7 @@ app.post("/api/sliderWebsite/load", controller.load);
 *               example: 5f1c548bf377ad2b40d5b1a5
 *           picture: 
 *               type: string 
-*               example: http://www/image.google.com
+*               example: http://www.image.google.com
 *           description:
 *               type: string 
 *               example: Uang Panas 
@@ -118,7 +118,7 @@ app.post("/api/sliderWebsite/save",[authJwt.verifyToken], controller.save);
 *         in : body
 *         type: object
 *         schema:
-*           "$ref": "#/definitions/inBody"
+*           "$ref": "#/definitions/sliderLoad"
 
 *     responses:
 *       200:
@@ -127,13 +127,7 @@ app.post("/api/sliderWebsite/save",[authJwt.verifyToken], controller.save);
 *         description: Bad username, not found in db
 *       500:
 *         description: something error on system
-*definitions:
-*   inBody:
-*       type: object
-*       properties:
-*           _id:
-*               type: string
-*               example: 5f1c548bf377ad2b40d5b1a5
+
 */
 
 app.post("/api/sliderWebsite/delete",[authJwt.verifyToken], controller.delete);

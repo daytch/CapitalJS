@@ -33,7 +33,7 @@ module.exports = function(app){
 
 
 *         schema:
-*           "$ref": "#/definitions/inBody"
+*           "$ref": "#/definitions/blogLoad"
 
 *     responses:
 *       200:
@@ -43,14 +43,14 @@ module.exports = function(app){
 *       500:
 *         description: something error on system
 *definitions:
-*   inBody:
+*   blogLoad:
 *       type: object
 *       properties:
 *           _id:
 *               type: string
 *               example: 5f1c548bf377ad2b40d5b1a5
 */
-app.get("/api/blog/load",[authJwt.verifyToken], controller.load);
+// app.get("/api/blog/load",[authJwt.verifyToken], controller.load);
 app.post("/api/blog/load",[authJwt.verifyToken], controller.load);
 
  /**
@@ -71,7 +71,7 @@ app.post("/api/blog/load",[authJwt.verifyToken], controller.load);
 *         in : body
 *         type: object
 *         schema:
-*           "$ref": "#/definitions/inBody"
+*           "$ref": "#/definitions/blogSave"
 *     responses:
 *       200:
 *         description: User found and logged in successfully
@@ -80,7 +80,7 @@ app.post("/api/blog/load",[authJwt.verifyToken], controller.load);
 *       500:
 *         description: something error on system
 *definitions:
-*   inBody:
+*   blogSave:
 *       type: object
 *       properties:
 *           _id:
@@ -124,7 +124,7 @@ app.post("/api/blog/save",[authJwt.verifyToken], controller.save);
 *         in : body
 *         type: object
 *         schema:
-*           "$ref": "#/definitions/inBody"
+*           "$ref": "#/definitions/blogLoad"
 *     responses:
 *       200:
 *         description: User found and logged in successfully
@@ -133,7 +133,7 @@ app.post("/api/blog/save",[authJwt.verifyToken], controller.save);
 *       500:
 *         description: something error on system
 *definitions:
-*   inBody:
+*   blogLoad:
 *       type: object
 *       properties:
 *           _id:

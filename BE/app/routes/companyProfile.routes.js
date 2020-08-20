@@ -32,7 +32,7 @@ module.exports = function(app) {
 
 
 *         schema:
-*           "$ref": "#/definitions/inBody"
+*           "$ref": "#/definitions/companyProfileSave"
 
 *     responses:
 *       200:
@@ -42,7 +42,7 @@ module.exports = function(app) {
 *       500:
 *         description: something error on system
 *definitions:
-*   inBody:
+*   companyProfileSave:
 *       type: object
 *       properties:
 *           _id:
