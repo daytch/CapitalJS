@@ -34,12 +34,16 @@ module.exports = function(app) {
 *               type: string
 *             email:
 *               type: string
+*             telp:
+*               type: string
 *             password:
 *               type: string
 *               format: password
 *         required:
 *           - username
 *           - password
+*           - telp
+*           - email
 *     responses:
 *       200:
 *         description: User found and logged in successfully
@@ -57,6 +61,12 @@ module.exports = function(app) {
 *           password:
 *               type: string
 *               example: 123
+*           email:
+*               type: string
+*               example: me@nurulhidayat.com
+*           telp:
+*               type: string
+*               example: 0858 6666 1326
 */
   app.post(
     "/api/auth/signup",
