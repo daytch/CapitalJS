@@ -1,25 +1,33 @@
 import {
-  SET_COMPANYPROFILE_LOADING,
-  SET_COMPANYPROFILE_DATA
+  SET_BLOG_LOADING,
+  SET_BLOG_GRIDDATA,
+  SET_BLOGCATEGORY
 } from '../../constants';
 
 const INIT_STATE = {
   isLoading: false,
-  data: null
+  griddata: [],
+  categories: []
 };
 
 export default (state = INIT_STATE, action) => {
   switch (action.type) {
-    case SET_COMPANYPROFILE_LOADING: {
+    case SET_BLOG_LOADING: {
       return {
         ...state,
         isLoading: action.payload
       };
     }
-    case SET_COMPANYPROFILE_DATA: {
+    case SET_BLOG_GRIDDATA: {
       return {
         ...state,
-        data: action.payload
+        griddata: action.payload
+      };
+    }
+    case SET_BLOGCATEGORY: {
+      return {
+        ...state,
+        categories: action.payload
       };
     }
     default:

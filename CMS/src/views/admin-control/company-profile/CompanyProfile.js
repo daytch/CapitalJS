@@ -14,19 +14,15 @@ import {
   CFormText,
   CLabel
 } from '@coreui/react'
-import CKEditor from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import {Editor} from '../../../components';
 
 import {companyProfileAction} from '../../../redux/actions';
+import {UploadImage} from '../../../services';
 
-const editorConfiguration = {
-  ckfinder: {
-    uploadUrl: 'https://ashiap.com'
-  }
-};
-
-const CompanyProfile = ({companyProfile, companyProfileSubmit, ...props}) => {
+const CompanyProfile = ({companyProfile, companyProfileSubmit, getCompanyProfile, ...props}) => {
+  const firstLoad = React.useRef(true)
   const [form, setForm] = React.useState({
+    id: "",
     profile: "",
     tagline: "",
     email: "",
@@ -37,6 +33,24 @@ const CompanyProfile = ({companyProfile, companyProfileSubmit, ...props}) => {
     twitter: "",
     logo: ""
   })
+
+  React.useEffect(() => {
+    getCompanyProfile()
+  }, [])
+
+  React.useEffect(() => {
+    if(companyProfile.data !==null){
+      console.log(companyProfile.data)
+      setForm({...companyProfile.data})
+    }
+  }, [companyProfile.data])
+
+  React.useEffect(() => {
+    if(firstLoad.current && companyProfile.data !== null){
+      firstLoad.current = false;
+    }
+  }, [form])
+
   const handleChange = (attr, val) => {
     setForm({
       ...form,
@@ -45,6 +59,13 @@ const CompanyProfile = ({companyProfile, companyProfileSubmit, ...props}) => {
   }
   const handleUpdate = () => {
     companyProfileSubmit(form)
+  }
+  const handleLogoChange = (e) => {
+    if(e.target.files.length){
+      UploadImage(e.target.files[0], (data) => {
+        handleChange("logo", data);
+      })
+    }
   }
   return (
     <CRow>
@@ -57,24 +78,14 @@ const CompanyProfile = ({companyProfile, companyProfileSubmit, ...props}) => {
                   <CLabel htmlFor="cp-email">Profile</CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
-                  <CKEditor
-                    editor={ ClassicEditor }
-                    config={editorConfiguration}
-                    data="<p>Hello from CKEditor 5!</p>"
-                    onInit={ editor => {
-                        // You can store the "editor" and use when it is needed.
-                        console.log( 'Editor is ready to use!', editor );
-                    } }
+                  <Editor
+                    data={form.profile}
                     onChange={ ( event, editor ) => {
+                      if(!firstLoad.current){
                         const data = editor.getData();
-                        console.log( { event, editor, data } );
-                    } }
-                    onBlur={ ( event, editor ) => {
-                        console.log( 'Blur.', editor );
-                    } }
-                    onFocus={ ( event, editor ) => {
-                        console.log( 'Focus.', editor );
-                    } }
+                        handleChange("profile", data);
+                      }
+                    }}
                   />
                   {/* <CInput type="text" id="cp-profile" value={form.profile} onChange={(e) => handleChange("profile", e.target.value)} name="cp-profile" placeholder="Enter Profile..." autoComplete="profile" /> */}
                 </CCol>
@@ -140,10 +151,21 @@ const CompanyProfile = ({companyProfile, companyProfileSubmit, ...props}) => {
                   <CLabel>Logo</CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
-                  <CInputFile custom id="cp-logo"/>
-                  <CLabel htmlFor="cp-logo" variant="custom-file" className="cp_inputfile">
-                    Choose file...
-                  </CLabel>
+                  <div>
+                    {
+                      form.logo && (
+                        <div>
+                          <img className="preview_image" src={form.logo} />
+                        </div>
+                      )
+                    }
+                    <div style={{position: "relative"}}>
+                      <CInputFile custom id="cp-logo" onChange={(e) => handleLogoChange(e)}/>
+                      <CLabel htmlFor="cp-logo" variant="custom-file">
+                        Choose file...
+                      </CLabel>
+                    </div>
+                  </div>
                 </CCol>
               </CFormGroup>
             </CForm>

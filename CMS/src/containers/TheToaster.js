@@ -6,8 +6,14 @@ import {
   CToastHeader,
   CToastBody
 } from '@coreui/react'
+import {globalAction} from '../redux/actions';
 
-const TheToaster = ({global, ...props}) => {
+const areEqual = (prevProps, nextProps) => {
+  var equal = prevProps.global.counter === nextProps.global.counter;
+  return equal;
+}
+
+const TheToaster = React.memo(({global, ...props}) => {
   return (
     <div>
       {
@@ -33,10 +39,10 @@ const TheToaster = ({global, ...props}) => {
       }
     </div>
   )
-}
+}, areEqual)
 
 const mapStateToProps = state => ({
   global: state.globalReducer
 });
-const mapActionToProps = {};
+const mapActionToProps = globalAction;
 export default connect(mapStateToProps, mapActionToProps)(TheToaster);

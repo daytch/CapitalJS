@@ -1,20 +1,95 @@
-export const API_URL = 'https://api.capitalbakery.net/api';
+export const PROD = 'https://api.capitalbakery.net';
+export const DEV = 'http://localhost:8080';
+export const API_BASE_URL = DEV;
+export const API_URL = DEV + "/api";
 export const URL = {
-  DATA_HOME: API_URL + "/home",
-  COMPANYPROFILE_SUBMIT: API_URL + "/company-profile",
-  FAKE: "https://jsonplaceholder.typicode.com/todos"
+  FAKE: "https://jsonplaceholder.typicode.com/todos",
+  FAKE_POST: "https://jsonplaceholder.typicode.com/posts",
+  LOGIN: API_URL + "/auth/signin",
+  UPLOAD_IMAGE: API_URL + "/UploadImage/Save",
+  GET_SLIDERSTATUS_DROPDOWN: API_URL + "/masterstatus/sliderconfig",
+  GET_BRANCHSTATUS_DROPDOWN: API_URL + "/masterstatus/branchconfig",
+  GET_BLOGSTATUS_DROPDOWN: API_URL + "/masterstatus/blogconfig",
+  GET_COMPANYPROFILE_DATA: API_URL + "/companyprofile/loadconfig",
+  GET_SLIDERWEBSITE_GRIDDATA: API_URL + "/sliderwebsite/load",
+  GET_OUTLETLOCATION_GRIDDATA: API_URL + "/branch/load",
+  GET_FAQ_GRIDDATA: API_URL + "/faq",
+  GET_BLOG_GRIDDATA: API_URL + "/blog/load",
+  GET_BLOGCATEGORY: API_URL + "/blogcategory/load",
+  SAVE_COMPANYPROFILE: API_URL + "/companyprofile/save",
+  SAVE_SLIDERWEBSITE: API_URL + "/sliderwebsite/save",
+  SAVE_OUTLETLOCATION: API_URL + "/branch/save",
+  SAVE_FAQ: API_URL + "/faq",
+  SAVE_BLOG: API_URL + "/blog/save",
+  SAVE_BLOGCATEGORY: API_URL + "/blogcategory/save",
+  UPDATE_FAQ: API_URL + "/faq/",
+  DELETE_SLIDERWEBSITE: API_URL + "/sliderwebsite/delete",
+  DELETE_FAQ: API_URL + "/faq/",
+  DELETE_BLOG: API_URL + "/blog/delete",
+  DELETE_BLOGCATEGORY: API_URL + "/blogcategory/delete",
 }
 
 export const SET_TOASTMESSAGE = 'SET_TOASTMESSAGE';
+
+// Login
 export const HANDLE_LOGIN = 'HANDLE_LOGIN';
+export const SET_LOGIN_LOADING = 'SET_LOGIN_LOADING';
+
+// Company Profile
 export const HANDLE_COMPANYPROFILE_SUBMIT = 'HANDLE_COMPANYPROFILE_SUBMIT';
+export const GET_COMPANYPROFILE_DATA = 'GET_COMPANYPROFILE_DATA';
+export const SET_COMPANYPROFILE_DATA = 'SET_COMPANYPROFILE_DATA';
 export const SET_COMPANYPROFILE_LOADING = 'SET_COMPANYPROFILE_LOADING';
+
+// Outlet Location
+export const SET_OUTLETLOCATION_GRIDDATA = 'SET_OUTLETLOCATION_GRIDDATA';
+export const SET_OUTLETLOCATION_LOADING = 'SET_OUTLETLOCATION_LOADING';
+export const GET_OUTLETLOCATION_GRIDDATA = 'GET_OUTLETLOCATION_GRIDDATA';
+export const CREATE_OUTLETLOCATION = 'CREATE_OUTLETLOCATION';
+export const UPDATE_OUTLETLOCATION = 'UPDATE_OUTLETLOCATION';
+export const DELETE_OUTLETLOCATION = 'DELETE_OUTLETLOCATION';
+
+// FAQ
+export const SET_FAQ_GRIDDATA = 'SET_FAQ_GRIDDATA';
+export const SET_FAQ_LOADING = 'SET_FAQ_LOADING';
+export const GET_FAQ_GRIDDATA = 'GET_FAQ_GRIDDATA';
+export const CREATE_FAQ = 'CREATE_FAQ';
+export const UPDATE_FAQ = 'UPDATE_FAQ';
+export const DELETE_FAQ = 'DELETE_FAQ';
+
+// Blog and Blog Category
+export const SET_BLOG_GRIDDATA = 'SET_BLOG_GRIDDATA';
+export const SET_BLOGCATEGORY = 'SET_BLOGCATEGORY';
+export const SET_BLOG_LOADING = 'SET_BLOG_LOADING';
+export const GET_BLOG_GRIDDATA = 'GET_BLOG_GRIDDATA';
+export const GET_BLOGCATEGORY = 'GET_BLOGCATEGORY';
+export const CREATE_BLOG = 'CREATE_BLOG';
+export const CREATE_BLOGCATEGORY = 'CREATE_BLOGCATEGORY';
+export const UPDATE_BLOG = 'UPDATE_BLOG';
+export const UPDATE_BLOGCATEGORY = 'UPDATE_BLOGCATEGORY';
+export const DELETE_BLOG = 'DELETE_BLOG';
+export const DELETE_BLOGCATEGORY = 'DELETE_BLOGCATEGORY';
+
+// Slider Website
+export const SET_SLIDERWEBSITE_GRIDDATA = 'SET_SLIDERWEBSITE_GRIDDATA';
+export const SET_SLIDERWEBSITE_LOADING = 'SET_SLIDERWEBSITE_LOADING';
+export const GET_SLIDERWEBSITE_GRIDDATA = 'GET_SLIDERWEBSITE_GRIDDATA';
+export const SAVE_SLIDERWEBSITE = 'SAVE_SLIDERWEBSITE';
+export const DELETE_SLIDERWEBSITE = 'DELETE_SLIDERWEBSITE';
+
+// Dropdown
+export const GET_SLIDERSTATUS_DROPDOWN = 'GET_SLIDERSTATUS_DROPDOWN';
+export const GET_BRANCHSTATUS_DROPDOWN = 'GET_BRANCHSTATUS_DROPDOWN';
+export const GET_BLOGSTATUS_DROPDOWN = 'GET_BLOGSTATUS_DROPDOWN';
+export const SET_SLIDERSTATUS_DROPDOWN = 'SET_SLIDERSTATUS_DROPDOWN';
+export const SET_BRANCHSTATUS_DROPDOWN = 'SET_BRANCHSTATUS_DROPDOWN';
+export const SET_BLOGSTATUS_DROPDOWN = 'SET_BLOGSTATUS_DROPDOWN';
 
 export const BASE_URL = process.env.REACT_APP_BASENAME || "/";
 
 // utils
 export const DEBOUNCE_LOADING_TIME = 750;
-export const TOAST_AUTOHIDE = 4000;
+export const TOAST_AUTOHIDE = 1500;
 export const TOAST_POSITION = "top-center";
 
 // API
