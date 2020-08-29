@@ -1,18 +1,14 @@
 const mongoose = require('mongoose');
 
-const Branch = mongoose.model(
-    'Branch',
+const ProductCategory = mongoose.model(
+    'ProductCategory',
     new mongoose.Schema({
         Name: String,
-        Telephone: String,
-        Address: String,
-        Maps: String,
         MasterStatusID:
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'MasterStatus'
         },
-        Picture:String,
         Created: Date,
         CreatedBy: String,
         Modified: Date,
@@ -21,4 +17,4 @@ const Branch = mongoose.model(
     })
 );
 
-module.exports = Branch;
+module.exports = ProductCategory;

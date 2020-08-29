@@ -16,6 +16,8 @@ db.branch = require('./branch.model');
 db.faq = require('./faq.model');
 db.applicant = require('./applicant.model');
 db.career = require('./career.model');
+db.productCategory = require('./productCategory.model');
+db.product = require('./product.model');
 
 db.ROLES = ["user", "admin", "moderator"];
 

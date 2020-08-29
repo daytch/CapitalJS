@@ -10,7 +10,7 @@ const SliderWebsite = db.sliderWebsite;
 
 
 exports.save = (req, res)=>{
-   if(null !=req.body._id && req.body._id != ""){
+   if(null !=req.body.id && req.body.id != ""){
        var sliderWebsite = new SliderWebsite();
        sliderWebsite._id = req.body.id;
        sliderWebsite.Picture = req.body.picture;
@@ -19,7 +19,7 @@ exports.save = (req, res)=>{
        sliderWebsite.Modified = Date.now();
        sliderWebsite.ModifiedBy = req.userId;
 
-        sliderWebsite.findOneAndUpdate({_id: req.body._id}, sliderWebsite, {new :false, userfindAndModify:false},
+        SliderWebsite.updateOne({_id: req.body.id}, sliderWebsite, {new :false, userfindAndModify:false},
             (err, sliderWebsite)=>{
                 if (err) {
                     return res.status(500).send({message:err, isError:1});
@@ -29,7 +29,7 @@ exports.save = (req, res)=>{
                 }
             });
             // const sliderWebsite = new SliderWebsite({
-            //             _id : req.body._id,
+            //             _id : req.body.id,
             //             Picture : req.body.picture,
             //             Description: req.body.description,
             //             MasterStatus:push(req.body.masterStatus),
@@ -43,7 +43,7 @@ exports.save = (req, res)=>{
             //             CreatedBy: req.body.username,
             //             RowStatus: true
             //         });
-            //         sliderWebsite.findOneAndUpdate({_id:req.body._id}, sliderWebsite, {new :false, useFindAndModify:false},
+            //         sliderWebsite.findOneAndUpdate({_id:req.body.id}, sliderWebsite, {new :false, useFindAndModify:false},
             //             (err, sliderWebsite)=>{
             //                 if (err) {
             //                     res.status(500).send({Message :err});
@@ -102,17 +102,38 @@ exports.save = (req, res)=>{
 
 
 exports.load = (req, res)=>{
-    SliderWebsite.find({RowStatus: true},(err, sliderWebsite)=>{
-                if (err) {
-                    return res.status(200).send({message: "Error, Data is Not Found", isError:1});
-                }
-                else  {
-                    return res.status(200).send({sliderWebsite, isError:0});
-                }
-            //    else{
-            //     return res.status(200).send({Message: "Data is Not Found"});
-            //    }
-           });
+    if (req.body.id != null && req.body.id != "") {
+        SliderWebsite.find({_id:req.body.id, RowStatus:true}, (err, result) => {
+            if (err) {
+                return res.status(500).send({ message: "Error, Data is Not Found" ,  isError: 1});
+            }
+            else {
+                return res.status(200).send({result, isError: 0});
+            }
+        });
+    }
+    else {
+        SliderWebsite.find({ RowStatus: true }, (err, result) => {
+            if (err) {
+                return res.status(500).send({ message: "Error, Data is Not Found", isError: 1 });
+            }
+            else  {
+                return res.status(200).send({result, isError: 0});
+            }
+           
+        });
+    }
+    // SliderWebsite.find({RowStatus: true},(err, sliderWebsite)=>{
+    //             if (err) {
+    //                 return res.status(200).send({message: "Error, Data is Not Found", isError:1});
+    //             }
+    //             else  {
+    //                 return res.status(200).send({sliderWebsite, isError:0});
+    //             }
+    //         //    else{
+    //         //     return res.status(200).send({Message: "Data is Not Found"});
+    //         //    }
+    //        });
     // CompanyProfile.find({}, (err, companyProfile)=>{
     //     if (err) {
     //         return res.status(500).send("Opps, Error while load Company Profile");
@@ -126,13 +147,16 @@ exports.load = (req, res)=>{
 
 exports.delete = (req,res)=>{
 
-    var sliderWebsite = new SliderWebsite();
-    sliderWebsite._id = req.body.id
-    sliderWebsite.Modified = Date.now();
-    sliderWebsite.ModifiedBy = req.userId;
-    sliderWebsite.RowStatus = false;
+    const sliderWebsite = {
+        Modified: Date.now(),
+        ModifiedBy: req.userId,
+        RowStatus: false
+    }
+    // sliderWebsite.Modified = Date.now();
+    // sliderWebsite.ModifiedBy = req.userId;
+    // sliderWebsite.RowStatus = false;
 
-    // sliderWebsite.findOneAndUpdate({_id: req.body._id}, sliderWebsite, {new :false, userfindAndModify:false},
+    // sliderWebsite.findOneAndUpdate({_id: req.body.id}, sliderWebsite, {new :false, userfindAndModify:false},
     //     (err, sliderWebsite)=>{
     //         if (err) {
     //             return res.status(500).send({message:err});
@@ -141,7 +165,7 @@ exports.delete = (req,res)=>{
     //             return res.status(200).send({message: "Delete Sucess"});
     //         }
     //     });
-    SliderWebsite.findByIdAndUpdate( req.body.id,sliderWebsite, {useFindAndModify:false},
+    SliderWebsite.update( {_id: {$in : req.body.id}}, {$set : sliderWebsite}, {useFindAndModify:false},
         
         (err)=>{
             if (err) {

@@ -12,11 +12,145 @@ module.exports = function(app) {
     next();
   });
 
-  app.post("/api/masterstatus/sliderconfig", [authJwt.verifyToken],controller.SliderConfig);
+/**
+* @swagger
+* /api/masterstatus/sliderconfig:
+*   get:
+*     tags:
+*       - Master Status
+*     name: Slider Config
+*     summary: Load Slider Config 
+*     description: Load Slider Config  
+*     consumes:
+*       - application/json
+*     parameters:
+*       - name: x-access-token
+*         in: header
+*         schema:
+*           type: string         
+*     responses:
+*       200:
+*         description: User found and logged in successfully
+*       401:
+*         description: Bad username, not found in db
+*       500:
+*         description: something error on system
+
+*/  
+  app.get("/api/masterstatus/sliderconfig",[authJwt.verifyToken],controller.SliderConfig);
+
+  /**
+* @swagger
+* /api/masterstatus/blogconfig:
+*   get:
+*     tags:
+*       - Master Status
+*     name: Blog Config
+*     summary: Load Blog Config 
+*     description: Load Blog Config  
+*     consumes:
+*       - application/json
+*     parameters:
+*       - name: x-access-token
+*         in: header
+*         schema:
+*           type: string
+*     responses:
+*       200:
+*         description: User found and logged in successfully
+*       401:
+*         description: Bad username, not found in db
+*       500:
+*         description: something error on system
+
+*/  
 
   app.get("/api/masterstatus/blogconfig",[authJwt.verifyToken], controller.BlogConfig);
 
+   /**
+* @swagger
+* /api/masterstatus/branchconfig:
+*   get:
+*     tags:
+*       - Master Status
+*     name: Branch Config
+*     summary: Load Branch Config 
+*     description: Load Branch Config  
+*     consumes:
+*       - application/json
+*     parameters:
+*       - name: x-access-token
+*         in: header
+*         schema:
+*           type: string
+*     responses:
+*       200:
+*         description: User found and logged in successfully
+*       401:
+*         description: Bad username, not found in db
+*       500:
+*         description: something error on system
+
+*/  
+
   app.get("/api/masterstatus/branchconfig",[authJwt.verifyToken], controller.BranchConfig);
+
+   /**
+* @swagger
+* /api/masterstatus/productconfig:
+*   get:
+*     tags:
+*       - Master Status
+*     name: Product Config
+*     summary: Load Product Config 
+*     description: Load Product Config  
+*     consumes:
+*       - application/json
+*     parameters:
+*       - name: x-access-token
+*         in: header
+*         schema:
+*           type: string
+*     responses:
+*       200:
+*         description: User found and logged in successfully
+*       401:
+*         description: Bad username, not found in db
+*       500:
+*         description: something error on system
+
+*/  
+
+app.get("/api/masterstatus/productconfig",[authJwt.verifyToken], controller.ProductConfig);
+
+   /**
+* @swagger
+* /api/masterstatus/productcategoryconfig:
+*   get:
+*     tags:
+*       - Master Status
+*     name: Product Category Config
+*     summary: Load Product Category Config 
+*     description: Load Product Category Config  
+*     consumes:
+*       - application/json
+*     parameters:
+*       - name: x-access-token
+*         in: header
+*         schema:
+*           type: string
+*     responses:
+*       200:
+*         description: User found and logged in successfully
+*       401:
+*         description: Bad username, not found in db
+*       500:
+*         description: something error on system
+
+*/  
+
+app.get("/api/masterstatus/productcategoryconfig",[authJwt.verifyToken], controller.ProductCategoryConfig);
+
   // app.post("/api/masterStatus/SaveConfig", controller.SaveConfig);
 
   

@@ -7,10 +7,10 @@ const Branch = db.branch;
 
 
 exports.save = (req, res)=>{
-   if(null !=req.body._id && req.body._id != ""){
+   if(null !=req.body.id && req.body.id != ""){
        var branch = new Branch();
-       branch._id = req.body._id;
-       branch.Name = req.name;
+       branch._id = req.body.id;
+       branch.Name = req.body.name;
        branch.Telephone = req.body.telephone;
        branch.Address = req.body.address;
        branch.Maps = req.body.maps;
@@ -20,8 +20,8 @@ exports.save = (req, res)=>{
        branch.Modified = Date.now();
        branch.ModifiedBy = req.userId;
 
-       Branch.findOneAndUpdate({_id: req.body._id}, branch, {new :false, userfindAndModify:false},
-            (err, sliderWebsite)=>{
+       Branch.updateOne( {_id: req.body.id}, {$set : branch}, {useFindAndModify:false},
+            (err)=>{
                 if (err) {
                     return res.status(500).send({message:err, isError:1});
                 }
@@ -60,44 +60,65 @@ exports.save = (req, res)=>{
 
 
 exports.load = (req, res)=>{
-    if (req.body._id != null && req.body._id != "") {
-        Branch.findById(req.body._id,(err, result)=>{
+    if (req.body.id != null && req.body.id != "") {
+        Branch.find({_id:req.body.id, RowStatus:true}, (err, result) => {
             if (err) {
-                return res.status(500).send({message: "Error, Data is Not Found", isError:1});
+                return res.status(500).send({ message: "Error, Data is Not Found" ,  isError: 1});
             }
             else {
-                return res.status(200).send({result, isError:0});
+                return res.status(200).send({result, isError: 0});
             }
-        // else{
-        //     return res.status(500).send({Message: "Data is Not Found"});
-        // }
-    });
+        });
     }
-    else
-    {
-        Branch.find({RowStatus: true},(err, result)=>{
-                    if (err) {
-                        return res.status(500).send({message: "Error, Data is Not Found", isError:1});
-                    }
-                    else {
-                        return res.status(200).send({result, isError:0});
-                    }
+    else {
+        Branch.find({ RowStatus: true }, (err, result) => {
+            if (err) {
+                return res.status(500).send({ message: "Error, Data is Not Found", isError: 1 });
+            }
+            else  {
+                return res.status(200).send({result, isError: 0});
+            }           
+        });
+    }
+    // if (req.body.id != null && req.body.id != "") {
+
+        
+    //     Branch.findById(req.body.id,(err, result)=>{
+    //         if (err) {
+    //             return res.status(500).send({message: "Error, Data is Not Found", isError:1});
+    //         }
+    //         else {
+    //             return res.status(200).send({result, isError:0});
+    //         }
+    //     // else{
+    //     //     return res.status(500).send({Message: "Data is Not Found"});
+    //     // }
+    // });
+    // }
+    // else
+    // {
+    //     Branch.find({RowStatus: true},(err, result)=>{
+    //                 if (err) {
+    //                     return res.status(500).send({message: "Error, Data is Not Found", isError:1});
+    //                 }
+    //                 else {
+    //                     return res.status(200).send({result, isError:0});
+    //                 }
                
-            });
-        }
+    //         });
+    //     }
  
 };
 
 
 
 exports.delete = (req,res)=>{
-
-    var branch = new Branch();
-    branch._id = req.body.id
-    branch.Modified = Date.now();
-    branch.ModifiedBy = req.userId;
-    branch.RowStatus = false;
-    Branch.findByIdAndUpdate( req.body.id,branch, {useFindAndModify:false},
+    const branch = {
+        Modified: Date.now(),
+        ModifiedBy: req.userId,
+        RowStatus: false
+    }
+    Branch.updateOne( {_id: req.body.id}, {$set : branch}, {useFindAndModify:false},
         
         (err)=>{
             if (err) {

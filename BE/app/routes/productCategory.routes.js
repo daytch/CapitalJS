@@ -1,5 +1,5 @@
 const { authJwt } = require("../middlewares");
-const controller = require("../controllers/branch.controller");
+const controller = require("../controllers/productCategory.controller");
 
 
 module.exports = function(app){
@@ -11,15 +11,17 @@ module.exports = function(app){
         next();
     });
 
+
+
     /**
 * @swagger
-* /api/branch/load:
+* /api/productCategory/load:
 
 *   post:
 *     tags:
-*       - Branch
+*       - Product Category
 *     name: Load
-*     summary: Load Branch
+*     summary: Load Product Category
 *     description:  ketika isinya {} atau object kosong maka akan load semua,<br> untuk load salah satu gunakan {"id" &#58; value}
 *     consumes:
 *       - application/json
@@ -32,7 +34,7 @@ module.exports = function(app){
 
 
 *         schema:
-*           "$ref": "#/definitions/branchLoad"
+*           "$ref": "#/definitions/productCategoryLoad"
 
 *     responses:
 *       200:
@@ -42,25 +44,24 @@ module.exports = function(app){
 *       500:
 *         description: something error on system
 *definitions:
-*   branchLoad:
+*   productCategoryLoad:
 *       type: object
 *       properties:
 *           id:
 *               type: string
 *               example: 5f1c548bf377ad2b40d5b1a5
 */
-app.get("/api/branch/load",[authJwt.verifyToken], controller.load);
-app.post("/api/branch/load",[authJwt.verifyToken], controller.load);
+app.post("/api/productCategory/load",[authJwt.verifyToken], controller.load);
 
    /**
 * @swagger
-* /api/branch/save:
+* /api/productCategory/save:
 
 *   post:
 *     tags:
-*       - Branch
+*       - Product Category
 *     name: Save
-*     summary: Save Branch
+*     summary: Save Product Category
 *     description: hilangkan "id" untuk save record baru 
 *     consumes:
 *       - application/json
@@ -73,7 +74,7 @@ app.post("/api/branch/load",[authJwt.verifyToken], controller.load);
 
 
 *         schema:
-*           "$ref": "#/definitions/branch"
+*           "$ref": "#/definitions/productCategorySave"
 
 *     responses:
 *       200:
@@ -83,43 +84,32 @@ app.post("/api/branch/load",[authJwt.verifyToken], controller.load);
 *       500:
 *         description: something error on system
 *definitions:
-*   branch:
+*   productCategorySave:
 *       type: object
 *       properties:
 *           id:
 *               type: string
 *               example: 5f1c548bf377ad2b40d5b1a5
-*           name: 
-*               type: string
-*               example: branch a
-*           telephone:
-*               type: string
-*               example: 081123321180
-*           address:
-*               type: string
-*               example: Sunter Agung
-*           maps:
-*               type: string
-*               example: https://www.google.com/
+*           name:
+*               type: string 
 *           masterStatusId:
 *               type: string
-*               example: 5f1c548bf377ad2b40d5b1a5
-*           picture:
-*               type: string
-*               example: https://www.google.com/
+*               example: 5f1c548bf37ead2240d5b1a5
 */
-app.post("/api/branch/save",[authJwt.verifyToken], controller.save);
 
-    /**
+app.post("/api/productCategory/save",[authJwt.verifyToken], controller.save);
+
+
+   /**
 * @swagger
-* /api/branch/delete:
+* /api/productCategory/delete:
 
 *   post:
 *     tags:
-*       - Branch
-*     name: Load
-*     summary: Delete Branch
-*     description:  Delete Branch
+*       - Product Category
+*     name: Delete
+*     summary: Delete Product Category
+*     description: Delete
 *     consumes:
 *       - application/json
 *     parameters:
@@ -131,7 +121,7 @@ app.post("/api/branch/save",[authJwt.verifyToken], controller.save);
 
 
 *         schema:
-*           "$ref": "#/definitions/branchLoad"
+*           "$ref": "#/definitions/productCategoryLoad"
 
 *     responses:
 *       200:
@@ -140,16 +130,8 @@ app.post("/api/branch/save",[authJwt.verifyToken], controller.save);
 *         description: Bad username, not found in db
 *       500:
 *         description: something error on system
-*definitions:
-*   branchDelete:
-*       type: object
-*       properties:
-*           id:
-*               type: array
-*               items:
-*                   type: string
-*               example: [5f1c548bf377ad2b40d5b1a5,5f1c548bf377ad2b40d5b1a5,5f1c548bf377ad2b40d5b1a5]
+
 */
-app.post("/api/branch/delete",[authJwt.verifyToken], controller.delete);
+app.post("/api/productcategory/delete",[authJwt.verifyToken], controller.delete);
 
 };

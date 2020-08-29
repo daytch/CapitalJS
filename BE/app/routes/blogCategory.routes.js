@@ -22,7 +22,7 @@ module.exports = function(app){
 *       - Blog Category
 *     name: Load
 *     summary: Load Blog Category
-*     description:  ketika isinya {} atau object kosong maka akan load semua,<br> untuk load salah satu gunakan {"_id" &#58; value}
+*     description:  ketika isinya {} atau object kosong maka akan load semua,<br> untuk load salah satu gunakan {"id" &#58; value}
 *     consumes:
 *       - application/json
 *     parameters:
@@ -47,12 +47,11 @@ module.exports = function(app){
 *   blogCategoryLoad:
 *       type: object
 *       properties:
-*           _id:
+*           id:
 *               type: string
 *               example: 5f1c548bf377ad2b40d5b1a5
 */
-app.get("/api/blogcategory/load",[authJwt.verifyToken], controller.load);
-app.post("/api/blogcategory/load", controller.load);
+app.post("/api/blogcategory/load",[authJwt.verifyToken], controller.load);
 
    /**
 * @swagger
@@ -63,7 +62,7 @@ app.post("/api/blogcategory/load", controller.load);
 *       - Blog Category
 *     name: Save
 *     summary: Save Blog Category
-*     description: hilangkan "_id" untuk save record baru 
+*     description: hilangkan "id" untuk save record baru 
 *     consumes:
 *       - application/json
 *     parameters:
@@ -88,7 +87,7 @@ app.post("/api/blogcategory/load", controller.load);
 *   blogCategorySave:
 *       type: object
 *       properties:
-*           _id:
+*           id:
 *               type: string
 *               example: 5f1c548bf377ad2b40d5b1a5
 *           name:

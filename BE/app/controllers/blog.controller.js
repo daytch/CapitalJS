@@ -10,9 +10,9 @@ const Blog = db.blog;
 
 
 exports.save = (req, res) => {
-    if (null != req.body._id && req.body._id != "") {
+    if (null != req.body.id && req.body.id != "") {
         var blog = new Blog();
-        blog._id = req.body._id;
+        blog._id = req.body.id;
         blog.BlogCategoryID = req.body.blogCategoryId;
         blog.Title = req.body.title;
         blog.Body = req.body.body;
@@ -22,7 +22,7 @@ exports.save = (req, res) => {
         blog.Modified = Date.now();
         blog.ModifiedBy = req.userId;
 
-        Blog.findOneAndUpdate({ _id: req.body._id }, blog, { new: false, userfindAndModify: false },
+        Blog.updateOne({ _id: req.body.id }, blog, { new: false, userfindAndModify: false },
             (err, sliderWebsite) => {
                 if (err) {
                     return res.status(500).send({ message: err, isError: 1 });
@@ -32,7 +32,7 @@ exports.save = (req, res) => {
                 }
             });
         // const sliderWebsite = new SliderWebsite({
-        //             _id : req.body._id,
+        //             id : req.body.id,
         //             Picture : req.body.picture,
         //             Description: req.body.description,
         //             MasterStatus:push(req.body.masterStatus),
@@ -46,7 +46,7 @@ exports.save = (req, res) => {
         //             CreatedBy: req.body.username,
         //             RowStatus: true
         //         });
-        //         sliderWebsite.findOneAndUpdate({_id:req.body._id}, sliderWebsite, {new :false, useFindAndModify:false},
+        //         sliderWebsite.findOneAndUpdate({id:req.body.id}, sliderWebsite, {new :false, useFindAndModify:false},
         //             (err, sliderWebsite)=>{
         //                 if (err) {
         //                     res.status(500).send({Message :err});
@@ -110,8 +110,8 @@ exports.save = (req, res) => {
 
 exports.load = (req, res) => {
   
-    if (req.body._id != null && req.body._id != "") {
-        Blog.findById(req.body._id, (err, result) => {
+    if (req.body.id != null && req.body.id != "") {
+        Blog.find({_id:req.body.id, RowStatus:true}, (err, result) => {
             if (err) {
                 return res.status(500).send({ message: "Error, Data is Not Found" ,  isError: 1});
             }
@@ -126,7 +126,7 @@ exports.load = (req, res) => {
                 return res.status(500).send({ message: "Error, Data is Not Found", isError: 1 });
             }
             else  {
-                return res.status(200).send({result, isError: 0,req : JSON.stringify(req.originalUrl)});
+                return res.status(200).send({result, isError: 0});
             }
            
         });
@@ -145,11 +145,11 @@ exports.load = (req, res) => {
 
 exports.delete = (req, res) => {
 
-    var blog = new Blog();
-    blog._id = req.body.id
-    blog.Modified = Date.now();
-    blog.ModifiedBy = req.userId;
-    blog.RowStatus = false;
+    // var blog = new Blog();
+    // blog._id = req.body.id
+    // blog.Modified = Date.now();
+    // blog.ModifiedBy = req.userId;
+    // blog.RowStatus = false;
 
     // sliderWebsite.findOneAndUpdate({_id: req.body._id}, sliderWebsite, {new :false, userfindAndModify:false},
     //     (err, sliderWebsite)=>{
@@ -160,7 +160,7 @@ exports.delete = (req, res) => {
     //             return res.status(200).send({message: "Delete Sucess"});
     //         }
     //     });
-    Blog.findByIdAndUpdate(req.body.id, blog, { useFindAndModify: false },
+    Blog.updateMany({_id: {$in : req.body.id}}, {$set :{Modified: Date.now(), ModifiedBy:req.userId,RowStatus:false}}, { useFindAndModify: false },
 
         (err) => {
             if (err) {

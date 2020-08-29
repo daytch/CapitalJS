@@ -35,8 +35,8 @@ exports.SaveConfig = (req, res)=>{
                         FacebookLink: req.body.facebookLink,
                         TwitterLink: req.body.twitterLink,
                         LogoCapitalLink: req.body.logoCapitalLink,
-                        Created: Date.now(),
-                        CreatedBy: req.userId,
+                        Modified: Date.now(),
+                        ModifiedBy: req.userId,
                         RowStatus: true
                     });
                     CompanyProfile.findOneAndUpdate({_id:req.body._id}, companyProfile, {new :true, useFindAndModify:false},
@@ -62,8 +62,8 @@ exports.SaveConfig = (req, res)=>{
                 FacebookLink: req.body.facebookLink,
                 TwitterLink: req.body.twitterLink,
                 LogoCapitalLink: req.body.logoCapitalLink,
-                Modified: Date.now(),
-                ModifiedBy: req.userId,
+                Created: Date.now(),
+                CreatedBy: req.userId,
                 })
                 companyProfile.save((err,companyProfile)=>{
                     if (err) {

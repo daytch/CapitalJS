@@ -21,7 +21,7 @@ module.exports = function(app){
 *       - Blog
 *     name: Load
 *     summary: Load Blog 
-*     description:  ketika isinya {} atau object kosong maka akan load semua,<br> untuk load salah satu gunakan {"_id" &#58; value}
+*     description:  ketika isinya {} atau object kosong maka akan load semua,<br> untuk load salah satu gunakan {"id" &#58; value}
 *     consumes:
 *       - application/json
 *     parameters:
@@ -46,12 +46,13 @@ module.exports = function(app){
 *   blogLoad:
 *       type: object
 *       properties:
-*           _id:
+*           id:
 *               type: string
 *               example: 5f1c548bf377ad2b40d5b1a5
 */
-// app.get("/api/blog/load",[authJwt.verifyToken], controller.load);
+// app.get("/api/blog/load", controller.load);
 app.post("/api/blog/load",[authJwt.verifyToken], controller.load);
+
 
  /**
 * @swagger
@@ -61,7 +62,7 @@ app.post("/api/blog/load",[authJwt.verifyToken], controller.load);
 *       - Blog
 *     name: Save
 *     summary: Save Blog 
-*     description: JSON untuk Edit:<br> {<br>"_id":{value}, <br> "blogCategoryId":{value}, <br> "title":{value},<br> "body":{value}, <br> "masterStatusId":{value}, <br>, "headerBlogLink":{value}<br>} <br><br> JSON untuk Save:<br> {<br> "blogCategoryId":{value}, <br> "title":{value},<br> "body":{value}, <br> "masterStatusId":{value}, <br>, "headerBlogLink":{value}<br>}
+*     description: JSON untuk Edit:<br> {<br>"id":{value}, <br> "blogCategoryId":{value}, <br> "title":{value},<br> "body":{value}, <br> "masterStatusId":{value}, <br>, "headerBlogLink":{value}<br>} <br><br> JSON untuk Save:<br> {<br> "blogCategoryId":{value}, <br> "title":{value},<br> "body":{value}, <br> "masterStatusId":{value}, <br>, "headerBlogLink":{value}<br>}
 *     consumes:
 *       - application/json
 *     parameters:
@@ -83,7 +84,7 @@ app.post("/api/blog/load",[authJwt.verifyToken], controller.load);
 *   blogSave:
 *       type: object
 *       properties:
-*           _id:
+*           id:
 *               type: string
 *               example: 5f1c548bf377ad2b40d5b1a5
 *           blogCategoryId: 
@@ -124,7 +125,7 @@ app.post("/api/blog/save",[authJwt.verifyToken], controller.save);
 *         in : body
 *         type: object
 *         schema:
-*           "$ref": "#/definitions/blogLoad"
+*           "$ref": "#/definitions/blogDelete"
 *     responses:
 *       200:
 *         description: User found and logged in successfully
@@ -133,12 +134,14 @@ app.post("/api/blog/save",[authJwt.verifyToken], controller.save);
 *       500:
 *         description: something error on system
 *definitions:
-*   blogLoad:
+*   blogDelete:
 *       type: object
 *       properties:
-*           _id:
-*               type: string
-*               example: 5f1c548bf377ad2b40d5b1a5
+*           id:
+*               type: array
+*               items:
+*                   type: string
+*               example: [5f1c548bf377ad2b40d5b1a5,5f1c548bf377ad2b40d5b1a5,5f1c548bf377ad2b40d5b1a5]
 */
 app.post("/api/blog/delete",[authJwt.verifyToken], controller.delete);
 

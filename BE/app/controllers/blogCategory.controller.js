@@ -6,8 +6,8 @@ const BlogCategory = db.blogCategory;
 var IsTrue = true;
 exports.load = (req, res)=>{
 
-    if (req.body._id != null && req.body._id != "") {
-        BlogCategory.findById(req.body._id, (err, result) => {
+    if (req.body.id != null && req.body.id != "") {
+        BlogCategory.find({_id:req.body.id, RowStatus:true}, (err, result) => {
             if (err) {
                 return res.status(500).send({ message: "Error, Data is Not Found" ,  isError: 1});
             }
@@ -23,7 +23,7 @@ exports.load = (req, res)=>{
                 return res.status(500).send({ message: "Error, Data is Not Found", isError: 1 });
             }
             else {
-                return res.status(200).send({result, isError: 0,req : JSON.stringify(req.originalUrl)});
+                return res.status(200).send({result, isError: 0});
             }
            
         });
@@ -42,9 +42,9 @@ exports.load = (req, res)=>{
 };
 
 exports.save = (req, res)=>{
-    if (null !=req.body._id && req.body._id != "") {
+    if (null !=req.body.id && req.body.id != "") {
         BlogCategory.find({
-            _id: {$ne : req.body._id}, Name: req.body.name, RowStatus:true
+            _id: {$ne : req.body.id}, Name: req.body.name, RowStatus:true
         }, function(err, result){
             if (err) {
                 return res.status(500).send({message: err,  isError: 1})
@@ -55,14 +55,14 @@ exports.save = (req, res)=>{
             }
             else{
                 var blogCategory = new BlogCategory({
-                    _id : req.body._id,
+                    _id : req.body.id,
                     Name : req.body.name,
                     Description: req.body.description,
                     Modified: Date.now(),
                     ModifiedBy: req.userId,
                     RowStatus: true
                 });
-                BlogCategory.findOneAndUpdate({_id:req.body._id}, blogCategory, {new :false, useFindAndModify:false},
+                BlogCategory.findOneAndUpdate({_id:req.body.id}, blogCategory, {new :false, useFindAndModify:false},
                     (err, blogCategory)=>{
                         if (err) {
                             res.status(500).send({message :err, isError :1});
@@ -112,17 +112,17 @@ exports.save = (req, res)=>{
     //     return res.status(200).send({message: "Name Already Exist in Current Data"});
     // }
     
-    // if(null !=req.body._id && req.body._id != ""){
+    // if(null !=req.body.id && req.body.id != ""){
        
     //     var blogCategory = new BlogCategory({
-    //                 _id : req.body._id,
+    //                 _id : req.body.id,
     //                 Name : req.body.name,
     //                 Description: req.body.description,
     //                 Modified: Date.now(),
     //                 ModifiedBy: req.body.username,
     //                 RowStatus: true
     //             });
-    //             BlogCategory.findOneAndUpdate({_id:req.body._id}, blogCategory, {new :false, useFindAndModify:false},
+    //             BlogCategory.findOneAndUpdate({_id:req.body.id}, blogCategory, {new :false, useFindAndModify:false},
     //                 (err, blogCategory)=>{
     //                     if (err) {
     //                         res.status(500).send({Message :err});
@@ -161,7 +161,7 @@ exports.delete = (req, res)=>{
     blogCategory.ModifiedBy = req.userId;
     blogCategory.RowStatus = false;
 
-    // sliderWebsite.findOneAndUpdate({_id: req.body._id}, sliderWebsite, {new :false, userfindAndModify:false},
+    // sliderWebsite.findOneAndUpdate({_id: req.body.id}, sliderWebsite, {new :false, userfindAndModify:false},
     //     (err, sliderWebsite)=>{
     //         if (err) {
     //             return res.status(500).send({message:err});

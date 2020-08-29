@@ -21,7 +21,7 @@ module.exports = function(app){
 *       - Slider Website
 *     name: Load
 *     summary: Load Slider Website 
-*     description:  ketika isinya {} atau object kosong maka akan load semua,<br> untuk load salah satu gunakan {"_id" &#58; value}
+*     description:  ketika isinya {} atau object kosong maka akan load semua,<br> untuk load salah satu gunakan {"id" &#58; value}
 *     consumes:
 *       - application/json
 *     parameters:
@@ -46,12 +46,12 @@ module.exports = function(app){
 *   sliderLoad:
 *       type: object
 *       properties:
-*           _id:
+*           id:
 *               type: string
 *               example: 5f1c548bf377ad2b40d5b1a5
 */
-app.get("/api/sliderWebsite/load", controller.load);
-app.post("/api/sliderWebsite/load", controller.load);
+// app.get("/api/sliderWebsite/load", controller.load);
+app.post("/api/sliderWebsite/load",[authJwt.verifyToken], controller.load);
 
   /**
 * @swagger
@@ -61,7 +61,7 @@ app.post("/api/sliderWebsite/load", controller.load);
 *       - Slider Website
 *     name: Save
 *     summary: Save - Slider Website 
-*     description: hilangkan "_id" untuk save record baru 
+*     description: hilangkan "id" untuk save record baru 
 *     consumes:
 *       - application/json
 *     parameters:
@@ -83,7 +83,7 @@ app.post("/api/sliderWebsite/load", controller.load);
 *   sliderSave:
 *       type: object
 *       properties:
-*           _id:
+*           id:
 *               type: string
 *               example: 5f1c548bf377ad2b40d5b1a5
 *           picture: 
@@ -118,7 +118,7 @@ app.post("/api/sliderWebsite/save",[authJwt.verifyToken], controller.save);
 *         in : body
 *         type: object
 *         schema:
-*           "$ref": "#/definitions/sliderLoad"
+*           "$ref": "#/definitions/sliderDelete"
 
 *     responses:
 *       200:
@@ -127,7 +127,15 @@ app.post("/api/sliderWebsite/save",[authJwt.verifyToken], controller.save);
 *         description: Bad username, not found in db
 *       500:
 *         description: something error on system
-
+*definitions:
+*   sliderDelete:
+*       type: object
+*       properties:
+*           id:
+*               type: array
+*               items:
+*                   type: string
+*               example: [5f1c548bf377ad2b40d5b1a5,5f1c548bf377ad2b40d5b1a5,5f1c548bf377ad2b40d5b1a5]
 */
 
 app.post("/api/sliderWebsite/delete",[authJwt.verifyToken], controller.delete);
