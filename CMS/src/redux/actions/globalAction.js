@@ -1,7 +1,10 @@
 import {
   SET_TOASTMESSAGE,
   TOAST_POSITION,
-  TOAST_AUTOHIDE
+  TOAST_AUTOHIDE,
+  GET_SLIDERSTATUS_DROPDOWN,
+  GET_BRANCHSTATUS_DROPDOWN,
+  GET_BLOGSTATUS_DROPDOWN
 } from '../../constants';
 
 export function toastSuccess(message, config={}) {
@@ -60,9 +63,31 @@ export function toastWarning(message, config={}) {
   };
 }
 
+export function getSliderStatusDropdown() {
+  return {
+    type: GET_SLIDERSTATUS_DROPDOWN,
+    payload: null
+  };
+}
+export function getBranchStatusDropdown() {
+  return {
+    type: GET_BRANCHSTATUS_DROPDOWN,
+    payload: null
+  };
+}
+export function getBlogStatusDropdown() {
+  return {
+    type: GET_BLOGSTATUS_DROPDOWN,
+    payload: null
+  };
+}
+
 export default {
   toastSuccess: toastSuccess,
   toastInfo: toastInfo,
   toastError: toastError,
-  toastWarning: toastWarning
+  toastWarning: toastWarning,
+  getSliderStatusDropdown: getSliderStatusDropdown,
+  getBranchStatusDropdown: getBranchStatusDropdown,
+  getBlogStatusDropdown: getBlogStatusDropdown
 };

@@ -1,4 +1,5 @@
 import React from 'react'
+import {connect} from 'react-redux';
 import {
   CCard,
   CCardBody,
@@ -11,15 +12,19 @@ import {
   CInput,
   CInputCheckbox,
   CFormGroup,
-  CLabel
+  CLabel,
+  CSelect
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import {useDropzone} from 'react-dropzone';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {sliderWebsiteAction, globalAction} from '../../../redux/actions';
+
+import {UploadImage} from '../../../services';
 
 const dummyData = [
-  {picture: "https://picsum.photos/500/300", status: true },
-  {picture: "https://picsum.photos/500/300", status: true }
+  {Picture: "https://picsum.photos/500/300", RowStatus: true },
+  {Picture: "https://picsum.photos/500/300", RowStatus: true }
 ]
 const fields = [
   {
@@ -29,8 +34,8 @@ const fields = [
     sorter: false,
     filter: false
   },
-  { key: 'picture', _style: { width: '79%'} },
-  { key: 'status', _style: { width: '10%'} },
+  { key: 'Picture', _style: { width: '79%'} },
+  { key: 'RowStatus', _style: { width: '10%'} },
   {
     key: 'action',
     label: 'Action',
@@ -40,39 +45,73 @@ const fields = [
   }
 ]
 
-async function fileGetter(event) {
-  const files = [];
-  const fileList = event.dataTransfer ? event.dataTransfer.files : event.target.files;
+// async function fileGetter(event) {
+//   const files = [];
+//   const fileList = event.dataTransfer ? event.dataTransfer.files : event.target.files;
 
-  for (var i = 0; i < fileList.length; i++) {
-    const file = fileList.item(i);
+//   for (var i = 0; i < fileList.length; i++) {
+//     const file = fileList.item(i);
     
-    Object.defineProperty(file, 'myProp', {
-      value: true
-    });
+//     Object.defineProperty(file, 'myProp', {
+//       value: true
+//     });
 
-    files.push(file);
-  }
+//     files.push(file);
+//   }
 
-  return files;
-}
+//   return files;
+// }
 
-const SliderWebsite = ({...props}) => {
+const SliderWebsite = ({global, sliderWebsite, getSliderStatusDropdown, getGridData, ...props}) => {
   const [create,setCreate] = React.useState(true)
   const [form, setForm] = React.useState({
+    id: "",
     linkslider: "",
     show: false,
-    image: "https://picsum.photos/500/300",
+    image: "",
     filename: "410 xx 20.jpg"
   })
+
+  // initial data
+  React.useEffect(() => {
+    getSliderStatusDropdown()
+    getGridData()
+  }, [])
+
   const {acceptedFiles, getRootProps, getInputProps} = useDropzone({
-    getFilesFromEvent: event => fileGetter(event)
+    getFilesFromEvent: event => {
+      const files = [];
+      const fileList = event.dataTransfer ? event.dataTransfer.files : event.target.files;
+
+      for (var i = 0; i < fileList.length; i++) {
+        const file = fileList.item(i);
+        
+        Object.defineProperty(file, 'myProp', {
+          value: true
+        });
+
+        files.push(file);
+      }
+      if(files.length){
+        UploadImage(files[0], (url) => {
+          handleChange("image", url)
+        })
+      }
+
+      return files;
+    }
   });
-  const files = acceptedFiles.map(f => (
-    <li key={f.name}>
-      {f.name} has <strong>myProps</strong>: {f.myProp === true ? 'YES' : ''}
-    </li>
-  ));
+  // const files = acceptedFiles.map(f => (
+  //   <li key={f.name}>
+  //     {f.name} has <strong>myProps</strong>: {f.myProp === true ? 'YES' : ''}
+  //   </li>
+  // ));
+  const handleChange = (attr, val) => {
+    setForm({
+      ...form,
+      [attr]: val
+    })
+  }
   const handleDropzoneImageRemove = () => {
     return setForm({
       ...form,
@@ -80,8 +119,15 @@ const SliderWebsite = ({...props}) => {
       filename: ""
     })
   }
-  const handleEdit = () => {
+  const handleEdit = (item) => {
     setCreate(false)
+    setForm({
+      id: item._id,
+      linkslider: item.Picture,
+      show: item.RowStatus,
+      image: item.Picture,
+      filename: ""
+    })
   }
   const handleCancel = () => {
     setCreate(true)
@@ -98,7 +144,7 @@ const SliderWebsite = ({...props}) => {
           </CCardHeader>
           <CCardBody>
             <CDataTable
-              items={dummyData}
+              items={sliderWebsite.griddata}
               fields={fields}
               tableFilter
               footer
@@ -111,7 +157,7 @@ const SliderWebsite = ({...props}) => {
                 'check': (
                   <CFormGroup variant="custom-checkbox">
                     <CInputCheckbox 
-                      custom 
+                      custom
                       id={"check-all"}
                       name={"check-all"}
                       value={"check-all"}
@@ -136,17 +182,17 @@ const SliderWebsite = ({...props}) => {
                     </td>
                   )
                 },
-                'picture': (item) => {
+                'Picture': (item) => {
                   return (
                     <td align="center">
-                      <img className="sw_table__image" src={item.picture} alt="" />
+                      <img className="sw_table__image" src={item.Picture} alt="" />
                     </td>
                   )
                 },
-                'status': (item) => {
+                'RowStatus': (item) => {
                   return (
                     <td>
-                      {item.status ? "SHOW" : "UNSHOW"}
+                      {item.RowStatus ? "SHOW" : "UNSHOW"}
                     </td>
                   )
                 },
@@ -154,7 +200,7 @@ const SliderWebsite = ({...props}) => {
                   (item, index)=>{
                     return (
                       <td className="py-2">
-                        <div className="icon-wrapper btn-primary" onClick={handleEdit}>
+                        <div className="icon-wrapper btn-primary" onClick={() => handleEdit(item)}>
                           <CIcon name={"cil-pencil"} size="lg"/>
                         </div>
                         <div className="icon-wrapper btn-danger">
@@ -178,25 +224,25 @@ const SliderWebsite = ({...props}) => {
           </CCardHeader>
           <CCardBody>
             <CFormGroup>
+              <CLabel htmlFor="status">Status</CLabel>
+              <CSelect custom name="status" id="status" onChange={(e) => handleChange("RowStatus", e.target.value)}>
+                {global.sliderStatusDropdown.map((v) => {
+                  return (
+                    <option key={v.id} value={v.id}>{v.name}</option>
+                  )
+                })}
+              </CSelect>
+            </CFormGroup>
+            <CFormGroup>
               <CLabel htmlFor="add-linkslider">Link Slider</CLabel>
               <CInput id="add-linkslider" placeholder="Insert Link Slider" required />
-            </CFormGroup>
-            <CFormGroup variant="custom-checkbox">
-              <CInputCheckbox 
-                custom 
-                id={"add-show"}
-                name={"add-show"}
-                value={"add-show"}
-              />
-              <CLabel variant="custom-checkbox" htmlFor={"add-show"}>Show</CLabel>
             </CFormGroup>
             <div className="dropzone-wrapper">
               <div {...getRootProps({className: 'dropzone'})} data-margin-top="xs">
                 {
                   form.image && (
                     <div className="dropzone-image-wrapper">
-                      <img src={form.image} alt="" style={{width: "50px",height: "50px"}}/>
-                      <span data-margin-left="xxs"><strong>{form.filename}</strong></span>
+                      <img src={form.image} alt="" style={{width: "100%"}}/>
                     </div>
                   )
                 }
@@ -225,4 +271,9 @@ const SliderWebsite = ({...props}) => {
   )
 }
 
-export default SliderWebsite
+const mapStateToProps = state => ({
+  sliderWebsite: state.sliderWebsiteReducer,
+  global: state.globalReducer,
+});
+const mapActionToProps = { ...sliderWebsiteAction, ...globalAction };
+export default connect(mapStateToProps, mapActionToProps)(SliderWebsite);

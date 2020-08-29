@@ -1,4 +1,7 @@
 import {
+  SET_SLIDERSTATUS_DROPDOWN,
+  SET_BRANCHSTATUS_DROPDOWN,
+  SET_BLOGSTATUS_DROPDOWN,
   SET_TOASTMESSAGE,
   TOAST_AUTOHIDE,
   TOAST_POSITION
@@ -14,7 +17,10 @@ const INIT_STATE = {
     message: "",
     type: "success",
     title: "Success"
-  }
+  },
+  sliderStatusDropdown: [],
+  blogStatusDropdown: [],
+  branchStatusDropdown: []
 };
 
 export default (state = INIT_STATE, action) => {
@@ -24,6 +30,24 @@ export default (state = INIT_STATE, action) => {
         ...state,
         data: action.payload,
         counter: state.counter+1
+      };
+    }
+    case SET_SLIDERSTATUS_DROPDOWN: {
+      return {
+        ...state,
+        sliderStatusDropdown: action.payload
+      };
+    }
+    case SET_BRANCHSTATUS_DROPDOWN: {
+      return {
+        ...state,
+        branchStatusDropdown: action.payload
+      };
+    }
+    case SET_BLOGSTATUS_DROPDOWN: {
+      return {
+        ...state,
+        blogStatusDropdown: action.payload
       };
     }
     case 'set':

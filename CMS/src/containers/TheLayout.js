@@ -14,7 +14,7 @@ const TheLayout = () => {
       <TheSidebar/>
       <div className="c-wrapper">
         <TheHeader/>
-        <TheToaster/>
+        {/* <TheToaster/> */}
         <div className="c-body">
           <TheContent/>
         </div>
