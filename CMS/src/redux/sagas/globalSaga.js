@@ -17,7 +17,7 @@ const global = state => state.loginReducer;
 export function* getSliderStatusDropdown(action) {
   try {
     const res = yield call(
-      POST,
+      GET,
       URL.GET_SLIDERSTATUS_DROPDOWN
     );
     if(res.isError===0){
@@ -25,6 +25,7 @@ export function* getSliderStatusDropdown(action) {
         id: v._id,
         name: v.Status
       }))
+      console.log(data)
       yield put({ type: SET_SLIDERSTATUS_DROPDOWN, payload: data });
     }
   }

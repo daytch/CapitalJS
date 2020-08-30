@@ -15,7 +15,7 @@ exports.save = (req, res)=>{
        sliderWebsite._id = req.body.id;
        sliderWebsite.Picture = req.body.picture;
        sliderWebsite.Description = req.body.description;
-       sliderWebsite.MasterStatus = req.body.masterStatus;
+       sliderWebsite.MasterStatus = req.body.masterStatusId;
        sliderWebsite.Modified = Date.now();
        sliderWebsite.ModifiedBy = req.userId;
 
@@ -58,7 +58,7 @@ exports.save = (req, res)=>{
             var sliderWebsite = new SliderWebsite();
             sliderWebsite.Picture = req.body.picture;
             sliderWebsite.Description = req.body.description;
-            sliderWebsite.MasterStatus = req.body.masterStatus;
+            sliderWebsite.MasterStatus = req.body.masterStatusId;
             sliderWebsite.Created = Date.now();
             sliderWebsite.CreatedBy = req.userId;
             sliderWebsite.Modified = null;

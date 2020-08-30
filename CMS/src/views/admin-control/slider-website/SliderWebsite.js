@@ -22,10 +22,6 @@ import {sliderWebsiteAction, globalAction} from '../../../redux/actions';
 
 import {UploadImage} from '../../../services';
 
-const dummyData = [
-  {Picture: "https://picsum.photos/500/300", RowStatus: true },
-  {Picture: "https://picsum.photos/500/300", RowStatus: true }
-]
 const fields = [
   {
     key: 'check',
@@ -61,22 +57,31 @@ const fields = [
 
 //   return files;
 // }
-
-const SliderWebsite = ({global, sliderWebsite, getSliderStatusDropdown, getGridData, ...props}) => {
+const DEFAULT_FORM = {
+  id: "",
+  linkslider: "",
+  status: "",
+  image: ""
+}
+const SliderWebsite = ({
+  global, sliderWebsite, getSliderStatusDropdown, getGridData,
+  saveSliderWebsite, updateSliderWebsite, deleteSliderWebsite, ...props
+}) => {
   const [create,setCreate] = React.useState(true)
-  const [form, setForm] = React.useState({
-    id: "",
-    linkslider: "",
-    show: false,
-    image: "",
-    filename: "410 xx 20.jpg"
-  })
+  const [form, setForm] = React.useState(DEFAULT_FORM)
+  const [checkList,setCheckList] = React.useState([])
 
   // initial data
   React.useEffect(() => {
     getSliderStatusDropdown()
     getGridData()
   }, [])
+
+  // React.useEffect(() => {
+  //   if(checkList.length == 0){
+  //     setCheckList(sliderWebsite.griddata.map((v,i) => (false)))
+  //   }
+  // }, [sliderWebsite.griddata])
 
   const {acceptedFiles, getRootProps, getInputProps} = useDropzone({
     getFilesFromEvent: event => {
@@ -115,25 +120,46 @@ const SliderWebsite = ({global, sliderWebsite, getSliderStatusDropdown, getGridD
   const handleDropzoneImageRemove = () => {
     return setForm({
       ...form,
-      image: "",
-      filename: ""
+      image: ""
     })
+  }
+  const resetCheckList = () => {
+    setCheckList(new Array(sliderWebsite.griddata.length).fill(false))
+  }
+  const resetForm  = () => {
+    setForm(DEFAULT_FORM)
+    setCreate(true)
+  }
+  const handleChecked = (index, checked) => {
+    checkList[index] = checked
+    setCheckList([...checkList])
+  }
+  const handleCreate = () => {
+    saveSliderWebsite({
+      ...form,
+      status: form.status || global.sliderStatusDropdown[0].id
+    }, resetForm)
   }
   const handleEdit = (item) => {
     setCreate(false)
     setForm({
       id: item._id,
-      linkslider: item.Picture,
-      show: item.RowStatus,
-      image: item.Picture,
-      filename: ""
+      linkslider: item.Description,
+      show: item.MasterStatusId,
+      image: item.Picture
     })
   }
   const handleCancel = () => {
     setCreate(true)
   }
   const handleDeleteSelected = () => {
-
+    const deletedIds = []
+    checkList.forEach((v, i) => {
+      if(v){
+        deletedIds.push(sliderWebsite.griddata[i]._id)
+      }
+    })
+    deleteSliderWebsite(deletedIds, resetCheckList)
   }
   return (
     <CRow>
@@ -147,7 +173,6 @@ const SliderWebsite = ({global, sliderWebsite, getSliderStatusDropdown, getGridD
               items={sliderWebsite.griddata}
               fields={fields}
               tableFilter
-              footer
               itemsPerPageSelect
               itemsPerPage={5}
               hover
@@ -176,6 +201,8 @@ const SliderWebsite = ({global, sliderWebsite, getSliderStatusDropdown, getGridD
                           id={index}
                           name={index}
                           value={index}
+                          checked={checkList[index] || false}
+                          onChange={(e) => handleChecked(index, e.target.checked)}
                         />
                         <CLabel variant="custom-checkbox" htmlFor={index}></CLabel>
                       </CFormGroup>
@@ -225,7 +252,7 @@ const SliderWebsite = ({global, sliderWebsite, getSliderStatusDropdown, getGridD
           <CCardBody>
             <CFormGroup>
               <CLabel htmlFor="status">Status</CLabel>
-              <CSelect custom name="status" id="status" onChange={(e) => handleChange("RowStatus", e.target.value)}>
+              <CSelect custom name="status" value={form.status} id="status" onChange={(e) => handleChange("status", e.target.value)}>
                 {global.sliderStatusDropdown.map((v) => {
                   return (
                     <option key={v.id} value={v.id}>{v.name}</option>
@@ -235,7 +262,7 @@ const SliderWebsite = ({global, sliderWebsite, getSliderStatusDropdown, getGridD
             </CFormGroup>
             <CFormGroup>
               <CLabel htmlFor="add-linkslider">Link Slider</CLabel>
-              <CInput id="add-linkslider" placeholder="Insert Link Slider" required />
+              <CInput id="add-linkslider" placeholder="Insert Link Slider" required value={form.linkslider} onChange={(e) => handleChange("linkslider", e.target.value)}/>
             </CFormGroup>
             <div className="dropzone-wrapper">
               <div {...getRootProps({className: 'dropzone'})} data-margin-top="xs">
@@ -258,7 +285,7 @@ const SliderWebsite = ({global, sliderWebsite, getSliderStatusDropdown, getGridD
           <CCardFooter>
             {
               create ? 
-              <CButton type="button" color="primary" onClick={handleDeleteSelected}>Create</CButton> :
+              <CButton type="button" color="primary" onClick={handleCreate}>Create</CButton> :
               <>
                 <CButton type="button" color="success" onClick={handleDeleteSelected}>Update</CButton>
                 <CButton type="button" color="danger" onClick={handleCancel}>Cancel</CButton>
