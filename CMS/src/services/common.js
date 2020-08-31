@@ -24,10 +24,17 @@ export function getHeader() {
 }
 
 export function getHeaderToken() {
-  return {
-    "Authorization": getToken(),
-    "x-access-token": getTokenOnly(),
+  const bearer = getToken()
+  const token = getTokenOnly()
+  const headers = {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
-  };
+  }
+  if(bearer){
+    headers["Authorization"] = bearer;
+  }
+  if(bearer){
+    headers["x-access-token"] = token;
+  }
+  return headers;
 }

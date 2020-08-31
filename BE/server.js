@@ -7,7 +7,7 @@ const swaggerUi = require('swagger-ui-express');
 const app = express();
 
 var corsOptions = {
-  origin: ["http://localhost:8081", "http://localhost:3000"]
+  origin: ["http://localhost:8081", "http://localhost:3000", "http://5.189.134.84:6971"]
 };
 
 if (dbConfig.swagger) {
