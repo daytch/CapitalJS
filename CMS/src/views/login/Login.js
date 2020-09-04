@@ -31,6 +31,7 @@ const Login = ({login, doLogin, ...props}) => {
     })
   }
   const handleLogin = () => {
+    debugger;
     doLogin(form)
   }
   return (

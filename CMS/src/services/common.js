@@ -1,7 +1,7 @@
 export function getTokenOnly() {
   const token = localStorage.getItem('idToken');
   if (token === undefined || token === '' || token === null) {
-    window.location.href = '/';
+    // window.location.href = '/';
   } else {
     return token;
   }
@@ -9,7 +9,7 @@ export function getTokenOnly() {
 export function getToken() {
   const token = localStorage.getItem('idToken');
   if (token === undefined || token === '' || token === null) {
-    window.location.href = '/';
+    // window.location.href = '/';
     // window.URL = 'views/login/index.html';
   } else {
     return "Bearer " + token;

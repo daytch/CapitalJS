@@ -6,9 +6,12 @@ const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const app = express();
 
-var corsOptions = {
-  origin: ["http://localhost:8081", "http://localhost:3000", "http://5.189.134.84:6971"]
-};
+var IsProd = process.env.PROD || false;
+var corsOptions = (IsProd) ? {
+  origin: ["http://5.189.134.84:8081", "http://5.189.134.84:3000"]
+} : {
+    origin: ["http://localhost:8081", "http://localhost:3000"]
+  };
 
 if (dbConfig.swagger) {
   const swaggerDefinition = {
@@ -57,6 +60,8 @@ app.use('/images', express.static('images'))
 
 const db = require("./app/models");
 const Role = db.role;
+const User = db.user;
+var bcrypt = require("bcryptjs");
 
 db.mongoose
   .connect(dbConfig.CONSTRING, {
@@ -65,7 +70,9 @@ db.mongoose
   })
   .then(() => {
     console.log("Successfully connect to MongoDB.");
-    initial();
+    if (!IsProd) {
+      initial();
+    }
   })
   .catch(err => {
     console.error("Connection error", err);
@@ -130,6 +137,43 @@ function initial() {
         }
 
         console.log("added 'admin' to roles collection");
+      });
+
+    }
+  });
+
+  User.estimatedDocumentCount((err, count) => {
+    if (!err && count === 0) {
+      const user = new User({
+        username: "udin",
+        email: "udin@yopmail.com",
+        password: bcrypt.hashSync("123", 8),
+        isActivated: true,
+        rowStatus: true
+      });
+
+      user.save((err, user) => {
+        if (err) {
+          console.log(err);
+          res.status(500).send({ message: err });
+          return;
+        }
+
+        Role.findOne({ name: "user" }, (err, role) => {
+          if (err) {
+            res.status(500).send({ message: err });
+            return;
+          }
+
+          user.roles = [role._id];
+          user.save(err => {
+            if (err) {
+              res.status(500).send({ message: err });
+              return;
+            }
+            //  res.send({ message: "User was registered successfully!" });
+          });
+        });
       });
     }
   });

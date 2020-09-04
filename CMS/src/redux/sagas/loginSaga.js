@@ -4,8 +4,8 @@ import {
   HANDLE_LOGIN,
   SET_LOGIN_LOADING
 } from '../../constants';
-import {POST} from '../../services';
-import {success, error} from '../../utils/notification';
+import { POST } from '../../services';
+import { success, error } from '../../utils/notification';
 import history from '../../utils/history';
 
 const login = state => state.loginReducer;
@@ -19,14 +19,14 @@ export function* doLogin(action) {
       URL.LOGIN,
       data
     );
-    if(res.isError===1 || !res.accessToken){
+    if (res.isError === 1 || !res.accessToken) {
       yield error(res.message);
     } else {
       localStorage.setItem("idToken", res.accessToken);
       localStorage.setItem("username", res.username);
       localStorage.setItem("userid", res.id);
       yield put({ type: SET_LOGIN_LOADING, payload: false });
-      yield call(history.push, "dashboard"); 
+      yield call(history.push, "dashboard");
     }
   }
   catch (err) {
