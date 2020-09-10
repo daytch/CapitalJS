@@ -1,15 +1,9 @@
 const mongoose = require('mongoose');
 
-const Product = mongoose.model(
-    'Product',
+const ProductAddOns = mongoose.model(
+    'ProductAddOns',
     new mongoose.Schema({
         Name: String,
-        CategoryID:
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'ProductCategory'
-        },
-        AddOns: Boolean,
         Weigth: Number,
         CapitalPrice: Number,
         SellingPrice: Number,
@@ -28,4 +22,4 @@ const Product = mongoose.model(
     })
 );
 
-module.exports = Product;
+module.exports = ProductAddOns;

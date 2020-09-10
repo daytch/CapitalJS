@@ -18,6 +18,7 @@ db.applicant = require('./applicant.model');
 db.career = require('./career.model');
 db.productCategory = require('./productCategory.model');
 db.product = require('./product.model');
+db.productAddOns = require('./productAddOns.model');
 
 db.ROLES = ["user", "admin", "moderator"];
 

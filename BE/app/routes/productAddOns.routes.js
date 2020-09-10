@@ -1,5 +1,5 @@
 const { authJwt } = require("../middlewares");
-const controller = require("../controllers/product.controller");
+const controller = require("../controllers/productAddOns.Controller");
 
 
 module.exports = function(app){
@@ -15,13 +15,13 @@ module.exports = function(app){
 
     /**
 * @swagger
-* /api/product/load:
+* /api/productAddOns/load:
 
 *   post:
 *     tags:
-*       - Product
+*       - Product AddOns
 *     name: Load
-*     summary: Load Product
+*     summary: Load ProductAddOns
 *     description:  ketika isinya {} atau object kosong maka akan load semua,<br> untuk load salah satu gunakan {"id" &#58; value}
 *     consumes:
 *       - application/json
@@ -51,15 +51,15 @@ module.exports = function(app){
 *               type: string
 *               example: 5f1c548bf377ad2b40d5b1a5
 */
-app.post("/api/product/load",[authJwt.verifyToken], controller.load);
+app.post("/api/productAddOns/load",[authJwt.verifyToken], controller.load);
 
    /**
 * @swagger
-* /api/product/save:
+* /api/productAddOns/save:
 
 *   post:
 *     tags:
-*       - Product
+*       - Product AddOns
 *     name: Save
 *     summary: Save Product
 *     description: hilangkan "id" untuk save record baru 
@@ -74,7 +74,7 @@ app.post("/api/product/load",[authJwt.verifyToken], controller.load);
 
 
 *         schema:
-*           "$ref": "#/definitions/productSave"
+*           "$ref": "#/definitions/productAddOnsSave"
 
 *     responses:
 *       200:
@@ -84,7 +84,7 @@ app.post("/api/product/load",[authJwt.verifyToken], controller.load);
 *       500:
 *         description: something error on system
 *definitions:
-*   productSave:
+*   productAddOnsSave:
 *       type: object
 *       properties:
 *           id:
@@ -93,12 +93,6 @@ app.post("/api/product/load",[authJwt.verifyToken], controller.load);
 *           name:
 *               type: string 
 *               example: 
-*           categoryId:
-*               type: string
-*               example: 5f1c548bf37ead2240d5b1a5
-*           addOns:
-*               type: boolean
-*               example: true
 *           weigth:
 *               type: number
 *               example: 20
@@ -121,16 +115,16 @@ app.post("/api/product/load",[authJwt.verifyToken], controller.load);
 *                example: ["https://www.google.com.","https://www.bing.com."]
 */
 
-app.post("/api/product/save",[authJwt.verifyToken], controller.save);
+app.post("/api/productAddOns/save",[authJwt.verifyToken], controller.save);
 
 
 /**
 * @swagger
-* /api/product/delete:
+* /api/productAddOns/delete:
 
 *   post:
 *     tags:
-*       - Product
+*       - Product AddOns
 *     name: Delete
 *     summary: Delete Product
 *     description: Delete
@@ -156,6 +150,6 @@ app.post("/api/product/save",[authJwt.verifyToken], controller.save);
 *         description: something error on system
 
 */
-app.post("/api/product/delete",[authJwt.verifyToken], controller.delete);
+app.post("/api/productAddOns/delete",[authJwt.verifyToken], controller.delete);
 
 };
