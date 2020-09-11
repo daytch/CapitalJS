@@ -165,14 +165,14 @@ exports.delete = (req,res)=>{
     //             return res.status(200).send({message: "Delete Sucess"});
     //         }
     //     });
-    SliderWebsite.update( {_id: {$in : req.body.id}}, {$set : sliderWebsite}, {useFindAndModify:false},
+    SliderWebsite.updateMany( {_id: {$in : req.body.id}}, {$set : sliderWebsite}, {useFindAndModify:false},
         
         (err)=>{
             if (err) {
                 return res.status(500).send({message:err, isError:1});
             }
             else{
-                return res.status(200).send({message: "Delete Success", isError:0});
+                return res.status(200).send({message: "Delete Success", isError:0, ID : req.body.id});
             }
         });
     

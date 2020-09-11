@@ -1,13 +1,13 @@
 const config = require("../config/auth.config");
 const db = require("../models");
-const Product = db.product;
+const ProductAddOns = db.productAddOns;
 
 
 var IsTrue = true;
 exports.load = (req, res) => {
 
     if (req.body.id != null && req.body.id != "") {
-        Product.find({ _id: req.body.id, RowStatus: true }, (err, result) => {
+        ProductAddOns.find({ _id: req.body.id, RowStatus: true }, (err, result) => {
             if (err) {
                 return res.status(500).send({ message: "Error, Data is Not Found", isError: 1 });
             }
@@ -18,7 +18,7 @@ exports.load = (req, res) => {
         });
     }
     else {
-        Product.find({ RowStatus: true }, (err, result) => {
+        ProductAddOns.find({ RowStatus: true }, (err, result) => {
             if (err) {
                 return res.status(500).send({ message: "Error, Data is Not Found", isError: 1 });
             }
@@ -32,22 +32,20 @@ exports.load = (req, res) => {
 
 exports.save = (req, res) => {
     if (null != req.body.id && req.body.id != "") {
-        Product.find({
+        ProductAddOns.find({
             _id: { $ne: req.body.id }, Name: req.body.name, RowStatus: true
         }, function (err, result) {
             if (err) {
                 return res.status(500).send({ message: err, isError: 1 })
             }
             else if (result.length != 0) {
-                return res.status(500).send({ message: "Name Duplicated Exist in Current Data", isError: 1, body: req.body });
+                return res.status(500).send({ message: "Name Duplicated Exist in Current Data", isError: 1 });
 
             }
             else {
-                var product = new Product({
+                var addOns = new ProductAddOns({
                     _id: req.body.id,
-                    Name: req.body.name,
-                    CategoryID: req.body.categoryId,
-                    AddOns: req.body.addOns,
+                    Name : req.body.name,
                     Weighth: req.body.weigth,
                     CapitalPrice: req.body.capitalPrice,
                     SellingPrice: req.body.sellingPrice,
@@ -58,7 +56,7 @@ exports.save = (req, res) => {
                     ModifiedBy: req.userId,
                     RowStatus: true
                 });
-                Product.findOneAndUpdate({ _id: req.body.id }, product, { new: false, useFindAndModify: false },
+                ProductAddOns.findOneAndUpdate({ _id: req.body.id }, addOns, { new: false, useFindAndModify: false },
                     (err, blogCategory) => {
                         if (err) {
                             res.status(500).send({ message: err, isError: 1 });
@@ -72,7 +70,7 @@ exports.save = (req, res) => {
 
     }
     else {
-        Product.find({
+        ProductAddOns.find({
             Name: req.body.name, RowStatus: true
         }, function (err, result) {
             if (err) {
@@ -83,10 +81,8 @@ exports.save = (req, res) => {
 
             }
             else {
-                var product = new Product({
-                    Name: req.body.name,
-                    CategoryID: req.body.categoryId,
-                    AddOns: req.body.addOns,
+                var addOns = new ProductAddOns({
+                    Name : req.body.name,
                     Weighth: req.body.weigth,
                     CapitalPrice: req.body.capitalPrice,
                     SellingPrice: req.body.sellingPrice,
@@ -97,7 +93,7 @@ exports.save = (req, res) => {
                     CreatedBy: req.userId,
                     RowStatus: true
                 })
-                product.save((err) => {
+                addOns.save((err) => {
                     if (err) {
                         res.status(500).send({ message: err, isError: 1 });
                         return;
@@ -113,13 +109,13 @@ exports.save = (req, res) => {
 };
 
 exports.delete = (req, res) => {
-    var product = new Product();
-    product._id = req.body.id
-    product.Modified = Date.now();
-    product.ModifiedBy = req.userId;
-    product.RowStatus = false;
+    var addOns = new ProductAddOns();
+    addOns._id = req.body.id
+    addOns.Modified = Date.now();
+    addOns.ModifiedBy = req.userId;
+    addOns.RowStatus = false;
 
-    Product.findByIdAndUpdate(req.body.id, product, { useFindAndModify: false },
+    ProductAddOns.findByIdAndUpdate(req.body.id, addOns, { useFindAndModify: false },
 
         (err) => {
             if (err) {

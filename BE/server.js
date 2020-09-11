@@ -98,6 +98,7 @@ require("./app/routes/faq.routes")(app);
 require("./app/routes/career.routes")(app);
 require("./app/routes/productCategory.routes")(app);
 require("./app/routes/product.routes")(app)
+require("./app/routes/productAddOns.routes")(app)
 
 
 // set port, listen for requests
