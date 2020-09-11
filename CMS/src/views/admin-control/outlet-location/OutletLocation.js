@@ -11,13 +11,13 @@ import {
   CButton,
   CInput,
   CSelect,
-  CInputCheckbox,
+  // CInputCheckbox,
   CFormGroup,
   CLabel
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import {useDropzone} from 'react-dropzone';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+// import {useDropzone} from 'react-dropzone';
+// import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {outletLocationAction, globalAction} from '../../../redux/actions';
 import {Dropzone} from '../../../components';
 
@@ -56,10 +56,10 @@ const OutletLocation = ({outletLocation, getGridData, global, getBranchStatusDro
   const [form, setForm] = React.useState(DEFAULT_FORM)
 
   // initial data
-  React.useEffect(() => {
-    getBranchStatusDropdown();
-    getGridData();
-  }, []);
+  // React.useEffect(() => {
+  //   getBranchStatusDropdown();
+  //   getGridData();
+  // }, []);
 
   const handleChange = (attr, val) => {
     setForm({
@@ -89,12 +89,12 @@ const OutletLocation = ({outletLocation, getGridData, global, getBranchStatusDro
   const handleUpdate = () => {
     setCreate(true)
   }
-  const handleDeleteSelected = () => {
+  // const handleDeleteSelected = () => {
 
-  }
+  // }
   return (
     <CRow>
-      <CCol xs="8">
+      <CCol md="8" xs="12">
         <CCard>
           <CCardHeader>
             <strong>List Branch</strong>
@@ -152,7 +152,7 @@ const OutletLocation = ({outletLocation, getGridData, global, getBranchStatusDro
           </CCardBody>
         </CCard>
       </CCol>
-      <CCol xs="4">
+      <CCol md="4" xs="12">
         <CCard>
           <CCardHeader>
             <strong>Add Branch</strong>

@@ -27,7 +27,7 @@ module.exports = function(app) {
 *         in : body
 *         type: object
 *         schema:
-*           $ref: '#/definitions/Auth'
+*           $ref: '#/definitions/auth'
 *           type: object
 *           properties:
 *             username:
@@ -94,7 +94,7 @@ module.exports = function(app) {
 *         in : body
 *         type: object
 *         schema:
-*           $ref: '#/definitions/Auth'
+*           $ref: '#/definitions/auth'
 *           type: object
 *           properties:
 *             username:

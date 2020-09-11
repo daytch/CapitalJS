@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { /*HashRouter,*/ Route, Switch } from 'react-router-dom';
 import {withToaster, withTokenProtection} from './views/hoc';
 import './scss/style.scss';
 

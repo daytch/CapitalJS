@@ -7,24 +7,21 @@ import {
   CREATE_OUTLETLOCATION,
   UPDATE_OUTLETLOCATION
 } from '../../constants';
-import {GET, POST} from '../../services';
-import {success, error} from '../../utils/notification';
+import { GET, POST } from '../../services';
+import {/*success,*/ error } from '../../utils/notification';
 
-const outletLocation = state => state.outletLocationReducer;
+// const outletLocation = state => state.outletLocationReducer;
 
-export function* getOutletLocationGridData(action)
-{
-  try
-  {
-    const data = action.payload;
+export function* getOutletLocationGridData(action) {
+  try {
+    // const data = action.payload;
     yield put({ type: SET_OUTLETLOCATION_LOADING, payload: true });
     const res = yield call(
       GET,
       URL.GET_OUTLETLOCATION_GRIDDATA
     );
     console.log(res.result)
-    if(res.isError===0)
-    {
+    if (res.isError === 0) {
       yield put({ type: SET_OUTLETLOCATION_GRIDDATA, payload: res.result });
     }
     yield put({ type: SET_OUTLETLOCATION_LOADING, payload: false });
@@ -50,8 +47,7 @@ export function* createOutletLocation(action) {
         picture: data.picture
       }
     );
-    if(res.isError === 0)
-    {
+    if (res.isError === 0) {
       console.log(res);
     }
     yield put({ type: SET_OUTLETLOCATION_LOADING, payload: false });
@@ -78,8 +74,7 @@ export function* updateOutletLocation(action) {
         picture: data.picture
       }
     );
-    if(res.isError === 0)
-    {
+    if (res.isError === 0) {
       console.log(res);
     }
     yield put({ type: SET_OUTLETLOCATION_LOADING, payload: false });

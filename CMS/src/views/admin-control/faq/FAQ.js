@@ -10,15 +10,15 @@ import {
   CCardFooter,
   CButton,
   CInput,
-  CSelect,
+  // CSelect,
   CFormGroup,
   CLabel
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import {useDropzone} from 'react-dropzone';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {outletLocationAction, globalAction} from '../../../redux/actions';
-import {Dropzone} from '../../../components';
+// import {useDropzone} from 'react-dropzone';
+// import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+// import {outletLocationAction, globalAction} from '../../../redux/actions';
+// import {Dropzone} from '../../../components';
 import {faqAction} from '../../../redux/actions';
 import {Editor} from '../../../components';
 
@@ -55,7 +55,7 @@ const FAQ = ({faq, getFAQGridData, createFAQ, updateFAQ, deleteFAQ, ...props}) =
   // initial data
   React.useEffect(() => {
     getFAQGridData();
-  }, []);
+  }, [getFAQGridData]);
 
   const handleChange = (attr, val) => {
     setForm({

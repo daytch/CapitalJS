@@ -8,10 +8,10 @@ import {
   UPDATE_SLIDERWEBSITE,
   DELETE_SLIDERWEBSITE
 } from '../../constants';
-import {GET, POST} from '../../services';
+import {/*GET,*/ POST} from '../../services';
 import {success, error} from '../../utils/notification';
 
-const sliderWebsite = state => state.sliderWebsiteReducer;
+// const sliderWebsite = state => state.sliderWebsiteReducer;
 
 export function* getSliderWebsiteGridData() {
   try {

@@ -5,13 +5,15 @@ import * as outletLocationAction from './outletLocationAction';
 import * as sliderWebsiteAction from './sliderWebsiteAction';
 import * as faqAction from './faqAction';
 import * as blogAction from './blogAction';
+import * as careerAction from './careerAction';
 
-export{
+export {
   globalAction,
   loginAction,
   companyProfileAction,
   outletLocationAction,
   sliderWebsiteAction,
   faqAction,
-  blogAction
+  blogAction,
+  careerAction
 }

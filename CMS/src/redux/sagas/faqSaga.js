@@ -8,15 +8,13 @@ import {
   UPDATE_FAQ,
   DELETE_FAQ
 } from '../../constants';
-import {GET, POST, PUT, DELETE} from '../../services';
-import {success, error} from '../../utils/notification';
+import { GET, POST, PUT, DELETE } from '../../services';
+import { success, error } from '../../utils/notification';
 
-const faq = state => state.faqReducer;
+// const faq = state => state.faqReducer;
 
-export function* getFAQGridData(action)
-{
-  try
-  {
+export function* getFAQGridData(action) {
+  try {
     yield put({ type: SET_FAQ_LOADING, payload: true });
     const res = yield call(
       GET,
@@ -46,7 +44,7 @@ export function* createFAQ(action) {
       }
     );
     yield success(res.message)
-    if(callback instanceof Function){
+    if (callback instanceof Function) {
       yield call(callback)
     }
     yield call(getFAQGridData)
@@ -72,7 +70,7 @@ export function* updateFAQ(action) {
       }
     );
     yield success(res.message)
-    if(callback instanceof Function){
+    if (callback instanceof Function) {
       yield call(callback)
     }
     yield call(getFAQGridData)
@@ -87,7 +85,11 @@ export function* deleteFAQ(action) {
   try {
     const id = action.payload;
     yield put({ type: SET_FAQ_LOADING, payload: true });
-    const res = yield call(
+    // const res = yield call(
+    //   DELETE,
+    //   URL.DELETE_FAQ + id
+    // );
+    yield call(
       DELETE,
       URL.DELETE_FAQ + id
     );

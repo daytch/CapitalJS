@@ -3,8 +3,8 @@ import {
   TheContent,
   TheSidebar,
   TheFooter,
-  TheHeader,
-  TheToaster
+  TheHeader
+  /*,TheToaster*/
 } from './index'
 
 const TheLayout = () => {

@@ -1,5 +1,5 @@
-import React from 'react'
-import {connect} from 'react-redux';
+  import React from 'react'
+import { connect } from 'react-redux';
 import {
   CCard,
   CCardBody,
@@ -10,9 +10,9 @@ import {
   CCardFooter,
   CButton,
   CInput,
-  CSelect,
+  // CSelect,
   CFormGroup,
-  CLabel,
+  // CLabel,
   CModal,
   CModalBody,
   CModalHeader,
@@ -20,21 +20,21 @@ import {
   CModalFooter
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {Dropzone} from '../../../components';
-import {blogAction, globalAction} from '../../../redux/actions';
+// import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { Dropzone } from '../../../components';
+import { blogAction, globalAction } from '../../../redux/actions';
 import FormBlog from './FormBlog';
 
 const fields = [
   {
     key: 'no',
     label: "No.",
-    _style: { width: '1%'},
+    _style: { width: '1%' },
     sorter: false,
     filter: false
   },
-  { key: 'Title', _style: { width: '80%'} },
-  { key: 'MasterStatusID', _style: { width: '1%%'} },
+  { key: 'Title', _style: { width: '80%' } },
+  { key: 'MasterStatusID', _style: { width: '1%%' } },
   {
     key: 'action',
     label: 'Action',
@@ -57,11 +57,11 @@ const blogCategoryFields = [
   {
     key: 'no',
     label: "No.",
-    _style: { width: '1%'},
+    _style: { width: '1%' },
     sorter: false,
     filter: false
   },
-  { key: 'id', _style: { width: '89%'} },
+  { key: 'id', _style: { width: '89%' } },
   {
     key: 'action',
     label: 'Action',
@@ -71,7 +71,7 @@ const blogCategoryFields = [
   }
 ]
 
-const BlogCategoryList = ({griddata, handleUpdate, ...props}) => {
+const BlogCategoryList = ({ griddata, handleUpdate, ...props }) => {
   const [form, setForm] = React.useState([]);
   React.useEffect(() => {
     setForm(griddata.map((v) => ({
@@ -91,23 +91,23 @@ const BlogCategoryList = ({griddata, handleUpdate, ...props}) => {
       hover
       sorter
       pagination
-      scopedSlots = {{
+      scopedSlots={{
         'no': (item, index) => {
           return (
             <td>
-              {index+1}
+              {index + 1}
             </td>
           )
         },
         'id': (item, index) => {
           return (
             <td>
-              <CInput value={form[index].name} onChange={(e) => handleChange(index, e.target.value)}/>
+              <CInput value={form[index].name} onChange={(e) => handleChange(index, e.target.value)} />
             </td>
           )
         },
         'action':
-          (item, index)=>{
+          (item, index) => {
             return (
               <td className="py-2">
                 <div className="icon-wrapper btn-primary" onClick={() => handleUpdate(item.id, form[index].name)}>
@@ -135,7 +135,7 @@ const Blog = ({
     getBlogCategory();
     getBlogStatusDropdown();
     getBlogGridData();
-  }, []);
+  }, [getBlogCategory,getBlogStatusDropdown,getBlogGridData]);
 
   const handleChange = (attr, val) => {
     setForm({
@@ -160,7 +160,7 @@ const Blog = ({
   const handleButtonCreate = () => {
     setIsFormPage(true)
   }
-  const resetForm  = () => {
+  const resetForm = () => {
     setForm(DEFAULT_FORM)
     setIsFormPage(false)
   }
@@ -176,15 +176,15 @@ const Blog = ({
   }
   const handleDelete = (id) => {
     let yes = window.confirm("Are you sure to delete this Blog...?");
-    if(yes){
+    if (yes) {
       deleteBlog(id)
     }
   }
   const handleUpdateBlogCategory = (id, name) => {
-    updateBlogCategory({id, name})
+    updateBlogCategory({ id, name })
   }
   const handleCreateBlogCategory = () => {
-    createBlogCategory({name: formBlogCategory}, () => {
+    createBlogCategory({ name: formBlogCategory }, () => {
       setFormBlogCategory("")
     })
   }
@@ -216,7 +216,7 @@ const Blog = ({
       {
         !isFormPage && (
           <>
-            <CCol xs="8">
+            <CCol xs="12" md="8">
               <CButton type="button" color="primary" onClick={handleButtonCreate} data-margin-bottom="xs">Create Blog</CButton>
               <CCard>
                 <CCardHeader>
@@ -233,11 +233,11 @@ const Blog = ({
                     hover
                     sorter
                     pagination
-                    scopedSlots = {{
+                    scopedSlots={{
                       'no': (item, index) => {
                         return (
                           <td>
-                            {index+1}
+                            {index + 1}
                           </td>
                         )
                       },
@@ -250,8 +250,8 @@ const Blog = ({
                       },
                       'MasterStatusID': (item) => {
                         let status = "";
-                        if(global.blogStatusDropdown && global.blogStatusDropdown.length){
-                          status = global.blogStatusDropdown.find((v) => v.id==item.MasterStatusID)
+                        if (global.blogStatusDropdown && global.blogStatusDropdown.length) {
+                          status = global.blogStatusDropdown.find((v) => v.id === item.MasterStatusID)
                           status = status && status.name
                         }
                         return (
@@ -261,14 +261,14 @@ const Blog = ({
                         )
                       },
                       'action':
-                        (item, index)=>{
+                        (item, index) => {
                           return (
                             <td className="py-2">
                               <div className="icon-wrapper btn-primary" onClick={() => handleEdit(item)}>
-                                <CIcon name={"cil-pencil"} size="lg"/>
+                                <CIcon name={"cil-pencil"} size="lg" />
                               </div>
                               <div className="icon-wrapper btn-danger" onClick={() => handleDelete(item._id)}>
-                                <CIcon name={"cil-trash"} size="lg"/>
+                                <CIcon name={"cil-trash"} size="lg" />
                               </div>
                             </td>
                           )
@@ -278,7 +278,7 @@ const Blog = ({
                 </CCardBody>
               </CCard>
             </CCol>
-            <CCol xs="4">
+            <CCol xs="12" md="8">
               <CCard>
                 <CCardHeader>
                   <strong>Header Blog</strong>
@@ -298,7 +298,7 @@ const Blog = ({
                 </CCardHeader>
                 <CCardBody>
                   <CFormGroup>
-                    <CInput id="blogCategory" placeholder="Blog Category" required value={formBlogCategory} onChange={(e) => setFormBlogCategory(e.target.value)}/>
+                    <CInput id="blogCategory" placeholder="Blog Category" required value={formBlogCategory} onChange={(e) => setFormBlogCategory(e.target.value)} />
                   </CFormGroup>
                 </CCardBody>
                 <CCardFooter>
@@ -311,7 +311,7 @@ const Blog = ({
         )
       }
       <CModal
-        show={isModalOpen} 
+        show={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         size="lg"
       >
@@ -333,5 +333,5 @@ const mapStateToProps = state => ({
   blog: state.blogReducer,
   global: state.globalReducer,
 });
-const mapActionToProps = {...blogAction, ...globalAction};
+const mapActionToProps = { ...blogAction, ...globalAction };
 export default connect(mapStateToProps, mapActionToProps)(Blog);

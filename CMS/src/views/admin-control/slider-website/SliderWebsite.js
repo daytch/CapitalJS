@@ -72,10 +72,10 @@ const SliderWebsite = ({
   const [checkList,setCheckList] = React.useState([])
 
   // initial data
-  React.useEffect(() => {
-    getSliderStatusDropdown()
-    getGridData()
-  }, [])
+  // React.useEffect(() => {
+  //   getSliderStatusDropdown()
+  //   getGridData()
+  // }, [])
 
   // React.useEffect(() => {
   //   if(checkList.length == 0){
@@ -83,7 +83,7 @@ const SliderWebsite = ({
   //   }
   // }, [sliderWebsite.griddata])
 
-  const {acceptedFiles, getRootProps, getInputProps} = useDropzone({
+  const {/*acceptedFiles,*/ getRootProps, getInputProps} = useDropzone({
     getFilesFromEvent: event => {
       const files = [];
       const fileList = event.dataTransfer ? event.dataTransfer.files : event.target.files;
@@ -163,7 +163,7 @@ const SliderWebsite = ({
   }
   return (
     <CRow>
-      <CCol xs="8">
+      <CCol xs="12" md="8">
         <CCard>
           <CCardHeader>
             <strong>List Slider Website</strong>
@@ -244,7 +244,7 @@ const SliderWebsite = ({
           </CCardFooter>
         </CCard>
       </CCol>
-      <CCol xs="4">
+      <CCol xs="12" md="4">
         <CCard>
           <CCardHeader>
             <strong>Add Slider Website</strong>

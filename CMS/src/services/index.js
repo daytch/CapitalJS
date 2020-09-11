@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {getHeader, getHeaderToken, getTokenOnly, getToken} from './common';
+import { getHeaderToken, getTokenOnly, getToken} from './common';
 import {globalAction} from '../redux/actions';
 import store from '../redux/store';
 import {URL, API_BASE_URL} from '../constants';

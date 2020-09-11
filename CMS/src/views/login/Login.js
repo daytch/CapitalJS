@@ -1,6 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux';
-import { Link } from 'react-router-dom'
 import {
   CButton,
   CCard,
@@ -31,7 +30,7 @@ const Login = ({login, doLogin, ...props}) => {
     })
   }
   const handleLogin = () => {
-    debugger;
+    
     doLogin(form)
   }
   return (

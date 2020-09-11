@@ -6,6 +6,7 @@ import outletLocationReducer from './outletLocationReducer';
 import sliderWebsiteReducer from './sliderWebsiteReducer';
 import faqReducer from './faqReducer';
 import blogReducer from './blogReducer';
+import careerReducer from './careerReducer';
 
 const rootReducer = combineReducers({
   globalReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   outletLocationReducer,
   sliderWebsiteReducer,
   faqReducer,
-  blogReducer
+  blogReducer,
+  careerReducer
 });
 
 export default rootReducer;

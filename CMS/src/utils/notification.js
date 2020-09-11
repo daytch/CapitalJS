@@ -1,4 +1,3 @@
-import React from 'react';
 import { put } from 'redux-saga/effects';
 import {globalAction} from '../redux/actions';
 

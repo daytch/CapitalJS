@@ -10,13 +10,13 @@ import {
   CFormGroup,
   CInput,
   CInputFile,
-  CFormText,
+  // CFormText,
   CSelect,
   CLabel
 } from '@coreui/react'
-import {Editor} from '../../../components';
+import { Editor } from '../../../components';
 
-import {UploadImage} from '../../../services';
+import { UploadImage } from '../../../services';
 
 const FormBlog = ({
   id,
@@ -45,7 +45,7 @@ const FormBlog = ({
   // })
 
   const handleHeaderBlogChange = (e) => {
-    if(e.target.files.length) {
+    if (e.target.files.length) {
       UploadImage(e.target.files[0], (data) => {
         handleChange("headerBlogLink", data);
       })
@@ -76,7 +76,7 @@ const FormBlog = ({
                   <CLabel htmlFor="title">Judul Blog</CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
-                  <CInput id="title" value={title} onChange={(e) => handleChange("title", e.target.value)} placeholder="Judul Blog..."/>
+                  <CInput id="title" value={title} onChange={(e) => handleChange("title", e.target.value)} placeholder="Judul Blog..." />
                 </CCol>
               </CFormGroup>
               <CFormGroup row>
@@ -86,7 +86,7 @@ const FormBlog = ({
                 <CCol xs="12" md="9">
                   <Editor
                     data={body}
-                    onChange={ ( event, editor ) => {
+                    onChange={(event, editor) => {
                       const data = editor.getData();
                       handleChange("body", data);
                     }}
@@ -116,12 +116,12 @@ const FormBlog = ({
                     {
                       headerBlogLink && (
                         <div>
-                          <img className="preview_image" src={headerBlogLink} />
+                          <img alt="Logo" className="preview_image" src={headerBlogLink} />
                         </div>
                       )
                     }
-                    <div style={{position: "relative"}}>
-                      <CInputFile custom id="headerBlogLink" onChange={(e) => handleHeaderBlogChange(e)}/>
+                    <div style={{ position: "relative" }}>
+                      <CInputFile custom id="headerBlogLink" onChange={(e) => handleHeaderBlogChange(e)} />
                       <CLabel htmlFor="headerBlogLink" variant="custom-file">
                         Choose file...
                       </CLabel>
@@ -133,9 +133,9 @@ const FormBlog = ({
           </CCardBody>
           <CCardFooter>
             {
-              id ? 
-              <CButton type="button" color="success" onClick={handleUpdate}>Update</CButton> :
-              <CButton type="button" color="primary" onClick={handleCreate}>Create</CButton>
+              id ?
+                <CButton type="button" color="success" onClick={handleUpdate}>Update</CButton> :
+                <CButton type="button" color="primary" onClick={handleCreate}>Create</CButton>
             }
             <CButton type="button" color="danger" onClick={handleCancel}>Cancel</CButton>
           </CCardFooter>

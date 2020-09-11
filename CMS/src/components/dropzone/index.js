@@ -4,7 +4,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {UploadImage} from '../../services';
 
 const Dropzone = ({src, onChange, onRemove, ...props}) => {
-  const {acceptedFiles, getRootProps, getInputProps} = useDropzone({
+  const {/*acceptedFiles,*/ getRootProps, getInputProps} = useDropzone({
     getFilesFromEvent: event => {
       const files = [];
       const fileList = event.dataTransfer ? event.dataTransfer.files : event.target.files;

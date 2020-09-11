@@ -5,11 +5,11 @@ const MasterStatus = mongoose.model(
     new mongoose.Schema({
         ConfigStatus: String,
         Status: String,
-        Created: Date,
+        Created: { type: Date, default: Date.now },
         CreatedBy: String,
-        Modified: Date,
+        Modified: { type: Date, default: Date.now },
         ModifiedBy: String,
-        RowStatus : Boolean
+        RowStatus: Boolean
     })
 );
 

@@ -13,15 +13,13 @@ import {
   UPDATE_BLOGCATEGORY,
   DELETE_BLOGCATEGORY,
 } from '../../constants';
-import {GET, POST, PUT, DELETE} from '../../services';
-import {success, error} from '../../utils/notification';
+import { POST /*, PUT,GET, DELETE*/ } from '../../services';
+import { success, error } from '../../utils/notification';
 
-const blog = state => state.blogReducer;
+// const blog = state => state.blogReducer;
 
-export function* getBlogGridData(action)
-{
-  try
-  {
+export function* getBlogGridData(action) {
+  try {
     yield put({ type: SET_BLOG_LOADING, payload: true });
     const res = yield call(
       POST,
@@ -35,10 +33,8 @@ export function* getBlogGridData(action)
   }
 }
 
-export function* getBlogCategory(action)
-{
-  try
-  {
+export function* getBlogCategory(action) {
+  try {
     yield put({ type: SET_BLOG_LOADING, payload: true });
     const res = yield call(
       POST,
@@ -69,7 +65,7 @@ export function* createBlog(action) {
       }
     );
     yield success(res.message)
-    if(callback instanceof Function){
+    if (callback instanceof Function) {
       yield call(callback)
     }
     yield call(getBlogGridData)
@@ -95,7 +91,7 @@ export function* createBlogCategory(action) {
     );
     console.log(res)
     yield success(res.message)
-    if(callback instanceof Function){
+    if (callback instanceof Function) {
       yield call(callback)
     }
     yield call(getBlogCategory)
@@ -124,7 +120,7 @@ export function* updateBlog(action) {
       }
     );
     yield success(res.message)
-    if(callback instanceof Function){
+    if (callback instanceof Function) {
       yield call(callback)
     }
     yield call(getBlogGridData)
@@ -150,7 +146,7 @@ export function* updateBlogCategory(action) {
       }
     );
     yield success(res.message)
-    if(callback instanceof Function){
+    if (callback instanceof Function) {
       yield call(callback)
     }
     yield call(getBlogCategory)
@@ -165,7 +161,7 @@ export function* deleteBlog(action) {
   try {
     const id = action.payload;
     yield put({ type: SET_BLOG_LOADING, payload: true });
-    const res = yield call(
+    yield call(
       POST,
       URL.DELETE_BLOG,
       {
@@ -184,7 +180,7 @@ export function* deleteBlogCategory(action) {
   try {
     const id = action.payload;
     yield put({ type: SET_BLOG_LOADING, payload: true });
-    const res = yield call(
+    yield call(
       POST,
       URL.DELETE_BLOGCATEGORY,
       {

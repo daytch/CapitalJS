@@ -11,12 +11,14 @@ export const URL = {
   GET_BRANCHSTATUS_DROPDOWN: API_URL + "/masterstatus/branchconfig",
   GET_BLOGSTATUS_DROPDOWN: API_URL + "/masterstatus/blogconfig",
   GET_COMPANYPROFILE_DATA: API_URL + "/companyprofile/loadconfig",
+  GET_CAREER_DATA: API_URL + "/career/load",
   GET_SLIDERWEBSITE_GRIDDATA: API_URL + "/sliderwebsite/load",
   GET_OUTLETLOCATION_GRIDDATA: API_URL + "/branch/load",
   GET_FAQ_GRIDDATA: API_URL + "/faq",
   GET_BLOG_GRIDDATA: API_URL + "/blog/load",
   GET_BLOGCATEGORY: API_URL + "/blogcategory/load",
   SAVE_COMPANYPROFILE: API_URL + "/companyprofile/save",
+  SAVE_CAREER: API_URL + "/career/save",
   SAVE_SLIDERWEBSITE: API_URL + "/sliderwebsite/save",
   SAVE_OUTLETLOCATION: API_URL + "/branch/save",
   SAVE_FAQ: API_URL + "/faq",
@@ -34,6 +36,12 @@ export const SET_TOASTMESSAGE = 'SET_TOASTMESSAGE';
 // Login
 export const HANDLE_LOGIN = 'HANDLE_LOGIN';
 export const SET_LOGIN_LOADING = 'SET_LOGIN_LOADING';
+
+// Career
+export const HANDLE_CAREER_SUBMIT = 'HANDLE_CAREER_SUBMIT';
+export const GET_CAREER_DATA = 'GET_CAREER_DATA';
+export const SET_CAREER_DATA = 'SET_CAREER_DATA';
+export const SET_CAREER_LOADING = 'SET_CAREER_LOADING';
 
 // Company Profile
 export const HANDLE_COMPANYPROFILE_SUBMIT = 'HANDLE_COMPANYPROFILE_SUBMIT';

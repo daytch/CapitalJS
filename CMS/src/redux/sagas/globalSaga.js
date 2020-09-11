@@ -8,11 +8,11 @@ import {
   SET_BRANCHSTATUS_DROPDOWN,
   SET_BLOGSTATUS_DROPDOWN
 } from '../../constants';
-import {GET, POST} from '../../services';
-import {success, error} from '../../utils/notification';
-import history from '../../utils/history';
+import {GET /*, POST*/} from '../../services';
+import {/*success,*/ error} from '../../utils/notification';
+// import history from '../../utils/history';
 
-const global = state => state.loginReducer;
+// const global = state => state.loginReducer;
 
 export function* getSliderStatusDropdown(action) {
   try {
