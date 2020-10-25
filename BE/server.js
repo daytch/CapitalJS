@@ -7,12 +7,20 @@ const swaggerUi = require('swagger-ui-express');
 const app = express();
 
 var IsProd = process.env.PROD || false;
-var corsOptions = (IsProd) ? {
-  origin: ["http://5.189.134.84:8081", "http://5.189.134.84:3000"]
-} : {
-    origin: ["http://localhost:8081", "http://localhost:3000"]
-  };
+console.log(IsProd);
+// var corsOptions = (IsProd) ? {
+//   origin: ["http://5.189.134.84:8081", "http://5.189.134.84:3000"]
+// } : {
+//     origin: ["http://localhost:8081", "http://localhost:3000"]
+//   };
+var allowedOrigins = (IsProd) ?
+  ["http://5.189.134.84:8081", "http://5.189.134.84:3000", "http://localhost:3000"]
+  :
+  ["http://localhost:8081", "http://localhost:3000"]
+  ;
 
+
+console.log(corsOptions);
 if (dbConfig.swagger) {
   const swaggerDefinition = {
     info: {
@@ -48,7 +56,21 @@ if (dbConfig.swagger) {
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 }
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.use(cors({
+  origin: function (origin, callback) {
+    // allow requests with no origin 
+    // (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      var msg = 'The CORS policy for this site does not ' +
+        'allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  }
+}));
+
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());

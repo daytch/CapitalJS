@@ -1,6 +1,6 @@
 export const PROD = 'http://5.189.134.84:8080';
 export const DEV = 'http://localhost:8080';
-export const API_BASE_URL = DEV;
+export const API_BASE_URL = PROD;
 export const API_URL = API_BASE_URL + "/api";
 export const URL = {
   FAKE: "https://jsonplaceholder.typicode.com/todos",
