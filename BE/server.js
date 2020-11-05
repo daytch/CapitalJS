@@ -14,7 +14,7 @@ console.log(IsProd);
 //     origin: ["http://localhost:8081", "http://localhost:3000"]
 //   };
 var allowedOrigins = (IsProd) ?
-  ["http://5.189.134.84:8081", "http://5.189.134.84:3000", "http://localhost:8080"]
+  ["http://5.189.134.84:8080", "http://5.189.134.84:8081", "http://5.189.134.84:3000", "http://localhost:3000","http://5.189.134.84:6971"]
   :
   ["http://localhost:8081", "http://localhost:8080"]
   ;
@@ -92,6 +92,7 @@ db.mongoose
   })
   .then(() => {
     console.log("Successfully connect to MongoDB.");
+    console.log("IsProd = " + IsProd);
     if (!IsProd) {
       // initial();
     }
@@ -119,8 +120,9 @@ require("./app/routes/branch.routes")(app);
 require("./app/routes/faq.routes")(app);
 require("./app/routes/career.routes")(app);
 require("./app/routes/productCategory.routes")(app);
-require("./app/routes/product.routes")(app)
-require("./app/routes/productAddOns.routes")(app)
+require("./app/routes/product.routes")(app);
+require("./app/routes/productAddOns.routes")(app);
+require("./app/routes/contactUs.routes")(app);
 
 
 // set port, listen for requests
