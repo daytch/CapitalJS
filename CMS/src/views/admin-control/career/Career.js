@@ -1,161 +1,272 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import {
-  CButton,
   CCard,
   CCardBody,
-  CCardFooter,
+  CCardHeader,
   CCol,
   CRow,
-  CForm,
-  CFormGroup,
+  CDataTable,
+  CCardFooter,
+  CButton,
   CInput,
-  CLabel
+  CInputCheckbox,
+  CFormGroup,
+  CLabel,
+  CSelect
 } from '@coreui/react'
-import { Editor } from '../../../components';
+import CIcon from '@coreui/icons-react'
+import { useDropzone } from 'react-dropzone';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { careerAction, globalAction } from '../../../redux/actions';
 
-import { careerAction } from '../../../redux/actions';
+import { UploadImage } from '../../../services';
 
-const Career = ({ career, careerSubmit, getCareer, ...props }) => {
-  const firstLoad = React.useRef(true)
-  const [form, setForm] = React.useState({
-    id: "",
-    profile: "",
-    tagline: "",
-    email: "",
-    phone: "",
-    whatsapp: "",
-    instagram: "",
-    facebook: "",
-    twitter: "",
-    logo: ""
-  })
+const fields = [
+  {
+    key: 'check',
+    label: "",
+    _style: { width: '1%' },
+    sorter: false,
+    filter: false
+  },
+  { key: 'Picture', _style: { width: '79%' } },
+  { key: 'RowStatus', _style: { width: '10%' } },
+  {
+    key: 'action',
+    label: 'Action',
+    _style: { width: '10%' },
+    sorter: false,
+    filter: false
+  }
+]
+const DEFAULT_FORM = {
+  id: "",
+  linkslider: "",
+  status: "",
+  image: ""
+}
+const Career = ({
+  global, sliderWebsite, getSliderStatusDropdown, getGridData,
+  saveSliderWebsite, updateSliderWebsite, deleteSliderWebsite, ...props
+}) => {
+  const [create, setCreate] = React.useState(true)
+  const [form, setForm] = React.useState(DEFAULT_FORM)
+  const [checkList, setCheckList] = React.useState([])
 
-  React.useEffect(() => {
-    getCareer()
-  })
+  const {/*acceptedFiles,*/ getRootProps, getInputProps } = useDropzone({
+    getFilesFromEvent: event => {
+      const files = [];
+      const fileList = event.dataTransfer ? event.dataTransfer.files : event.target.files;
 
-  React.useEffect(() => {
-    
-    if (career.data !== null) {
-      console.log(career.data)
-      setForm({ ...career.data })
+      for (var i = 0; i < fileList.length; i++) {
+        const file = fileList.item(i);
+
+        Object.defineProperty(file, 'myProp', {
+          value: true
+        });
+
+        files.push(file);
+      }
+      if (files.length) {
+        UploadImage(files[0], (url) => {
+          handleChange("image", url)
+        })
+      }
+
+      return files;
     }
-  }, [career.data])
-
-  React.useEffect(() => {
-    if (firstLoad.current && career.data !== null) {
-      firstLoad.current = false;
-    }
-  })
-
+  });
+  
   const handleChange = (attr, val) => {
     setForm({
       ...form,
       [attr]: val
     })
   }
-  const handleUpdate = () => {
-    careerSubmit(form)
+  const handleDropzoneImageRemove = () => {
+    return setForm({
+      ...form,
+      image: ""
+    })
   }
-
+  const resetCheckList = () => {
+    setCheckList(new Array(sliderWebsite.griddata.length).fill(false))
+  }
+  const resetForm = () => {
+    setForm(DEFAULT_FORM)
+    setCreate(true)
+  }
+  const handleChecked = (index, checked) => {
+    checkList[index] = checked
+    setCheckList([...checkList])
+  }
+  const handleCreate = () => {
+    saveSliderWebsite({
+      ...form,
+      status: form.status || global.sliderStatusDropdown[0].id
+    }, resetForm)
+  }
+  const handleEdit = (item) => {
+    setCreate(false)
+    setForm({
+      id: item._id,
+      linkslider: item.Description,
+      show: item.MasterStatusId,
+      image: item.Picture
+    })
+  }
+  const handleCancel = () => {
+    setCreate(true)
+  }
+  const handleDeleteSelected = () => {
+    const deletedIds = []
+    checkList.forEach((v, i) => {
+      if (v) {
+        deletedIds.push(sliderWebsite.griddata[i]._id)
+      }
+    })
+    deleteSliderWebsite(deletedIds, resetCheckList)
+  }
   return (
     <CRow>
-      <CCol xs="12">
+      <CCol xs="12" md="8">
         <CCard>
+          <CCardHeader>
+            <strong>List Slider Website</strong>
+          </CCardHeader>
           <CCardBody>
-            <CForm action="" method="post" className="form-horizontal">
-              <CFormGroup row>
-                <CCol md="3">
-                  <CLabel htmlFor="cp-email">Profile</CLabel>
-                </CCol>
-                <CCol xs="12" md="9">
-                  <Editor
-                    data={form.profile}
-                    onChange={(event, editor) => {
-                      if (!firstLoad.current) {
-                        const data = editor.getData();
-                        handleChange("profile", data);
-                      }
-                    }}
-                  />
-                  {/* <CInput type="text" id="cp-profile" value={form.profile} onChange={(e) => handleChange("profile", e.target.value)} name="cp-profile" placeholder="Enter Profile..." autoComplete="profile" /> */}
-                </CCol>
-              </CFormGroup>
-              <CFormGroup row>
-                <CCol md="3">
-                  <CLabel htmlFor="cp-tagline">Tagline</CLabel>
-                </CCol>
-                <CCol xs="12" md="9">
-                  <CInput type="text" id="cp-tagline" value={form.tagline} onChange={(e) => handleChange("tagline", e.target.value)} name="cp-tagline" placeholder="Enter Tagline..." autoComplete="tagline" />
-                </CCol>
-              </CFormGroup>
-              <CFormGroup row>
-                <CCol md="3">
-                  <CLabel htmlFor="cp-email">Email</CLabel>
-                </CCol>
-                <CCol xs="12" md="9">
-                  <CInput type="email" id="cp-email" value={form.email} onChange={(e) => handleChange("email", e.target.value)} name="cp-email" placeholder="Enter Email..." autoComplete="email" />
-                </CCol>
-              </CFormGroup>
-              <CFormGroup row>
-                <CCol md="3">
-                  <CLabel htmlFor="cp-phone">Phone</CLabel>
-                </CCol>
-                <CCol xs="12" md="9">
-                  <CInput type="text" id="cp-phone" value={form.phone} onChange={(e) => handleChange("phone", e.target.value)} name="cp-phone" placeholder="Enter Phone..." autoComplete="phone" />
-                </CCol>
-              </CFormGroup>
-              <CFormGroup row>
-                <CCol md="3">
-                  <CLabel htmlFor="cp-whatsapp">Whatsapp Link</CLabel>
-                </CCol>
-                <CCol xs="12" md="9">
-                  <CInput type="text" id="cp-whatsapp" value={form.whatsapp} onChange={(e) => handleChange("whatsapp", e.target.value)} name="cp-whatsapp" placeholder="Enter Whatsapp..." autoComplete="whatsapp" />
-                </CCol>
-              </CFormGroup>
-              <CFormGroup row>
-                <CCol md="3">
-                  <CLabel htmlFor="cp-instagram">Instagram Link</CLabel>
-                </CCol>
-                <CCol xs="12" md="9">
-                  <CInput type="text" id="cp-instagram" value={form.instagram} onChange={(e) => handleChange("instagram", e.target.value)} name="cp-instagram" placeholder="Enter Instagram..." autoComplete="instagram" />
-                </CCol>
-              </CFormGroup>
-              <CFormGroup row>
-                <CCol md="3">
-                  <CLabel htmlFor="cp-facebook">Facebook Link</CLabel>
-                </CCol>
-                <CCol xs="12" md="9">
-                  <CInput type="text" id="cp-facebook" value={form.facebook} onChange={(e) => handleChange("facebook", e.target.value)} name="cp-facebook" placeholder="Enter Facebook..." autoComplete="facebook" />
-                </CCol>
-              </CFormGroup>
-              <CFormGroup row>
-                <CCol md="3">
-                  <CLabel htmlFor="cp-twitter">Twitter Link</CLabel>
-                </CCol>
-                <CCol xs="12" md="9">
-                  <CInput type="text" id="cp-twitter" value={form.twitter} onChange={(e) => handleChange("twitter", e.target.value)} name="cp-twitter" placeholder="Enter Twitter..." autoComplete="twitter" />
-                </CCol>
-              </CFormGroup>
-              <CFormGroup row>
-                <CCol md="3">
-                  <CLabel>Logo</CLabel>
-                </CCol>
-              </CFormGroup>
-            </CForm>
+            <CDataTable
+              items={sliderWebsite.griddata}
+              fields={fields}
+              tableFilter
+              itemsPerPageSelect
+              itemsPerPage={5}
+              hover
+              sorter
+              pagination
+              columnHeaderSlot={{
+                'check': (
+                  <CFormGroup variant="custom-checkbox">
+                    <CInputCheckbox
+                      custom
+                      id={"check-all"}
+                      name={"check-all"}
+                      value={"check-all"}
+                    />
+                    <CLabel variant="custom-checkbox" htmlFor={"check-all"}></CLabel>
+                  </CFormGroup>
+                )
+              }}
+              scopedSlots={{
+                'check': (item, index) => {
+                  return (
+                    <td>
+                      <CFormGroup variant="custom-checkbox">
+                        <CInputCheckbox
+                          custom
+                          id={index}
+                          name={index}
+                          value={index}
+                          checked={checkList[index] || false}
+                          onChange={(e) => handleChecked(index, e.target.checked)}
+                        />
+                        <CLabel variant="custom-checkbox" htmlFor={index}></CLabel>
+                      </CFormGroup>
+                    </td>
+                  )
+                },
+                'Picture': (item) => {
+                  return (
+                    <td align="center">
+                      <img className="sw_table__image" src={item.Picture} alt="" />
+                    </td>
+                  )
+                },
+                'RowStatus': (item) => {
+                  return (
+                    <td>
+                      {item.RowStatus ? "SHOW" : "UNSHOW"}
+                    </td>
+                  )
+                },
+                'action':
+                  (item, index) => {
+                    return (
+                      <td className="py-2">
+                        <div className="icon-wrapper btn-primary" onClick={() => handleEdit(item)}>
+                          <CIcon name={"cil-pencil"} size="lg" />
+                        </div>
+                        <div className="icon-wrapper btn-danger">
+                          <CIcon name={"cil-trash"} size="lg" />
+                        </div>
+                      </td>
+                    )
+                  }
+              }}
+            />
           </CCardBody>
           <CCardFooter>
-            <CButton type="button" color="primary" onClick={handleUpdate}>Update</CButton>
+            <CButton type="button" color="danger" onClick={handleDeleteSelected}>Delete</CButton>
+          </CCardFooter>
+        </CCard>
+      </CCol>
+      <CCol xs="12" md="4">
+        <CCard>
+          <CCardHeader>
+            <strong>Add Slider Website</strong>
+          </CCardHeader>
+          <CCardBody>
+            <CFormGroup>
+              <CLabel htmlFor="status">Status</CLabel>
+              <CSelect custom name="status" value={form.status} id="status" onChange={(e) => handleChange("status", e.target.value)}>
+                {global.sliderStatusDropdown.map((v) => {
+                  return (
+                    <option key={v.id} value={v.id}>{v.name}</option>
+                  )
+                })}
+              </CSelect>
+            </CFormGroup>
+            <CFormGroup>
+              <CLabel htmlFor="add-linkslider">Link Slider</CLabel>
+              <CInput id="add-linkslider" placeholder="Insert Link Slider" required value={form.linkslider} onChange={(e) => handleChange("linkslider", e.target.value)} />
+            </CFormGroup>
+            <div className="dropzone-wrapper">
+              <div {...getRootProps({ className: 'dropzone' })} data-margin-top="xs">
+                {
+                  form.image && (
+                    <div className="dropzone-image-wrapper">
+                      <img src={form.image} alt="" style={{ width: "100%" }} />
+                    </div>
+                  )
+                }
+                <input {...getInputProps()} />
+                <p><strong>Drag 'n' drop some files here, or click to select files</strong></p>
+              </div>
+              {
+                form.image &&
+                <FontAwesomeIcon icon="times-circle" size="lg" className="dropzone-image-close" onClick={handleDropzoneImageRemove} />
+              }
+            </div>
+          </CCardBody>
+          <CCardFooter>
+            {
+              create ?
+                <CButton type="button" color="primary" onClick={handleCreate}>Create</CButton> :
+                <>
+                  <CButton type="button" color="success" onClick={handleDeleteSelected}>Update</CButton>
+                  <CButton type="button" color="danger" onClick={handleCancel}>Cancel</CButton>
+                </>
+            }
           </CCardFooter>
         </CCard>
       </CCol>
     </CRow>
   )
-
 }
+
 const mapStateToProps = state => ({
   career: state.careerReducer
 });
-const mapActionToProps = careerAction;
+const mapActionToProps = { ...careerAction, ...globalAction };
 export default connect(mapStateToProps, mapActionToProps)(Career);

@@ -14,13 +14,13 @@ console.log(IsProd);
 //     origin: ["http://localhost:8081", "http://localhost:3000"]
 //   };
 var allowedOrigins = (IsProd) ?
-  ["http://5.189.134.84:8081", "http://5.189.134.84:3000", "http://localhost:3000"]
+  ["http://5.189.134.84:8081", "http://5.189.134.84:3000", "http://localhost:8080"]
   :
-  ["http://localhost:8081", "http://localhost:3000"]
+  ["http://localhost:8081", "http://localhost:8080"]
   ;
 
 
-console.log(corsOptions);
+console.log(allowedOrigins);
 if (dbConfig.swagger) {
   const swaggerDefinition = {
     info: {
@@ -93,7 +93,7 @@ db.mongoose
   .then(() => {
     console.log("Successfully connect to MongoDB.");
     if (!IsProd) {
-      initial();
+      // initial();
     }
   })
   .catch(err => {
