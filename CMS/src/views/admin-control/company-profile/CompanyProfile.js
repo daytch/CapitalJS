@@ -40,7 +40,6 @@ const CompanyProfile = ({ companyProfile, companyProfileSubmit, getCompanyProfil
 
   React.useEffect(() => {
     if (companyProfile.data !== null) {
-      console.log(companyProfile.data)
       setForm({ ...companyProfile.data })
     }
   }, [companyProfile.data])
@@ -80,11 +79,9 @@ const CompanyProfile = ({ companyProfile, companyProfileSubmit, getCompanyProfil
                 <CCol xs="12" md="9">
                   <Editor
                     data={form.profile}
-                    onChange={(event, editor) => {
-                      if (!firstLoad.current) {
+                    onChange={(event, editor) => {        
                         const data = editor.getData();
                         handleChange("profile", data);
-                      }
                     }}
                   />
                   {/* <CInput type="text" id="cp-profile" value={form.profile} onChange={(e) => handleChange("profile", e.target.value)} name="cp-profile" placeholder="Enter Profile..." autoComplete="profile" /> */}

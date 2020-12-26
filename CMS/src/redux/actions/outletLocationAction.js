@@ -2,7 +2,8 @@ import {
   // HANDLE_COMPANYPROFILE_SUBMIT,
   CREATE_OUTLETLOCATION,
   UPDATE_OUTLETLOCATION,
-  GET_OUTLETLOCATION_GRIDDATA
+  GET_OUTLETLOCATION_GRIDDATA,
+  DELETE_OUTLETLOCATION
 } from '../../constants';
 
 export function getGridData() {
@@ -26,8 +27,17 @@ export function createOutletLocation(data) {
   };
 }
 
+export function deleteOutletLocation(id){
+  console.log('ini action' + JSON.stringify(id))
+    return {
+      type: DELETE_OUTLETLOCATION,
+      payload: id
+    }
+}
+
 export default {
   getGridData: getGridData,
   createOutletLocation: createOutletLocation,
-  updateOutletLocation: updateOutletLocation
+  updateOutletLocation: updateOutletLocation,
+  deleteOutletLocation: deleteOutletLocation
 };

@@ -1,5 +1,7 @@
 const { verifySignUp } = require("../middlewares");
 const controller = require("../controllers/auth.controller");
+const Role = require("../models/role.model");
+
 
 module.exports = function(app) {
   app.use(function(req, res, next) {
@@ -10,7 +12,7 @@ module.exports = function(app) {
     next();
   });
 
-  
+
   /**
 * @swagger
 * /api/auth/signup:
@@ -68,6 +70,8 @@ module.exports = function(app) {
 *               type: string
 *               example: 0858 6666 1326
 */
+
+  
   app.post(
     "/api/auth/signup",
     [
@@ -76,6 +80,19 @@ module.exports = function(app) {
     ],
     controller.signup
   );
+
+  // app.get("/api/role",(req,res)=>{
+  //   Role.insertMany([
+  //     {
+  //       name: "user"
+  //     }
+  //   ],(err)=>{
+  //     if(err){
+  //       res.json('errror')
+  //     }
+  //     res.json('noerror')
+  //   })
+  // })
 
 
   /**

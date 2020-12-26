@@ -34,7 +34,7 @@ module.exports = function (app) {
 *       500:
 *         description: something error on system
 */
-  app.get("/api/faq", [authJwt.verifyToken], controller.getFaq);
+  app.get("/api/faq", controller.getFaq);
 
   /**
 * @swagger

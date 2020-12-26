@@ -7,6 +7,7 @@ const Branch = db.branch;
 
 
 exports.save = (req, res)=>{
+    console.log(req.body)
    if(null !=req.body.id && req.body.id != ""){
        var branch = new Branch();
        branch._id = req.body.id;
@@ -14,7 +15,8 @@ exports.save = (req, res)=>{
        branch.Telephone = req.body.telephone;
        branch.Address = req.body.address;
        branch.Maps = req.body.maps;
-       branch.MasterStatusID = req.body.masterStatusId;
+       branch.isDeliver = req.body.isDeliver;
+       branch.MasterStatusID = req.body.status;
        branch.Picture = req.body.picture;
        
        branch.Modified = Date.now();
@@ -32,15 +34,15 @@ exports.save = (req, res)=>{
      
         }
         else{
-            
+            console.log(req.body)
             var branch = new Branch();
             branch.Name = req.body.name;
             branch.Telephone = req.body.telephone;
             branch.Address = req.body.address;
             branch.Maps = req.body.maps;
-            branch.MasterStatusID = req.body.masterStatusId;
+            branch.MasterStatusID = req.body.status;
             branch.Picture = req.body.picture;
-            
+            branch.isDelivery = req.body.isDelivery;
             branch.Created = Date.now();
             branch.CreatedBy = req.userId;
             branch.RowStatus = true;
@@ -49,6 +51,7 @@ exports.save = (req, res)=>{
                     return res.status(500).send({message: err, isError:1});
                 }
                 else{
+                    console.log(branch)
                     return res.status(200).send({message:"Add Success", isError:0});
                 }
             })
@@ -57,6 +60,30 @@ exports.save = (req, res)=>{
     
     
 };
+
+
+exports.loadDeliver = (req, res)=>{
+    if (req.body.id != null && req.body.id != "") {
+        Branch.find({_id:req.body.id, isDelivery: '1' ,RowStatus:true}, (err, result) => {
+            if (err) {
+                return res.status(500).send({ message: "Error, Data is Not Found" ,  isError: 1});
+            }
+            else {
+                return res.status(200).send({result, isError: 0});
+            }
+        });
+    }
+    else {
+        Branch.find({isDelivery: '1', RowStatus: true }, (err, result) => {
+            if (err) {
+                return res.status(500).send({ message: "Error, Data is Not Found", isError: 1 });
+            }
+            else  {
+                return res.status(200).send({result, isError: 0});
+            }           
+        });
+    }
+}
 
 
 exports.load = (req, res)=>{
@@ -113,6 +140,7 @@ exports.load = (req, res)=>{
 
 
 exports.delete = (req,res)=>{
+    console.log(req.body)
     const branch = {
         Modified: Date.now(),
         ModifiedBy: req.userId,
@@ -122,9 +150,11 @@ exports.delete = (req,res)=>{
         
         (err)=>{
             if (err) {
+                console.log('error')
                 return res.status(500).send({message:err, isError:1});
             }
             else{
+                console.log('no errpr')
                 return res.status(200).send({message: "Delete Success", isError:0});
             }
         });

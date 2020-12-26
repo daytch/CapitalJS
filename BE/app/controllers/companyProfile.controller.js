@@ -27,7 +27,7 @@ exports.SaveConfig = (req, res)=>{
             const companyProfile = new CompanyProfile({
                         _id : req.body._id,
                         Profile : req.body.profile,
-                        TagLine: req.body.tagLine,
+                        Tagline: req.body.tagLine,
                         Email : req.body.email,
                         Telphone: req.body.telphone,
                         WhatsAppLink: req.body.whatsAppLink,
@@ -45,16 +45,16 @@ exports.SaveConfig = (req, res)=>{
                                 res.status(500).send({message :err, isError:1});
                                 return;
                             }
+                          
                             res.status(200).send({message: "Update Success", isError:0});
                             return;
                         });
         }
         else{
-            
                const companyProfile = new CompanyProfile({
                 
                 Profile : req.body.profile,
-                TagLine: req.body.tagLine,
+                Tagline: req.body.tagLine,
                 Email : req.body.email,
                 Telphone: req.body.telphone,
                 WhatsAppLink: req.body.whatsAppLink,
@@ -70,9 +70,9 @@ exports.SaveConfig = (req, res)=>{
                         res.status(500).send({message:err, isError:1});
                         return;
                     }
-                        res.status(200).send({message: "Add Success", isError:0});
+                       return res.status(200).send({message: "Add Success", isError:0});
                         
-                        return;
+                        
                 });
         }
     
@@ -81,7 +81,7 @@ exports.SaveConfig = (req, res)=>{
 
 
 exports.LoadConfig = (req, res)=>{
-    CompanyProfile.findOne({RowStatus: true},(err, companyProfile)=>{
+    CompanyProfile.findOne((err, companyProfile)=>{
                 if (err) {
                     return res.status(200).send({message: "Error, Data is Not Found", isError:1});
                 }

@@ -2,7 +2,26 @@ const config = require("../config/auth.config");
 const db = require("../models");
 const MasterStatus = db.masterStatus;
 
-
+// exports.addMasterStatus = (req,res) => {
+//     MasterStatus.insertMany([
+//         {ConfigStatus:"SliderConfig",Status:"Show",RowStatus:true},
+//         {ConfigStatus:"SliderConfig",Status:"Hide",RowStatus:true},
+//         {ConfigStatus:"BlogConfig",Status:"Show",RowStatus:true},
+//         {ConfigStatus:"BlogConfig",Status:"Hide",RowStatus:true},
+//         {ConfigStatus:"BranchConfig",Status:"Open",RowStatus:true},
+//         {ConfigStatus:"BranchConfig",Status:"Closed",RowStatus:true},
+//         {ConfigStatus:"ProductConfig",Status:"Show",RowStatus:true},
+//         {ConfigStatus:"ProductConfig",Status:"Hide",RowStatus:true},
+//         {ConfigStatus:"ProductCategoryConfig",Status:"Hide",RowStatus:true},
+//         {ConfigStatus:"ProductCategoryConfig",Status:"Show",RowStatus:true}
+//     ],(err,s)=>{
+//         if(err){
+//             return res.json(err)
+//         }else{
+//             return res.json(s)
+//         }
+//     })
+// }
 
 exports.SliderConfig = (req, res) => {
     MasterStatus.find({ RowStatus: true, ConfigStatus: "SliderConfig" }, (err, masterStatus) => {
@@ -14,7 +33,6 @@ exports.SliderConfig = (req, res) => {
         }
     });
 };
-
 
 exports.BlogConfig = (req, res) => {
     MasterStatus.find({ RowStatus: true, ConfigStatus: "BlogConfig" }, (err, masterStatus) => {
@@ -37,6 +55,7 @@ exports.BranchConfig = (req, res) => {
         }
     });
 }
+
 
 exports.ProductConfig = (req, res) => {
     MasterStatus.find({ RowStatus: true, ConfigStatus: "ProductConfig" }, (err, masterStatus) => {

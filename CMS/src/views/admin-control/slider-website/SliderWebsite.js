@@ -1,5 +1,5 @@
-import React from 'react'
-import {connect} from 'react-redux';
+import React, { useEffect } from 'react'
+import {connect, useDispatch, useSelector} from 'react-redux';
 import {
   CCard,
   CCardBody,
@@ -70,6 +70,16 @@ const SliderWebsite = ({
   const [create,setCreate] = React.useState(true)
   const [form, setForm] = React.useState(DEFAULT_FORM)
   const [checkList,setCheckList] = React.useState([])
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+   dispatch(getSliderStatusDropdown())
+  }, [])
+
+  useEffect(()=>{
+    dispatch(getGridData())
+  },[])
+  const slider = useSelector(state => state)
 
   // initial data
   // React.useEffect(() => {
@@ -161,6 +171,13 @@ const SliderWebsite = ({
     })
     deleteSliderWebsite(deletedIds, resetCheckList)
   }
+  const handleDelete = (item) =>{
+    deleteSliderWebsite(item, resetCheckList)
+  }
+
+  const handleUpdate = () => {
+    updateSliderWebsite(form)
+  }
   return (
     <CRow>
       <CCol xs="12" md="8">
@@ -231,7 +248,7 @@ const SliderWebsite = ({
                           <CIcon name={"cil-pencil"} size="lg"/>
                         </div>
                         <div className="icon-wrapper btn-danger">
-                        <CIcon name={"cil-trash"} size="lg"/>
+                        <CIcon name={"cil-trash"} onClick={()=> handleDelete(item._id)} size="lg"/>
                         </div>
                       </td>
                       )
@@ -287,7 +304,7 @@ const SliderWebsite = ({
               create ? 
               <CButton type="button" color="primary" onClick={handleCreate}>Create</CButton> :
               <>
-                <CButton type="button" color="success" onClick={handleDeleteSelected}>Update</CButton>
+                <CButton type="button" color="success" onClick={handleUpdate}>Update</CButton>
                 <CButton type="button" color="danger" onClick={handleCancel}>Cancel</CButton>
               </>
             }

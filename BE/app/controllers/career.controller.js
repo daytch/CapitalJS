@@ -28,6 +28,7 @@ exports.getCareer = (req, res) => {
 };
 
 exports.saveCareer = (req, res) => {
+  console.log('carer ' + req.body.title)
   const career = new Career({
     title: req.body.title,
     description: req.body.description,

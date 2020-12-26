@@ -51,7 +51,7 @@ module.exports = function(app){
 *               type: string
 *               example: 5f1c548bf377ad2b40d5b1a5
 */
-app.post("/api/blogcategory/load",[authJwt.verifyToken], controller.load);
+app.post("/api/blogcategory/load",controller.load);
 
    /**
 * @swagger

@@ -8,19 +8,21 @@ const Role = db.role;
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
-exports.signup = (req, res) => {
+exports.signup = async (req, res) => {
   const user = new User({
     username: req.body.username,
     email: req.body.email,
+    telp: req.body.telp,
     password: bcrypt.hashSync(req.body.password, 8),
     isActivated: false,
     rowStatus: true
   });
 
+
   user.save((err, user) => {
     if (err) {
       console.log(err);
-      res.status(500).send({ message: err });
+      res.status(200).send({ message: err , isError: 1 });
       return;
     }
 
@@ -31,14 +33,14 @@ exports.signup = (req, res) => {
         },
         (err, roles) => {
           if (err) {
-            res.status(500).send({ message: err });
+            res.status(200).send({ message: err, isError: 1 });
             return;
           }
 
           user.roles = roles.map(role => role._id);
           user.save(err => {
             if (err) {
-              res.status(500).send({ message: err });
+              res.status(200).send({ message: err, isError: 1 });
               return;
             }
 
@@ -49,14 +51,14 @@ exports.signup = (req, res) => {
     } else {
       Role.findOne({ name: "user" }, (err, role) => {
         if (err) {
-          res.status(500).send({ message: err });
+          res.status(200).send({ message: err, isError: 1 });
           return;
         }
 
         user.roles = [role._id];
         user.save(err => {
           if (err) {
-            res.status(500).send({ message: err });
+            res.status(200).send({ message: err, isError: 1 });
             return;
           }
           //  res.send({ message: "User was registered successfully!" });
@@ -65,8 +67,8 @@ exports.signup = (req, res) => {
 
     }
   });
-  SendEmail(user.email);
-  res.send({ message: "User was registered successfully!" });
+  // SendEmail(user.email);
+  res.send({ message: "User was registered successfully! aaaaa", isError: 0 });
 };
 
 async function SendEmail(email) {
@@ -126,7 +128,7 @@ exports.signin = (req, res) => {
       );
 
       if (!passwordIsValid) {
-        return res.status(401).send({
+        return res.status(200).send({
           accessToken: null,
           message: "Invalid Password!"
         });
@@ -145,6 +147,7 @@ exports.signin = (req, res) => {
         id: user._id,
         username: user.username,
         email: user.email,
+        telp: user.telp,
         roles: authorities,
         accessToken: token
       });

@@ -47,6 +47,10 @@ const ContactUs = React.lazy(() => import('./views/admin-control/contact-us/Cont
 const FindUs = React.lazy(() => import('./views/admin-control/find-us/FindUs'));
 const FAQ = React.lazy(() => import('./views/admin-control/faq/FAQ'));
 const Survei = React.lazy(() => import('./views/admin-control/survei/Survei'));
+const AddOns = React.lazy(() => import('./views/admin-control/products/addons'))
+const CategoryProduct = React.lazy(() => import('./views/admin-control/products/productCategory'))
+const Product = React.lazy(() => import('./views/admin-control/products/product'))
+const Order = React.lazy(()=> import('./views/admin-control/order/order'))
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -56,9 +60,13 @@ const routes = [
   { path: '/admin-control/outlet-location', name: 'Outlet Location', component: OutletLocation },
   { path: '/admin-control/career', name: 'Career', component: Career },
   { path: '/admin-control/contact-us', name: 'Contact Us', component: ContactUs },
+  { path: '/admin-control/categoryproduct', name: 'Category Product', component: CategoryProduct},
+  { path: '/admin-control/product', mame: 'Product', component: Product},
   { path: '/admin-control/find-us', name: 'Find Us', component: FindUs },
   { path: '/admin-control/faq', name: 'FAQ', component: FAQ },
+  { path: '/admin-control/addons', name: 'Add Ons', component: AddOns},
   { path: '/admin-control/survei', name: 'Survei', component: Survei },
+  { path: '/admin-control/order', name: 'Order', component: Order},
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/theme', name: 'Theme', component: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', component: Colors },

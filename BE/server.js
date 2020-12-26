@@ -14,7 +14,7 @@ console.log(IsProd);
 //     origin: ["http://localhost:8081", "http://localhost:3000"]
 //   };
 var allowedOrigins = (IsProd) ?
-  ["http://5.189.134.84:8080", "http://5.189.134.84:8081", "http://5.189.134.84:3000", "http://localhost:3000","http://5.189.134.84:6971"]
+  ["http://5.189.134.84:8080", "http://5.189.134.84:8081", "http://5.189.134.84:3000", "http://localhost:3000", "http://5.189.134.84:6971","http://localhost:8080","http://localhost:4000" ,"http://127.0.0.1:3000"]
   :
   ["http://localhost:8081", "http://localhost:8080"]
   ;
@@ -123,6 +123,8 @@ require("./app/routes/productCategory.routes")(app);
 require("./app/routes/product.routes")(app);
 require("./app/routes/productAddOns.routes")(app);
 require("./app/routes/contactUs.routes")(app);
+require("./app/routes/order.routes")(app);
+require("./app/routes/midtrans.routes")(app);
 
 
 // set port, listen for requests
@@ -130,76 +132,3 @@ const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
-
-function initial() {
-  Role.estimatedDocumentCount((err, count) => {
-    if (!err && count === 0) {
-      new Role({
-        name: "user"
-      }).save(err => {
-        if (err) {
-          console.log("error", err);
-        }
-
-        console.log("added 'user' to roles collection");
-      });
-
-      new Role({
-        name: "moderator"
-      }).save(err => {
-        if (err) {
-          console.log("error", err);
-        }
-
-        console.log("added 'moderator' to roles collection");
-      });
-
-      new Role({
-        name: "admin"
-      }).save(err => {
-        if (err) {
-          console.log("error", err);
-        }
-
-        console.log("added 'admin' to roles collection");
-      });
-
-    }
-  });
-
-  User.estimatedDocumentCount((err, count) => {
-    if (!err && count === 0) {
-      const user = new User({
-        username: "udin",
-        email: "udin@yopmail.com",
-        password: bcrypt.hashSync("123", 8),
-        isActivated: true,
-        rowStatus: true
-      });
-
-      user.save((err, user) => {
-        if (err) {
-          console.log(err);
-          res.status(500).send({ message: err });
-          return;
-        }
-
-        Role.findOne({ name: "user" }, (err, role) => {
-          if (err) {
-            res.status(500).send({ message: err });
-            return;
-          }
-
-          user.roles = [role._id];
-          user.save(err => {
-            if (err) {
-              res.status(500).send({ message: err });
-              return;
-            }
-            //  res.send({ message: "User was registered successfully!" });
-          });
-        });
-      });
-    }
-  });
-}

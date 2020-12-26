@@ -4,7 +4,9 @@ import {
   TOAST_AUTOHIDE,
   GET_SLIDERSTATUS_DROPDOWN,
   GET_BRANCHSTATUS_DROPDOWN,
-  GET_BLOGSTATUS_DROPDOWN
+  GET_BLOGSTATUS_DROPDOWN,
+  GET_CATEGORYPRODUCT_DROPDOWN,
+  GET_PRODUCT_DROPDOWN
 } from '../../constants';
 
 export function toastSuccess(message, config={}) {
@@ -82,6 +84,18 @@ export function getBlogStatusDropdown() {
   };
 }
 
+export function getCategoryProductDropdown(){
+  return {
+    type: GET_CATEGORYPRODUCT_DROPDOWN
+  }
+}
+
+export function getProductDropdown(){
+  return {
+    type: GET_PRODUCT_DROPDOWN
+  }
+}
+
 export default {
   toastSuccess: toastSuccess,
   toastInfo: toastInfo,
@@ -89,5 +103,7 @@ export default {
   toastWarning: toastWarning,
   getSliderStatusDropdown: getSliderStatusDropdown,
   getBranchStatusDropdown: getBranchStatusDropdown,
-  getBlogStatusDropdown: getBlogStatusDropdown
+  getBlogStatusDropdown: getBlogStatusDropdown,
+  getCategoryProductDropdown: getCategoryProductDropdown,
+  getProductDropdown: getProductDropdown
 };

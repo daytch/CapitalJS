@@ -17,6 +17,11 @@ export default [
     _children: [
       {
         _tag: 'CSidebarNavItem',
+        name: 'Orderan',
+        to: '/admin-control/order'
+      },
+      {
+        _tag: 'CSidebarNavItem',
         name: 'Company Profile',
         to: '/admin-control/company-profile',
       },
@@ -40,16 +45,16 @@ export default [
         name: 'Career',
         to: '/admin-control/career',
       },
-      {
-        _tag: 'CSidebarNavItem',
-        name: 'Contact Us',
-        to: '/admin-control/contact-us',
-      },
-      {
-        _tag: 'CSidebarNavItem',
-        name: 'Find Us',
-        to: '/admin-control/find-us',
-      },
+      // {
+      //   _tag: 'CSidebarNavItem',
+      //   name: 'Contact Us',
+      //   to: '/admin-control/contact-us',
+      // },
+      // {
+      //   _tag: 'CSidebarNavItem',
+      //   name: 'Find Us',
+      //   to: '/admin-control/find-us',
+      // },
       {
         _tag: 'CSidebarNavItem',
         name: 'FAQ',
@@ -57,9 +62,24 @@ export default [
       },
       {
         _tag: 'CSidebarNavItem',
-        name: 'Survei',
-        to: '/admin-control/survei',
+        name: 'AddOns Product',
+        to: '/admin-control/addons'
       },
+      {
+        _tag: 'CSidebarNavItem',
+        name: 'Category Product',
+        to: '/admin-control/categoryproduct'
+      },
+      {
+        _tag: 'CSidebarNavItem',
+        name: 'Product',
+        to: '/admin-control/product'
+      }
+      // {
+      //   _tag: 'CSidebarNavItem',
+      //   name: 'Survei',
+      //   to: '/admin-control/survei',
+      // },
     ]
   },
   // {
@@ -358,4 +378,3 @@ export default [
   //   className: 'm-2'
   // }
 ]
-

@@ -4,81 +4,92 @@ import {
   HANDLE_CAREER_SUBMIT,
   SET_CAREER_LOADING,
   SET_CAREER_DATA,
-  GET_CAREER_DATA
+  GET_CAREER_DATA,
+  UPDATE_CARRER_DATA,
+  DELETE_CARRER_DATA
 } from '../../constants';
-import {GET, POST} from '../../services';
+import {DELETE, GET, POST, PUT} from '../../services';
 import {success, error} from '../../utils/notification';
-import {getUsername} from '../../utils';
+import { deleteCareer } from '../actions/careerAction';
 
-const companyProfile = state => state.companyProfileReducer;
-
-export function* companyProfileSubmit(action) {
-  try {
-    const data = action.payload;
-    const param = {
-      _id: data.id,
-      profile: data.profile,
-      tagLine: data.tagline,
-      email: data.email,
-      telphone: data.phone,
-      whatsAppLink: data.whatsapp,
-      instagramLink: data.instagram,
-      facebookLink: data.facebook,
-      twitterLink: data.twitter,
-      logoCapitalLink: data.logo
-    }
-    yield put({ type: SET_CAREER_LOADING, payload: true });
+export function* getCarrer(){
+  try{
+    yield put({type: SET_CAREER_LOADING, payload: true})
     const res = yield call(
-      POST,
-      URL.SAVE_CAREER,
-      param
-    );
-    if(res.isError===0){
-      yield success(res.message);
-    }
-    else {
-      yield error(res.message);
-    }
-    yield put({ type: SET_CAREER_LOADING, payload: false });
-  }
-  catch (err) {
+      GET,
+      URL.GET_CAREER_DATA
+    )
+    yield put({type: SET_CAREER_DATA, payload: res})
+    yield put({type: SET_CAREER_LOADING, payload: false})
+  }catch(err){
     error(err)
   }
 }
 
-export function* getCompanyProfile(action) {
-  try {
-    const callback = action.callback;
-    yield put({ type: SET_CAREER_LOADING, payload: true });
+export function* submitCareer(action){
+  const data = action.payload
+  console.log('saga ' + data.title)
+  try{
+    yield put({type: SET_CAREER_LOADING, payload: true})
     const res = yield call(
-      GET,
-      URL.GET_CAREER_DATA
-    );
-    if(res.isError===0 && res.companyProfile != null)
-    {
-      yield put({ type: SET_CAREER_DATA, payload: {
-        id: res.companyProfile._id,
-        profile: res.companyProfile.Profile,
-        tagline: res.companyProfile.Tagline || "",
-        email: res.companyProfile.Email,
-        phone: res.companyProfile.Telphone,
-        whatsapp: res.companyProfile.WhatsAppLink,
-        instagram: res.companyProfile.InstagramLink,
-        facebook: res.companyProfile.FacebookLink,
-        twitter: res.companyProfile.TwitterLink,
-        logo: res.companyProfile.LogoCapitalLink
-      }});
-    }
-    yield put({ type: SET_CAREER_LOADING, payload: false });
-  }
-  catch (err) {
+      POST,
+      URL.SAVE_CAREER,
+      {
+        title: data.title,
+        description: data.description,
+        status: data.status
+      }
+    )
+      yield call(getCarrer)
+      yield success("Berhasil ditambahkan")
+    yield put({type: SET_CAREER_LOADING, payload: false})
+  }catch(err){
     error(err)
   }
+}
+
+export function* updateCarrer(action){
+  const data = action.payload
+  try{
+    yield put({type: SET_CAREER_LOADING, payload: true})
+    const res = yield call(
+      PUT,
+      URL.UPDATE_CARRER + data.id,
+      {
+        title: data.title,
+        description: data.description,
+        status: data.status
+      }
+    )
+    yield success("Berhasil diubah");
+      yield call(getCarrer)
+   
+    yield put({type: SET_CAREER_LOADING, payload: false})
+  }catch(err){
+    error(err)
+  }
+}
+
+export function* deleteCarrer(action){
+  const data = action.payload
+  console.log(URL.DELETE_CARRER + data)
+  console.log('delete' + data)
+  yield put({type: SET_CAREER_LOADING, payload: true})
+  yield call(
+    DELETE,
+    URL.DELETE_CARRER + data
+  )
+  yield success("Berhasil dihapus");
+  yield call(getCarrer)
+  yield put({type: SET_CAREER_LOADING, payload: false})
+
 }
 
 export default function* rootSaga() {
   yield all([
-    takeLatest(HANDLE_CAREER_SUBMIT, companyProfileSubmit),
-    takeLatest(GET_CAREER_DATA, getCompanyProfile)
+    takeLatest(GET_CAREER_DATA, getCarrer),
+    takeLatest(HANDLE_CAREER_SUBMIT, submitCareer),
+    takeLatest(UPDATE_CARRER_DATA, updateCarrer),
+    takeLatest(DELETE_CARRER_DATA, deleteCarrer)
   ]);
 }

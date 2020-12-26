@@ -9,7 +9,12 @@ const Product = mongoose.model(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'ProductCategory'
         },
-        AddOns: Boolean,
+        AddOns: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'ProductAddOns'
+            }
+        ],
         Weigth: Number,
         CapitalPrice: Number,
         SellingPrice: Number,

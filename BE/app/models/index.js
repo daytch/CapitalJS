@@ -20,6 +20,7 @@ db.productCategory = require('./productCategory.model');
 db.product = require('./product.model');
 db.productAddOns = require('./productAddOns.model');
 db.contactUs = require('./contactUs.model');
+db.order = require('./order.model')
 
 db.ROLES = ["user", "admin", "moderator"];
 

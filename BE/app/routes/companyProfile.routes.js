@@ -76,7 +76,7 @@ module.exports = function(app) {
 *               type: string
 *               example: https://www.image.google.com/
 */
-  app.post("/api/companyprofile/save", [authJwt.verifyToken],controller.SaveConfig);
+  app.post("/api/companyprofile/save",[authJwt.verifyToken],controller.SaveConfig);
 
  /**
 * @swagger
@@ -105,7 +105,7 @@ module.exports = function(app) {
 
 */
 
-  app.get("/api/companyprofile/loadconfig", [authJwt.verifyToken], controller.LoadConfig);
+  app.get("/api/companyprofile/loadconfig", controller.LoadConfig);
 //   app.get("/api/companyprofile/test", (req, res) => {
 //     console.log('server get *');
 //     res.send('Server is working. Please post at "/contact" to submit a message.')});

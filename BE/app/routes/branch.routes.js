@@ -49,8 +49,10 @@ module.exports = function(app){
 *               type: string
 *               example: 5f1c548bf377ad2b40d5b1a5
 */
-app.get("/api/branch/load",[authJwt.verifyToken], controller.load);
-app.post("/api/branch/load",[authJwt.verifyToken], controller.load);
+app.get("/api/branch/load", controller.load);
+app.post("/api/branch/load", controller.load);
+
+app.post('/api/branch/isdeliver',controller.loadDeliver)
 
    /**
 * @swagger
@@ -101,6 +103,9 @@ app.post("/api/branch/load",[authJwt.verifyToken], controller.load);
 *           maps:
 *               type: string
 *               example: https://www.google.com/
+*           isDeliver:
+*                type: string
+*                example: 1
 *           masterStatusId:
 *               type: string
 *               example: 5f1c548bf377ad2b40d5b1a5

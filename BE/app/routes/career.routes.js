@@ -36,7 +36,7 @@ module.exports = function (app) {
 *       500:
 *         description: something error on system
 */
-  app.get("/api/career", [authJwt.verifyToken], controller.getCareer);
+  app.get("/api/career", controller.getCareer);
  
 
   /**

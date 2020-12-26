@@ -111,7 +111,7 @@ export function* updateBlog(action) {
       POST,
       URL.SAVE_BLOG,
       {
-        _id: data.id,
+        id: data.id,
         blogCategoryId: data.blogCategoryId,
         title: data.title,
         body: data.body,
@@ -140,7 +140,7 @@ export function* updateBlogCategory(action) {
       POST,
       URL.SAVE_BLOGCATEGORY,
       {
-        _id: data.id,
+        id: data.id,
         name: data.name,
         description: data.description
       }
@@ -165,7 +165,7 @@ export function* deleteBlog(action) {
       POST,
       URL.DELETE_BLOG,
       {
-        _id: id
+        id: id
       }
     );
     yield call(getBlogGridData)

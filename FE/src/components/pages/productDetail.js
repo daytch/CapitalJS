@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { public_path, rupiah } from '../../utils/common';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useDispatch, useSelector } from 'react-redux';
+import { getDetailProduct } from '../../redux/actions/productAction';
+import { toast, ToastContainer } from 'react-toastify';
 
 function ProductDetailExtraItem(props) {
   return (
@@ -27,12 +30,57 @@ function ProductDetailPreviewItem(props){
   return(
     <div className={"productDetail-previewItem " + (props.active && "active")}>
       <div className="productDetail-previewItemInner">
-        <img src={public_path(props.url)} alt=""/>
+        <img style={{width: '130px'}} src={props.url} alt=""/>
       </div>
     </div>
   );
 }
 
+const Init_form = {
+  note: "",
+}
+
+
+function ProductDetail(props) {
+  const [quantity, setQuantity] = React.useState(0);
+  const [form,setForm] = React.useState(Init_form);
+  const [priceCake, setPriceCake] = React.useState(0)
+  const [total, setTotal] = React.useState(0)
+  const [candlePrice, setCandlePrice] = React.useState(0);
+  const [lilin, setLilin] = React.useState({
+  })
+  const AddOnsOnChange = (id, value) => {
+    setLilin({
+      ...lilin,
+      [id]: (value < 0 ? 0 : value)
+    })
+  }
+
+
+  const addOns = React.useState()
+
+  // useEffect(() => {
+  //   addOns
+  // }, [lilin]);
+
+  const handleChange = (id,data)=>{
+    setForm(e =>{
+      return {
+        ...e,
+        [id] : data
+      }
+    })
+  }
+  
+  const product = useSelector(state => state.detailProductReducer.data)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getDetailProduct({
+      id: props.match.params.id
+    }))
+  }, [])
+  
+  
 function ExtraPriceListItem(props) {
   return (
     <div className="productDetail-extraPriceListItem">
@@ -41,13 +89,24 @@ function ExtraPriceListItem(props) {
         <span>Rp {rupiah(props.price)}</span>
       </div>
       <div className="productDetail-extraPriceListInput">
-        <div className="productDetail-inputMinus" onClick={(e) => props.onChange(props.id, props.value - 1)}>
+        <div className="productDetail-inputMinus" onClick={(e) =>{
+          props.onChange(props.id, props.value - 1)
+          setTotal(e=>{
+            if(props.value > 0){
+              return e - props.price
+            }
+            return e
+          })
+        } }>
           <FontAwesomeIcon icon="minus" />
         </div>
         <div className="productDetail-extraPriceInputText">
-          <input min="0" type="number" value={props.value} onChange={(e) => props.onChange(props.id, e.value)}/>
+          <input min="1" type="number" value={props.value} onChange={(e) => props.onChange(props.id, e.value)}/>
         </div>
-        <div className="productDetail-inputPlus" onClick={(e) => props.onChange(props.id, props.value + 1)}>
+        <div className="productDetail-inputPlus" onClick={(e) => {
+          props.onChange(props.id, props.value + 1)
+          setTotal(e=> e + props.price)
+          }}>
           <FontAwesomeIcon icon="plus" />
         </div>
       </div>
@@ -55,20 +114,31 @@ function ExtraPriceListItem(props) {
   )
 }
 
-function ProductDetail(props) {
-  const [quantity, setQuantity] = React.useState(0);
-  const [candlePrice, setCandlePrice] = React.useState(0);
-  const [lilin, setLilin] = React.useState({
-    "n1": 0,"n2": 0,"n3": 0,"n4": 0,"n5": 0
-  })
-  const lilinOnChange = (id, value) => {
-    setLilin({
-      ...lilin,
-      [id]: (value < 0 ? 0 : value)
-    })
+//add to cart
+  const addToCart = ()=>{
+    const data = {
+      id: Date.now(),
+      idProduct: product._id,
+      name: product.Name,
+      total: total + priceCake,
+      note: form.note,
+      quantity: quantity,
+      addOns: Object.keys(lilin).map((key) => [key, lilin[key]]),
+      picture: product.Pictures[0],
+    }
+  if(quantity >= 1){
+    const cart = JSON.parse(localStorage.getItem('cart') || "[]");
+  cart.push(data)
+  localStorage.setItem('cart', JSON.stringify(cart));
+  props.history.push('/cart')
+  }else{
+    toast.error('Minimal pembelian 1 Quantity')
+  }
+  
   }
   return (
     <div className="productDetail-container">
+      <ToastContainer/>
       <section className="productDetail-bannerSection">
         <div className="productDetail-banner">
           <img src={public_path('/assets/img/product-banner.png')} alt="" />
@@ -78,34 +148,45 @@ function ProductDetail(props) {
         <div className="productDetail-productInfoContainer">
           <div className="productDetail-imagePreviewContainer">
             <div className="productDetail-selectedPreview" data-margin-bottom="sm">
-              <img src={public_path('/assets/img/detail-kue1.png')} alt=""/>
+              <img src={product.Pictures[0]} alt=""/>
             </div>
             <div className="productDetail-previewList">
-            <ProductDetailPreviewItem url="/assets/img/detail-kue2.png"/>
-            <ProductDetailPreviewItem url="/assets/img/detail-kue3.png"/>
-            <ProductDetailPreviewItem url="/assets/img/detail-kue4.png" active={true}/>
+              {
+                product.Pictures.map(v=>{
+                  return (
+                    <ProductDetailPreviewItem url={v}/>
+                  )
+                })
+              }
             </div>
           </div>
           <div className="productDetail-detailContainer">
             <div className="productDetail-productNameWrapper">
-              <h1 className="productDetail-productName">PANDAN CAKE</h1>
+            <h1 className="productDetail-productName">{product.Name}</h1>
             </div>
-            <p>A party special that is loved by all. Vanilla flavored booked cheesecake with freshly picked strawberries.</p>
-            <span className="productDetail-price"><strong>Price. Rp 360.000</strong></span>
+            {/* <p>A party special that is loved by all. Vanilla flavored booked cheesecake with freshly picked strawberries.</p> */}
+            <span className="productDetail-price"><strong>Price Rp.{rupiah(product.SellingPrice)}</strong></span>
             <div className="productDetail-sizeQuantityContainer" data-margin-bottom="sm">
               <div className="productDetail-sizeContainer" data-margin-bottom="sm">
                 <label className="productDetail-labelName">Size</label>
-                <select>
-                  <option>20 Round</option>
-                  <option>20X30</option>
-                </select>
+                {product.Weigth}
               </div>
               <div className="productDetail-quantityContainer">
                 <label className="productDetail-labelName">Quantity</label>
-                <input type="number" name="quantity" id="quantity" value={quantity} onChange={(e) => setQuantity(e.value)} />
+                <input type="number" name="quantity" id="quantity" value={quantity} onChange={(e) => {
+                  
+                  if(e.target.value > 0){
+                    setQuantity(e.target.value)
+                    setPriceCake(product.SellingPrice * e.target.value)
+                    
+                  }
+
+                  
+                }     
+              } />
               </div>
             </div>
-            <div className="productDetail-candleContainer">
+            {/* <div className="productDetail-candleContainer">
               <div className="productDetail-candleWrapper">
                 <label className="productDetail-labelName">Candle</label>
                 <input type="radio" id="classic" name="candleType" value="classic" />
@@ -115,48 +196,54 @@ function ProductDetail(props) {
               </div>
               <div className="productDetail-candlePriceContainer">
                 <div className="productDetail-candlePriceWrapper">
-                  <label data-margin-right="xs">Price</label>
-                  <input type="number" data-margin-right="xs" value={candlePrice} onChange={(e) => setCandlePrice(e.value)} />
-                  <label><strong>Rp 8.000</strong></label>
+                  Price <label><strong>Rp 8.000</strong></label>
                 </div>
               </div>
-            </div>
+            </div> */}
             {/* <div className="divider" data-margin-bottom="md"></div> */}
             <div className="productDetail-noteContainer">
               <label className="productDetail-inputNoteLabel">You can put wording on your cake for FREE</label>
               <br/>
               <div className="productDetail-inputNoteWrapper">
-                <input className="productDetail-inputNote" type="text" name="note" id="note" placeholder="Note on Cake" />
+                <input value={form.note} onChange={e => handleChange('note', e.target.value)} className="productDetail-inputNote" type="text" name="note" id="note" placeholder="Note on Cake" />
               </div>
             </div>
             <div className="productDetail-extraContainer">
               <div className="productDetail-extraLabel">
                 <span>EXTRA</span>
               </div>
-              <div className="productDetail-extraItemWrapper">
+              {/* <div className="productDetail-extraItemWrapper">
                 <ProductDetailExtraItem name="Lilin" innerClass="candle" active={true}/>
                 <ProductDetailExtraItem name="Lilin Special" innerClass="special-candle" />
                 <ProductDetailExtraItem name="Pita" innerClass="ribbon" />
                 <ProductDetailExtraItem name="Kartu Ucapan" innerClass="card" />
                 <ProductDetailExtraItem name="Aksesoris" innerClass="accessories" />
-              </div>
+              </div> */}
               <div className="productDetail-extraPriceTable">
                 <div className="productDetail-extraPriceTableInner">
                   <p className="productDetail-extraPriceTableDescription">
                     Tunjukkan perkataan anda kepada orang-orang terkasih dengan menambahkan lilin, pita dan kartu ucapan pada kue pesanan Anda.
                   </p>
                   <div className="productDetail-extraPriceList">
-                    <ExtraPriceListItem id="n1" name="Lilin Angka 9" price="4000" value={lilin.n1} onChange={lilinOnChange} />
-                    <ExtraPriceListItem id="n2" name="Lilin Angka 9" price="4000" value={lilin.n2} onChange={lilinOnChange} />
-                    <ExtraPriceListItem id="n3" name="Lilin Angka 9" price="4000" value={lilin.n3} onChange={lilinOnChange} />
-                    <ExtraPriceListItem id="n4" name="Lilin Angka 9" price="4000" value={lilin.n4} onChange={lilinOnChange} />
-                    <ExtraPriceListItem id="n5" name="Lilin Angka 9" price="4000" value={lilin.n5} onChange={lilinOnChange} />
+                    {
+                      product.AddOns.map(v=>{
+                        return (
+                          <ExtraPriceListItem value={lilin[v.Name] ?? 0} id={v.Name} name={v.Name} price={v.SellingPrice} onChange={AddOnsOnChange} />
+                        )
+                      })
+                    }
+                    
                   </div>
                   <div className="productDetail-extraCart">
-                    <div className="productDetail-addToCart">
+                    <div onClick={addToCart} className="productDetail-addToCart">
                       ADD TO CART
                     </div>
                   </div>
+                  <div className="productDetail-candlePriceContainer">
+                <div className="productDetail-candlePriceWrapper float-right">
+                  Total <label><strong>Rp {rupiah(total + priceCake)}</strong></label>
+                </div>
+              </div>
                 </div>
               </div>
             </div>

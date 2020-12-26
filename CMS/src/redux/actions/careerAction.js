@@ -1,6 +1,8 @@
 import {
     HANDLE_CAREER_SUBMIT,
-    GET_CAREER_DATA
+    GET_CAREER_DATA,
+    UPDATE_CARRER_DATA,
+    DELETE_CARRER_DATA
   } from '../../constants';
   
   export function careerSubmit(data) {
@@ -10,15 +12,30 @@ import {
     };
   }
   
-  export function getCareer(callback) {
+  export function getCareer() {
     return {
       type: GET_CAREER_DATA,
       payload: null,
-      callback: callback
     };
+  }
+
+  export function updateCareer(data){
+    return {
+      type: UPDATE_CARRER_DATA,
+      payload: data
+    }
+  }
+
+  export function deleteCareer(data){
+    return {
+      type: DELETE_CARRER_DATA,
+      payload: data
+    }
   }
   
   export default {
     careerSubmit: careerSubmit,
-    getCareer: getCareer
+    getCareer: getCareer,
+    updateCareer: updateCareer,
+    deleteCareer: deleteCareer
   };

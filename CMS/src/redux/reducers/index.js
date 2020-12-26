@@ -7,6 +7,12 @@ import sliderWebsiteReducer from './sliderWebsiteReducer';
 import faqReducer from './faqReducer';
 import blogReducer from './blogReducer';
 import careerReducer from './careerReducer';
+import contactReducer from './contactReducer'
+import addOnsReducer from './addOnsReducer'
+import categoryProductReducer from './categoryProductReducer'
+import productReducer from './productReducer'
+import orderReducer from './orderReducer'
+
 
 const rootReducer = combineReducers({
   globalReducer,
@@ -16,7 +22,12 @@ const rootReducer = combineReducers({
   sliderWebsiteReducer,
   faqReducer,
   blogReducer,
-  careerReducer
+  careerReducer,
+  contactReducer,
+  addOnsReducer,
+  categoryProductReducer,
+  productReducer,
+  orderReducer
 });
 
 export default rootReducer;

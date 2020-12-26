@@ -8,12 +8,7 @@ const ProductAddOns = mongoose.model(
         CapitalPrice: Number,
         SellingPrice: Number,
         Stock: Number,
-        MasterStatusID:
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'MasterStatus'
-        },
-        Pictures: [String],
+        Pictures: String,
         Created: Date,
         CreatedBy: String,
         Modified: Date,

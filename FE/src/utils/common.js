@@ -5,6 +5,7 @@ function rupiah(val){
   return new Intl.NumberFormat("id-ID").format(val);
 }
 
+
 export {
   public_path,
   rupiah

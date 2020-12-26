@@ -6,6 +6,12 @@ import OutletLocation from './outletLocationSaga';
 import SliderWebsite from './sliderWebsiteSaga';
 import FAQ from './faqSaga';
 import Blog from './blogSaga';
+import Carrer from './careerSaga'
+import Contact from './contactSaga'
+import AddOns from './addOnsSaga'
+import categoryProduct from './categoryProductSaga'
+import Product from './productSaga'
+import Order from './orderSaga'
 
 export default function* rootSaga() {
   yield all([
@@ -15,6 +21,12 @@ export default function* rootSaga() {
     OutletLocation(),
     SliderWebsite(),
     FAQ(),
-    Blog()
+    Blog(),
+    Carrer(),
+    Contact(),
+    AddOns(),
+    categoryProduct(),
+    Product(),
+    Order()
   ]);
 }

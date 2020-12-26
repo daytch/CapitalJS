@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import { BrowserRouter, Router } from 'react-router-dom';
 import { CookiesProvider } from 'react-cookie';
 
@@ -15,6 +15,9 @@ import './style/style.scss';
 import history from './utils/history';
 
 import * as serviceWorker from './serviceWorker';
+import { getProfile } from './redux/actions/profileAction';
+
+
 
 ReactDOM.render(
   <Provider store={store}>

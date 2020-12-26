@@ -13,6 +13,7 @@ const Branch = mongoose.model(
             ref: 'MasterStatus'
         },
         Picture:String,
+        isDelivery: String,
         Created: Date,
         CreatedBy: String,
         Modified: Date,

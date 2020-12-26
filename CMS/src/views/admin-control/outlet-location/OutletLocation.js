@@ -1,5 +1,5 @@
-import React from 'react'
-import {connect} from 'react-redux';
+import React, { useEffect } from 'react'
+import {connect, useDispatch} from 'react-redux';
 import {
   CCard,
   CCardBody,
@@ -20,6 +20,7 @@ import CIcon from '@coreui/icons-react'
 // import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {outletLocationAction, globalAction} from '../../../redux/actions';
 import {Dropzone} from '../../../components';
+import { createOutletLocation, deleteOutletLocation, updateOutletLocation } from '../../../redux/actions/outletLocationAction';
 
 const fields = [
   {
@@ -32,6 +33,7 @@ const fields = [
   { key: 'Name', _style: { width: '30%'} },
   { key: 'Address', _style: { width: '40%'} },
   { key: 'Telephone', _style: { width: '10%'} },
+  { key: 'isDelivery', _style:{width: '10%'}},
   {
     key: 'action',
     label: 'Action',
@@ -48,12 +50,24 @@ const DEFAULT_FORM = {
   address: "",
   map: "",
   status: "",
-  picture: ""
+  picture: "",
+  isDelivery: ""
 }
 
 const OutletLocation = ({outletLocation, getGridData, global, getBranchStatusDropdown,...props}) => {
   const [create,setCreate] = React.useState(true)
   const [form, setForm] = React.useState(DEFAULT_FORM)
+  const dispatch = useDispatch()
+  useEffect(() => {
+   dispatch(globalAction.getBranchStatusDropdown())
+  }, [])
+
+  useEffect(() => {
+    dispatch(getGridData())
+  }, [])
+
+  console.log(form)
+
 
   // initial data
   // React.useEffect(() => {
@@ -74,6 +88,7 @@ const OutletLocation = ({outletLocation, getGridData, global, getBranchStatusDro
       branch: item.Name,
       phone: item.Telephone,
       address: item.Address,
+      isDelivery: item.isDelivery,
       map: item.Maps,
       status: item.MasterStatusId,
       picture: item.Picture
@@ -85,13 +100,28 @@ const OutletLocation = ({outletLocation, getGridData, global, getBranchStatusDro
   }
   const handleCreate = () => {
     setCreate(false)
+    dispatch(createOutletLocation({
+      ...form,
+      status: form.status || global.branchStatusDropdown[0].id,
+      isDelivery: form.isDelivery || '1'
+    }))
+    setForm(DEFAULT_FORM)
   }
   const handleUpdate = () => {
     setCreate(true)
+    dispatch(updateOutletLocation(form))
+    setForm(DEFAULT_FORM)
   }
-  // const handleDeleteSelected = () => {
 
-  // }
+  const handleDelete = (item) => {
+    let userid = localStorage.getItem('userid')
+    console.log('ini view ' + userid)
+    dispatch(deleteOutletLocation({
+      id: item._id,
+      userId: userid
+    }))
+    setForm(DEFAULT_FORM)
+  }
   return (
     <CRow>
       <CCol md="8" xs="12">
@@ -141,7 +171,7 @@ const OutletLocation = ({outletLocation, getGridData, global, getBranchStatusDro
                         <div className="icon-wrapper btn-primary" onClick={() => handleEdit(item)}>
                           <CIcon name={"cil-pencil"} size="lg"/>
                         </div>
-                        <div className="icon-wrapper btn-danger">
+                        <div className="icon-wrapper btn-danger" onClick={()=> handleDelete(item)}>
                         <CIcon name={"cil-trash"} size="lg"/>
                         </div>
                       </td>
@@ -160,7 +190,7 @@ const OutletLocation = ({outletLocation, getGridData, global, getBranchStatusDro
           <CCardBody>
             <CFormGroup>
               <CLabel htmlFor="status">Status</CLabel>
-              <CSelect custom name="status" id="status" value={form.status} onChange={(e) => handleChange("MasterStatusID", e.target.value)}>
+              <CSelect  custom name="status" id="status" value={form.status} onChange={(e) => handleChange("status", e.target.value)}>
                 {global.branchStatusDropdown.map((v) => {
                   return (
                     <option key={v.id} value={v.id}>{v.name}</option>
@@ -169,20 +199,28 @@ const OutletLocation = ({outletLocation, getGridData, global, getBranchStatusDro
               </CSelect>
             </CFormGroup>
             <CFormGroup>
+              <CLabel htmlFor="isDelivery">Is Delivery</CLabel>
+              <CSelect  custom name="isDelivery" id="isDelivery" value={form.isDelivery} onChange={(e) => handleChange("isDelivery", e.target.value)}>
+                    <option value="1" defaultValue>Bisa Delivery</option>
+                    <option value="0"> Tidak Bisa Delivery</option>
+                  
+              </CSelect>
+            </CFormGroup>
+            <CFormGroup>
               <CLabel htmlFor="branch">Nama Cabang:</CLabel>
-              <CInput id="branch" placeholder="" required value={form.branch} onChange={(e) => handleChange("branch", e.target.value)}/>
+              <CInput id="branch" placeholder="" required value={form.branch || ''} onChange={(e) => handleChange("branch", e.target.value)}/>
             </CFormGroup>
             <CFormGroup>
               <CLabel htmlFor="phone">No. Telpon:</CLabel>
-              <CInput id="phone" placeholder="" required value={form.phone} onChange={(e) => handleChange("phone", e.target.value)}/>
+              <CInput id="phone" placeholder="" required value={form.phone || ''} onChange={(e) => handleChange("phone", e.target.value)}/>
             </CFormGroup>
             <CFormGroup>
               <CLabel htmlFor="address">Alamat:</CLabel>
-              <CInput id="address" placeholder="" required value={form.address} onChange={(e) => handleChange("address", e.target.value)}/>
+              <CInput id="address" placeholder="" required value={form.address || ''} onChange={(e) => handleChange("address", e.target.value)}/>
             </CFormGroup>
             <CFormGroup>
               <CLabel htmlFor="map">Link Slider</CLabel>
-              <CInput id="map" placeholder="" required value={form.map} onChange={(e) => handleChange("map", e.target.value)}/>
+              <CInput id="map" placeholder="" required value={form.map || ''} onChange={(e) => handleChange("map", e.target.value)}/>
             </CFormGroup>
             <Dropzone src={form.picture} onChange={(url) => handleChange("picture", url)} onRemove={() => handleChange("picture", "")} />
           </CCardBody>

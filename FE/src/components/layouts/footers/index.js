@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {Link} from 'react-router-dom';
+import { getProfile } from '../../../redux/actions/profileAction';
 import {public_path} from '../../../utils/common';
 
 function Footer(){
+  
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getProfile())
+  }, []);
+
+  const profile = useSelector(state => state.profileReducer.data)
   return(
     <footer>
       <div className="motherImage">
@@ -16,11 +25,12 @@ function Footer(){
                 <Link to="/about" className="footer-link">ABOUT US</Link>
                 <Link to="/blog" className="footer-link">BLOG</Link>
                 <Link to="/outlet" className="footer-link">OUTLET LOCATIONS</Link>
-                <a className="footer-link">CAREER</a>
-                <a className="footer-link">CONTACT US</a>
-                <a className="footer-link">FAQ</a>
-                <a className="footer-link">PAYMENT METHODS</a>
-                <a className="footer-link">ORDER BY WEBSITE</a>
+                <Link to="/carrer" className="footer-link">CAREER</Link>
+
+                {/* <a className="footer-link">CONTACT US</a> */}
+                <Link to="/faq" className="footer-link">FAQ</Link>
+                {/* <a className="footer-link">PAYMENT METHODS</a>
+                <a className="footer-link">ORDER BY WEBSITE</a> */}
                 <Link to="/delivery" className="footer-link">DELIVERY</Link>
               </div>
               <div className="footer-leftImageContainer">
@@ -50,17 +60,16 @@ function Footer(){
                 <br/>
                 Kota Jakarta Barat, Daerah Khusus IbuKota Jakarta - 11460
                 <br/>
-                10211 5678 005
+                {profile.Telphone}
               </p>
             </div>
             <div className="footer-securePayment">
               <img src={public_path('/assets/img/payment.png')} alt=""/>
             </div>
             <div className="footer-socialMedia">
-              <div className="footer-socialMediaItem"><img src={public_path('/assets/icon/facebook.svg')} /></div>
-              <div className="footer-socialMediaItem"><img src={public_path('/assets/icon/whatsapp.svg')} /></div>
-              <div className="footer-socialMediaItem"><img src={public_path('/assets/icon/instagram.svg')} /></div>
-              <div className="footer-socialMediaItem"><img src={public_path('/assets/icon/youtube.svg')} /></div>
+              <a href={profile.FacebookLink} className="footer-socialMediaItem"><img src={public_path('/assets/icon/facebook.svg')} /></a>
+              <a href={ profile.WhatsAppLink} className="footer-socialMediaItem"><img src={public_path('/assets/icon/whatsapp.svg')} /></a>
+              <a href={profile.InstagramLink} className="footer-socialMediaItem"><img src={public_path('/assets/icon/instagram.svg')} /></a>
             </div>
             <div className="footer-apps">
               <div className="footer-appstore">

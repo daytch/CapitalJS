@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {public_path, rupiah} from '../../utils/common';
 import history from '../../utils/history';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import Pagination from '../pagination';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProduct, getProductByName } from '../../redux/actions/productAction';
+import { Link } from 'react-router-dom';
 
 function ProductItem(props){
+  
   return (
-    <div className="product-item" onClick={props.onClick}>
+    <Link className="product-item" to={'/product/'+ props.link}>
       <div className="product-itemContainer">
         <div className="product-itemImage">
-          <img src={public_path(props.url)} alt=""/>
+          <img src={props.url} alt=""/>
         </div>
         <div className="product-itemInfo">
           <div className="product-itemDescriptionContainer">
@@ -23,11 +27,22 @@ function ProductItem(props){
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
 
 function Product(props){
+  const dispatch = useDispatch()
+  useEffect(() => {
+    const data = props.history.location.state
+    if(data){
+      dispatch(getProductByName(data.data))
+    }else{
+        dispatch(getProduct())
+    }
+    
+  }, [])
+  const product = useSelector(state => state.productReducer.data)
   const productSectionRef = React.useRef(null)
   const scrollToProduct = () => window.scrollTo({
     top: productSectionRef.current.offsetTop,
@@ -53,15 +68,14 @@ function Product(props){
             <span>CLASSIC & WESTERN</span>
           </div>
           <div className="product-gridContainer">
-            <ProductItem url="/assets/img/product-kue1.png" name="MILO CHOCOLATE CAKE" price="170000" onClick={goToDetail} />
-            <ProductItem url="/assets/img/product-kue2.png" name="VANILLA CHEESE CAKE" price="170000" onClick={goToDetail}/>
-            <ProductItem url="/assets/img/product-kue3.png" name="RED VELVET" price="170000" onClick={goToDetail}/>
-            <ProductItem url="/assets/img/product-kue4.png" name="TARTA DE MOKA CAKE" price="170000" onClick={goToDetail}/>
-            <ProductItem url="/assets/img/product-kue5.png" name="TIRAMISU CAKE" price="170000" onClick={goToDetail}/>
-            <ProductItem url="/assets/img/product-kue6.png" name="PANDAN CARAMELO CAKE" price="170000" onClick={goToDetail}/>
-            <ProductItem url="/assets/img/product-kue7.png" name="NUTTY BEAR CAKE" price="170000" onClick={goToDetail}/>
-            <ProductItem url="/assets/img/product-kue8.png" name="OREO DELIGHT CAKE" price="170000" onClick={goToDetail}/>
-            <ProductItem url="/assets/img/product-kue9.png" name="BLACKFOREST" price="170000" onClick={goToDetail}/>
+            {
+              product.map(v=>{
+                return (
+                  <ProductItem url={v.Pictures[0]} name={v.Name} price={v.SellingPrice} link={v._id} />
+                )
+              })
+            }
+            
             <Pagination totalPage={3} />
           </div>
         </div>

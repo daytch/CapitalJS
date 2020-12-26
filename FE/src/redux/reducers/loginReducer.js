@@ -1,14 +1,17 @@
 import {
-  HANDLE_LOGIN
+  HANDLE_LOGIN,
+  HANDLE_REGISTER
 } from '../../constants';
 
 const INIT_STATE = {
-  form: {
-    email: "test@gmail.com",
-    password: "testtt",
-    rememberme: false,
+  message: {
+    isError: "",
+    message: "",
   },
-  data: {}
+  data: {},
+  user: {},
+  isRegister: false
+
 };
 
 export default (state = INIT_STATE, action) => {
@@ -16,8 +19,26 @@ export default (state = INIT_STATE, action) => {
     case HANDLE_LOGIN: {
       return {
         ...state,
-        dataHome: action.payload
+        data: action.payload
       };
+    }
+    case HANDLE_REGISTER: {
+      return {
+        ...state,
+        data: action.payload
+      };
+    }
+    case 'SET_USER': {
+      return {
+        ...state,
+        user: action.payload
+      }
+    }
+    case 'MESSAGE': {
+      return {
+        ...state,
+        message: action.payload
+      }
     }
     default:
       return state;

@@ -7,7 +7,7 @@ var IsTrue = true;
 exports.load = (req, res) => {
 
     if (req.body.id != null && req.body.id != "") {
-        Product.find({ _id: req.body.id, RowStatus: true }, (err, result) => {
+        Product.find({ _id: req.body.id, RowStatus: true }).populate('AddOns').exec((err, result) => {
             if (err) {
                 return res.status(500).send({ message: "Error, Data is Not Found", isError: 1 });
             }
@@ -18,7 +18,7 @@ exports.load = (req, res) => {
         });
     }
     else {
-        Product.find({ RowStatus: true }, (err, result) => {
+        Product.find({ RowStatus: true }).populate('AddOns').exec((err, result) => {
             if (err) {
                 return res.status(500).send({ message: "Error, Data is Not Found", isError: 1 });
             }
@@ -29,6 +29,18 @@ exports.load = (req, res) => {
         });
     }
 };
+
+exports.byname = (req,res) =>{
+    Product.find({ Name: { $regex: '.*' + req.body.name + '.*' ,$options: 'i'}, RowStatus: true }).populate('AddOns').exec((err, result) => {
+            if (err) {
+                return res.status(500).send({ message: "Error, Data is Not Found", isError: 1 });
+            }
+            else {
+                return res.status(200).send({ result, isError: 0 });
+            }
+
+        });
+}
 
 exports.save = (req, res) => {
     if (null != req.body.id && req.body.id != "") {
@@ -48,7 +60,7 @@ exports.save = (req, res) => {
                     Name: req.body.name,
                     CategoryID: req.body.categoryId,
                     AddOns: req.body.addOns,
-                    Weighth: req.body.weigth,
+                    Weigth: req.body.weigth,
                     CapitalPrice: req.body.capitalPrice,
                     SellingPrice: req.body.sellingPrice,
                     Stock: req.body.stock,
@@ -87,7 +99,7 @@ exports.save = (req, res) => {
                     Name: req.body.name,
                     CategoryID: req.body.categoryId,
                     AddOns: req.body.addOns,
-                    Weighth: req.body.weigth,
+                    Weigth: req.body.weigth,
                     CapitalPrice: req.body.capitalPrice,
                     SellingPrice: req.body.sellingPrice,
                     Stock: req.body.stock,

@@ -4,7 +4,9 @@ import {
   SET_BLOGSTATUS_DROPDOWN,
   SET_TOASTMESSAGE,
   TOAST_AUTOHIDE,
-  TOAST_POSITION
+  TOAST_POSITION,
+  SET_CATEGORYPRODUCT_DROPDOWN,
+  SET_PRODUCT_DROPDOWN
 } from '../../constants';
 
 const INIT_STATE = {
@@ -20,7 +22,9 @@ const INIT_STATE = {
   },
   sliderStatusDropdown: [],
   blogStatusDropdown: [],
-  branchStatusDropdown: []
+  branchStatusDropdown: [],
+  categoryProductDropdown: [],
+  productDropdown: []
 };
 
 export default (state = INIT_STATE, action) => {
@@ -49,6 +53,18 @@ export default (state = INIT_STATE, action) => {
         ...state,
         blogStatusDropdown: action.payload
       };
+    }
+    case SET_CATEGORYPRODUCT_DROPDOWN: {
+      return {
+        ...state,
+        categoryProductDropdown: action.payload
+      }
+    }
+    case SET_PRODUCT_DROPDOWN: {
+      return {
+        ...state,
+        productDropdown: action.payload
+      }
     }
     case 'set':
       return {...state, ...action }

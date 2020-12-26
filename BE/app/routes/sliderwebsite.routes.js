@@ -51,7 +51,7 @@ module.exports = function(app){
 *               example: 5f1c548bf377ad2b40d5b1a5
 */
 // app.get("/api/sliderWebsite/load", controller.load);
-app.post("/api/sliderWebsite/load",[authJwt.verifyToken], controller.load);
+app.post("/api/sliderWebsite/load",controller.load);
 
   /**
 * @swagger

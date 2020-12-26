@@ -6,6 +6,11 @@ import * as sliderWebsiteAction from './sliderWebsiteAction';
 import * as faqAction from './faqAction';
 import * as blogAction from './blogAction';
 import * as careerAction from './careerAction';
+import * as contactAction from './contactAction'
+import * as addOnsAction from './addOnsAction'
+import * as categoryProductAction from './categoryProductAction'
+import * as productAction from './productAction'
+import * as orderAction from './orderAction'
 
 export {
   globalAction,
@@ -15,5 +20,10 @@ export {
   sliderWebsiteAction,
   faqAction,
   blogAction,
-  careerAction
+  careerAction,
+  contactAction,
+  addOnsAction,
+  categoryProductAction,
+  productAction,
+  orderAction
 }

@@ -1,20 +1,34 @@
-// const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-// const Order = mongoose.model(
-//     'Order',
-//     new mongoose.Schema({
-//         Invoice: String,
-//         Name: String,
-//         PhoneNumber: Number,
-//         Weigth: Number,
-//         Time: Date,
-        
-//         Created: Date,
-//         CreatedBy: String,
-//         Modified: Date,
-//         ModifiedBy: String,
-//         RowStatus : Boolean
-//     })
-// );
+const Order = mongoose.model(
+    'Order',
+    new mongoose.Schema({
+        UserId: String,
+        TransaksiID: String,
+        Name: String,
+        PhoneNumber: Number,
+        Time: Date,
+        Address: String,
+        Total: Number,
+        Delivery: String,
+        Outlet: String,
+        Product: [
+            {
+                product: {
+                    type: mongoose.Schema.Types.ObjectId,
+                ref: 'Product'
+                },
+                AddOns: Array,
+                Weigth: String,
+                Note: String
+            }
+        ],
+        Created: Date,
+        CreatedBy: String,
+        Modified: Date,
+        ModifiedBy: String,
+        RowStatus : Boolean
+    })
+);
 
-// module.exports = Product;
+module.exports = Order;

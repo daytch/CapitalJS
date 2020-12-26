@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { public_path } from '../../utils/common';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Carousel from '../carousel';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSlider } from '../../redux/actions/sliderAction';
+import { getProfile } from '../../redux/actions/profileAction';
+import { toast, ToastContainer } from 'react-toastify';
 
-const images = [
+const imagei = [
   "/assets/img/banner-2.jpg",
   "/assets/img/banner-3.jpg",
   "/assets/img/banner-4.jpg",
@@ -13,14 +17,12 @@ const images = [
   "/assets/img/banner-8.jpg",
   "/assets/img/banner-9.jpg",
 ]
-
 function Dot(props) {
   const {active, onClick} = props;
   return(
     <li className={"dot " + (active && "selected")} onClick={onClick}></li>
   )
 }
-
 function CategoryItem(props) {
   const {active, onClick, text} = props;
   return (
@@ -63,13 +65,27 @@ function Home(props) {
     }
   };
 
+  
+  
+  const dispatch = useDispatch()
+useEffect(() => {
+  dispatch(getSlider())
+  dispatch(getProfile())
+  if(props.location.search == '?authorized=0'){
+    toast.error('Anda Harus Login Dahulu!')
+  }
+}, []);
+const images = useSelector(state => state.sliderReducer.data)
+const profile = useSelector(state => state.profileReducer.data)
   return (
+    
     <div>
+      <ToastContainer />
       <section className="home-banner">
         <Carousel>
             {images.map((url,key) => {
               return(
-                <CarouselItem key={key} index={key} url={url} />
+                <CarouselItem key={key} index={key} url={url.Picture} />
               )
             })}
         </Carousel>
@@ -79,7 +95,7 @@ function Home(props) {
           <div className="home-leftContainer">
             <div className="home-leftTitleContainer">
               <h2 className="home-leftTitle">Capital start with the art of traditional Baking</h2>
-              <p className="home-leftDescription">since 1989 we bring happiness in a bite</p>
+              <p className="home-leftDescription" style={{wordWrap: 'break-word'}} dangerouslySetInnerHTML={{__html: profile.Profile}}/>
             </div>
             <div className="divider"></div>
             <div className="home-categoryContainer">

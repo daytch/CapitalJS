@@ -31,6 +31,7 @@ exports.load = (req, res) => {
 };
 
 exports.save = (req, res) => {
+    console.log(req.body)
     if (null != req.body.id && req.body.id != "") {
         ProductAddOns.find({
             _id: { $ne: req.body.id }, Name: req.body.name, RowStatus: true
@@ -46,7 +47,7 @@ exports.save = (req, res) => {
                 var addOns = new ProductAddOns({
                     _id: req.body.id,
                     Name : req.body.name,
-                    Weighth: req.body.weigth,
+                    Weigth: req.body.weigth,
                     CapitalPrice: req.body.capitalPrice,
                     SellingPrice: req.body.sellingPrice,
                     Stock: req.body.stock,
@@ -83,7 +84,7 @@ exports.save = (req, res) => {
             else {
                 var addOns = new ProductAddOns({
                     Name : req.body.name,
-                    Weighth: req.body.weigth,
+                    Weigth: req.body.weigth,
                     CapitalPrice: req.body.capitalPrice,
                     SellingPrice: req.body.sellingPrice,
                     Stock: req.body.stock,

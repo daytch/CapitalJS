@@ -10,7 +10,9 @@ const Blog = db.blog;
 
 
 exports.save = (req, res) => {
+    console.log(req.body)
     if (null != req.body.id && req.body.id != "") {
+        console.log('update')
         var blog = new Blog();
         blog._id = req.body.id;
         blog.BlogCategoryID = req.body.blogCategoryId;
@@ -18,7 +20,6 @@ exports.save = (req, res) => {
         blog.Body = req.body.body;
         blog.MasterStatusID = req.body.masterStatusId;
         blog.HeaderBlogLink = req.body.headerBlogLink;
-        
         blog.Modified = Date.now();
         blog.ModifiedBy = req.userId;
 
@@ -57,7 +58,7 @@ exports.save = (req, res) => {
         //             });
     }
     else {
-
+        console.log('create')
         var blog = new Blog();
 
         blog.BlogCategoryID = req.body.blogCategoryId;

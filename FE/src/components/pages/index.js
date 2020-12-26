@@ -6,6 +6,15 @@ import Blog from './blog';
 import Delivery from './delivery';
 import Outlet from './outlet';
 import NotFound from './notFound';
+import Carrer from './carrer'
+import Team from './team'
+import Workplace from './workplace'
+import Tips from './tips'
+import Operational from './operational'
+import DetailBlog from './detailBlog'
+import Faq from './faq'
+import Cart from './cart'
+import Order from './order'
 
 export {
   Home,
@@ -15,5 +24,14 @@ export {
   Blog,
   Delivery,
   Outlet,
-  NotFound
+  NotFound,
+  Carrer,
+  Team,
+  Workplace,
+  Tips,
+  Operational,
+  DetailBlog,
+  Faq,
+  Cart,
+  Order
 };

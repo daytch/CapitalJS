@@ -1,5 +1,5 @@
-import React from 'react'
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react'
+import { connect, useDispatch, useSelector } from 'react-redux';
 import {
   CCard,
   CCardBody,
@@ -21,17 +21,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { careerAction, globalAction } from '../../../redux/actions';
 
 import { UploadImage } from '../../../services';
+import { careerSubmit, deleteCareer, getCareer, updateCareer } from '../../../redux/actions/careerAction';
 
 const fields = [
   {
-    key: 'check',
-    label: "",
-    _style: { width: '1%' },
+    key: 'no',
+    label: "No.",
+    _style: { width: '1%'},
     sorter: false,
     filter: false
   },
-  { key: 'Picture', _style: { width: '79%' } },
-  { key: 'RowStatus', _style: { width: '10%' } },
+  { key: 'title', _style: { width: '30%'} },
+  { key: 'description', _style: { width: '40%'} },
+  { key: 'status', _style: {width: '30%'}},
   {
     key: 'action',
     label: 'Action',
@@ -42,9 +44,9 @@ const fields = [
 ]
 const DEFAULT_FORM = {
   id: "",
-  linkslider: "",
-  status: "",
-  image: ""
+  title: "",
+  description: "",
+  status: ""
 }
 const Career = ({
   global, sliderWebsite, getSliderStatusDropdown, getGridData,
@@ -54,213 +56,126 @@ const Career = ({
   const [form, setForm] = React.useState(DEFAULT_FORM)
   const [checkList, setCheckList] = React.useState([])
 
-  const {/*acceptedFiles,*/ getRootProps, getInputProps } = useDropzone({
-    getFilesFromEvent: event => {
-      const files = [];
-      const fileList = event.dataTransfer ? event.dataTransfer.files : event.target.files;
+  const dispatch = useDispatch()
 
-      for (var i = 0; i < fileList.length; i++) {
-        const file = fileList.item(i);
+  useEffect(() => {
+    dispatch(getCareer())
+  }, [])
 
-        Object.defineProperty(file, 'myProp', {
-          value: true
-        });
+const carrer = useSelector(state => state.careerReducer.data)
 
-        files.push(file);
-      }
-      if (files.length) {
-        UploadImage(files[0], (url) => {
-          handleChange("image", url)
-        })
-      }
-
-      return files;
-    }
-  });
-  
-  const handleChange = (attr, val) => {
+ const handleEdit = (item) =>{
+setCreate(false)
     setForm({
+      id: item._id,
+  title: item.title,
+  description: item.description,
+  status: item.status
+    })
+ }
+
+ const handleDelete = (item) =>{
+     dispatch(deleteCareer(item))
+ }
+
+ const handleUpdate = () =>{
+    dispatch(updateCareer(form))
+    setCreate(true)
+    setForm(DEFAULT_FORM)
+ }
+ const handleCreate = () =>{
+  setCreate(false)
+  dispatch(careerSubmit(form))
+  setForm(DEFAULT_FORM)
+ }
+ const handleCancel = () =>{
+    setCreate(true)
+    setForm(DEFAULT_FORM)
+ }
+
+ const handleChange = (attr,val) =>{
+   setForm({
       ...form,
       [attr]: val
     })
-  }
-  const handleDropzoneImageRemove = () => {
-    return setForm({
-      ...form,
-      image: ""
-    })
-  }
-  const resetCheckList = () => {
-    setCheckList(new Array(sliderWebsite.griddata.length).fill(false))
-  }
-  const resetForm = () => {
-    setForm(DEFAULT_FORM)
-    setCreate(true)
-  }
-  const handleChecked = (index, checked) => {
-    checkList[index] = checked
-    setCheckList([...checkList])
-  }
-  const handleCreate = () => {
-    saveSliderWebsite({
-      ...form,
-      status: form.status || global.sliderStatusDropdown[0].id
-    }, resetForm)
-  }
-  const handleEdit = (item) => {
-    setCreate(false)
-    setForm({
-      id: item._id,
-      linkslider: item.Description,
-      show: item.MasterStatusId,
-      image: item.Picture
-    })
-  }
-  const handleCancel = () => {
-    setCreate(true)
-  }
-  const handleDeleteSelected = () => {
-    const deletedIds = []
-    checkList.forEach((v, i) => {
-      if (v) {
-        deletedIds.push(sliderWebsite.griddata[i]._id)
-      }
-    })
-    deleteSliderWebsite(deletedIds, resetCheckList)
-  }
+ }
   return (
     <CRow>
-      <CCol xs="12" md="8">
-        <CCard>
-          <CCardHeader>
-            <strong>List Slider Website</strong>
-          </CCardHeader>
-          <CCardBody>
-            <CDataTable
-              items={sliderWebsite.griddata}
-              fields={fields}
-              tableFilter
+     <CCol md="8" xs="12">
+      <CCard>
+        <CCardHeader>
+          <strong>List Career</strong>
+        </CCardHeader>
+        <CCardBody>
+          <CDataTable
+          items={carrer}
+          fields={fields}
+          tableFilter
+              footer
               itemsPerPageSelect
               itemsPerPage={5}
               hover
               sorter
               pagination
-              columnHeaderSlot={{
-                'check': (
-                  <CFormGroup variant="custom-checkbox">
-                    <CInputCheckbox
-                      custom
-                      id={"check-all"}
-                      name={"check-all"}
-                      value={"check-all"}
-                    />
-                    <CLabel variant="custom-checkbox" htmlFor={"check-all"}></CLabel>
-                  </CFormGroup>
-                )
-              }}
               scopedSlots={{
-                'check': (item, index) => {
+                'no': (item,index) =>{
                   return (
-                    <td>
-                      <CFormGroup variant="custom-checkbox">
-                        <CInputCheckbox
-                          custom
-                          id={index}
-                          name={index}
-                          value={index}
-                          checked={checkList[index] || false}
-                          onChange={(e) => handleChecked(index, e.target.checked)}
-                        />
-                        <CLabel variant="custom-checkbox" htmlFor={index}></CLabel>
-                      </CFormGroup>
-                    </td>
-                  )
+                          <td>
+                            {index + 1}
+                          </td>
+                        )
                 },
-                'Picture': (item) => {
+                'action': (item) =>{
                   return (
-                    <td align="center">
-                      <img className="sw_table__image" src={item.Picture} alt="" />
-                    </td>
-                  )
-                },
-                'RowStatus': (item) => {
-                  return (
-                    <td>
-                      {item.RowStatus ? "SHOW" : "UNSHOW"}
-                    </td>
-                  )
-                },
-                'action':
-                  (item, index) => {
-                    return (
-                      <td className="py-2">
-                        <div className="icon-wrapper btn-primary" onClick={() => handleEdit(item)}>
-                          <CIcon name={"cil-pencil"} size="lg" />
-                        </div>
-                        <div className="icon-wrapper btn-danger">
-                          <CIcon name={"cil-trash"} size="lg" />
-                        </div>
-                      </td>
-                    )
-                  }
+                            <td className="py-2">
+                              <div className="icon-wrapper btn-primary" onClick={() => handleEdit(item)}>
+                                <CIcon name={"cil-pencil"} size="lg" />
+                              </div>
+                              <div className="icon-wrapper btn-danger" onClick={() => handleDelete(item._id)}>
+                                <CIcon name={"cil-trash"} size="lg" />
+                              </div>
+                            </td>
+                          )
+                }
               }}
-            />
-          </CCardBody>
-          <CCardFooter>
-            <CButton type="button" color="danger" onClick={handleDeleteSelected}>Delete</CButton>
-          </CCardFooter>
-        </CCard>
-      </CCol>
-      <CCol xs="12" md="4">
-        <CCard>
+
+          >
+
+          </CDataTable>
+        </CCardBody>
+      </CCard>
+     </CCol>
+     <CCol md="4" xs="12">
+              <CCard>
           <CCardHeader>
-            <strong>Add Slider Website</strong>
+            <strong>Add Branch</strong>
           </CCardHeader>
           <CCardBody>
             <CFormGroup>
-              <CLabel htmlFor="status">Status</CLabel>
-              <CSelect custom name="status" value={form.status} id="status" onChange={(e) => handleChange("status", e.target.value)}>
-                {global.sliderStatusDropdown.map((v) => {
-                  return (
-                    <option key={v.id} value={v.id}>{v.name}</option>
-                  )
-                })}
-              </CSelect>
+              <CLabel htmlFor="title">Title:</CLabel>
+              <CInput id="title" placeholder="" required value={form.title || ''} onChange={(e) => handleChange("title", e.target.value)}/>
             </CFormGroup>
             <CFormGroup>
-              <CLabel htmlFor="add-linkslider">Link Slider</CLabel>
-              <CInput id="add-linkslider" placeholder="Insert Link Slider" required value={form.linkslider} onChange={(e) => handleChange("linkslider", e.target.value)} />
+              <CLabel htmlFor="deskripsi">Deskripsi:</CLabel>
+              <CInput id="deskripsi" placeholder="" required value={form.description || ''} onChange={(e) => handleChange("description", e.target.value)}/>
             </CFormGroup>
-            <div className="dropzone-wrapper">
-              <div {...getRootProps({ className: 'dropzone' })} data-margin-top="xs">
-                {
-                  form.image && (
-                    <div className="dropzone-image-wrapper">
-                      <img src={form.image} alt="" style={{ width: "100%" }} />
-                    </div>
-                  )
-                }
-                <input {...getInputProps()} />
-                <p><strong>Drag 'n' drop some files here, or click to select files</strong></p>
-              </div>
-              {
-                form.image &&
-                <FontAwesomeIcon icon="times-circle" size="lg" className="dropzone-image-close" onClick={handleDropzoneImageRemove} />
-              }
-            </div>
+            <CFormGroup>
+              <CLabel htmlFor="status">Status:</CLabel>
+              <CInput id="status" placeholder="" required value={form.status || ''} onChange={(e) => handleChange("status", e.target.value)}/>
+            </CFormGroup>
           </CCardBody>
           <CCardFooter>
             {
-              create ?
-                <CButton type="button" color="primary" onClick={handleCreate}>Create</CButton> :
-                <>
-                  <CButton type="button" color="success" onClick={handleDeleteSelected}>Update</CButton>
-                  <CButton type="button" color="danger" onClick={handleCancel}>Cancel</CButton>
-                </>
+              create ? 
+              <CButton type="button" color="primary" onClick={handleCreate}>Create</CButton> :
+              <>
+                <CButton type="button" color="success" onClick={handleUpdate}>Update</CButton>
+                <CButton type="button" color="danger" onClick={handleCancel}>Cancel</CButton>
+              </>
             }
           </CCardFooter>
         </CCard>
-      </CCol>
+     </CCol>
     </CRow>
   )
 }

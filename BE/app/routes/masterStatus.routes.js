@@ -37,8 +37,8 @@ module.exports = function(app) {
 *         description: something error on system
 
 */  
-  app.get("/api/masterstatus/sliderconfig",[authJwt.verifyToken],controller.SliderConfig);
-
+  // app.get('/api/addmaster',controller.addMasterStatus)
+  app.get("/api/masterstatus/sliderconfig",controller.SliderConfig);
   /**
 * @swagger
 * /api/masterstatus/blogconfig:
@@ -93,7 +93,7 @@ module.exports = function(app) {
 
 */  
 
-  app.get("/api/masterstatus/branchconfig",[authJwt.verifyToken], controller.BranchConfig);
+  app.get("/api/masterstatus/branchconfig", controller.BranchConfig);
 
    /**
 * @swagger
@@ -121,7 +121,7 @@ module.exports = function(app) {
 
 */  
 
-app.get("/api/masterstatus/productconfig",[authJwt.verifyToken], controller.ProductConfig);
+app.get("/api/masterstatus/productconfig", controller.ProductConfig);
 
    /**
 * @swagger
@@ -149,7 +149,7 @@ app.get("/api/masterstatus/productconfig",[authJwt.verifyToken], controller.Prod
 
 */  
 
-app.get("/api/masterstatus/productcategoryconfig",[authJwt.verifyToken], controller.ProductCategoryConfig);
+app.get("/api/masterstatus/productcategoryconfig", controller.ProductCategoryConfig);
 
   // app.post("/api/masterStatus/SaveConfig", controller.SaveConfig);
 
