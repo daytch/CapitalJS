@@ -1,35 +1,33 @@
-.outlet-section{
+.outlet-section {
   padding: 100px 20px 20px 20px;
   color: $cl_primary;
   font-family: Roboto;
 }
-.outlet-titleWrapper{
+.outlet-titleWrapper {
   text-align: center;
   margin-bottom: 30px;
 }
-.outlet-title{
+.outlet-title {
   margin: 0;
 }
 
-.outlet-grid{
+.outlet-grid {
   margin-bottom: 30px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
 }
-.outlet-gridItem{
-  flex-basis: 25%;
-  display: flex;
+.outlet-gridItem {
   justify-content: center;
   margin-bottom: 20px;
 }
-.outlet-gridItemInner{
+.outlet-gridItemInner {
   max-width: 270px;
   display: flex;
   flex-direction: column;
-  padding: 0 10px;
+  padding: 0px;
 }
-.gridItemImage{
+.gridItemImage {
   text-align: center;
 }
 .gridItemImage > img {
@@ -37,19 +35,19 @@
   height: 185px;
 }
 
-.outlet-locationName{
+.outlet-locationName {
   margin-top: 10px;
   margin-bottom: 0;
 }
-.outlet-locationAddress{
+.outlet-locationAddress {
   font-size: 14px;
   margin: 0;
 }
-.outlet-phone{
+.outlet-phone {
   font-size: 14px;
 }
 
-.map-container{
+.map-container {
   max-width: 1100px;
   margin: auto;
 }

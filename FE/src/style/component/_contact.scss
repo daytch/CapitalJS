@@ -1,0 +1,29 @@
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  color: brown;
+}
+.we-would {
+  background-color: #fffad4;
+  border-top: 2px solid $cl_primary;
+}
+.box-animasi {
+  background-color: rgb(219, 215, 215);
+  width: 80%;
+  height: 250px;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bolder;
+  color: brown;
+}
+.btn-contact {
+  margin-top: 4px;
+  border: 1px solid brown !important;
+  width: 100px;
+}

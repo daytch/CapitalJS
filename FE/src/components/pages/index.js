@@ -15,6 +15,7 @@ import DetailBlog from './detailBlog'
 import Faq from './faq'
 import Cart from './cart'
 import Order from './order'
+import Contact from './contact'
 
 export {
   Home,
@@ -33,5 +34,6 @@ export {
   DetailBlog,
   Faq,
   Cart,
-  Order
+  Order,
+  Contact
 };

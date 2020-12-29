@@ -37,19 +37,23 @@ function Outlet(props){
         <div className="outlet-titleWrapper">
           <h1 className="outlet-title">OUTLET LOCATION</h1>
         </div>
-        <div className="outlet-grid">
+        <div className="map-container">
+          <GoogleMapV2 isMarkerShown />
+        <div className="row mt-4">
           {
             outlet.map(v=>{
               return (
+                  <div class="col-md-4 col-6">
                   <OutletItem name={v.Name} address={v.Address} phone={v.Telephone} url={v.Picture} />
+                  </div>
               )
             })
           }
         
         </div>
-        <div className="map-container">
-          <GoogleMapV2 isMarkerShown />
         </div>
+        
+        
       </section>
     </div>
   )

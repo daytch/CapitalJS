@@ -152,10 +152,14 @@ function ExtraPriceListItem(props) {
             </div>
             <div className="productDetail-previewList">
               {
-                product.Pictures.map(v=>{
-                  return (
+                product.Pictures.map((v,i)=>{
+                  if(i <= 4){
+                    return (
+                    
                     <ProductDetailPreviewItem url={v}/>
                   )
+                  }
+                  
                 })
               }
             </div>

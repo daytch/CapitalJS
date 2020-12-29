@@ -18,7 +18,8 @@ import {
   DetailBlog,   
   Faq,
   Cart,
-  Order
+  Order,
+  Contact
 } from './components/pages';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faPlus,faSortDown,faArrowRight,faArrowLeft,faMinus } from '@fortawesome/free-solid-svg-icons'
@@ -30,11 +31,12 @@ function App() {
   return (
     <div className="app-container">
       <Switch>
-        <Route exact path={["/","/faq","/order" ,"/cart","/about","/carrer","/blog/:id","/operational","/tips","/team","/workplace" ,"/product","/home" ,"/product/:id", "/blog", "/delivery", "/outlet"]}>
+        <Route exact path={["/","/faq","/order","/contact" ,"/cart","/about","/carrer","/blog/:id","/operational","/tips","/team","/workplace" ,"/product","/home" ,"/product/:id", "/blog", "/delivery", "/outlet"]}>
           <Application>
             <PrivateRoute exact path="/order" component={Order} />
             <PrivateRoute exact path="/cart" component={Cart} />
             <Route exact path="/faq" component={Faq} />
+            <Route exact path="/contact" component={Contact} />
             <Route exact path="/blog/:id" component={DetailBlog} />
             <Route exact path="/operational" component={Operational}/>
             <Route exact path="/tips" component={Tips}/>
