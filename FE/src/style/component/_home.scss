@@ -9,10 +9,11 @@
 
 .home-content {
   display: flex;
+  color: #fffad4 !important;
   flex-direction: column;
 }
 .home-leftContent {
-  background: #d6554f;
+  background-color: #755036;
   flex-basis: 45%;
   color: #fffad4;
 }
@@ -21,6 +22,8 @@
   padding-top: 35px;
   padding-right: 20px;
   padding-left: 20px;
+  background-color: #755036;
+  color: #fffad4;
 }
 .home-rightContent {
   flex-basis: 55%;
@@ -46,6 +49,7 @@
   justify-content: space-around;
   padding-top: 20px;
   margin-bottom: 60px;
+  color: #fffad4 !important;
 }
 .home-categoryItem {
   padding: 0 5px;

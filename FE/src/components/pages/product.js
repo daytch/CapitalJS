@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 function ProductItem(props){
   
   return (
-    <Link className="product-item" to={'/product/'+ props.link}>
+    <Link style={{ textDecoration: 'none' }} className="product-item" to={'/product/'+ props.link}>
       <div className="product-itemContainer">
         <div className="product-itemImage">
           <img src={props.url} alt=""/>
