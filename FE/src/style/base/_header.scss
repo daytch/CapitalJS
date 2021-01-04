@@ -23,6 +23,7 @@ header a {
 .header-container > label {
   position: absolute;
 }
+
 .header-container > label > span {
   background: #000;
   display: block;
@@ -108,6 +109,9 @@ header a {
   display: inline-block;
   border-bottom: 1px solid $cl_menu;
   padding-bottom: 2px;
+}
+.menu-label:hover {
+  color: white;
 }
 .menu-dropdownContainer {
   display: none;

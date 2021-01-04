@@ -41,6 +41,7 @@
 }
 .home-leftTitle {
   font-size: 35px;
+  color: black;
   font-weight: normal;
   margin-bottom: 10px;
 }
@@ -95,6 +96,9 @@
 }
 .home-buttonContainer > .control-dots {
   bottom: 15px;
+}
+.home-bg {
+  background-color: #755036;
 }
 .home-buttonItem {
   display: flex;

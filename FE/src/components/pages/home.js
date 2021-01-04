@@ -79,7 +79,7 @@ const images = useSelector(state => state.sliderReducer.data)
 const profile = useSelector(state => state.profileReducer.data)
   return (
     
-    <div>
+    <div className="home-bg">
       <ToastContainer />
       <section className="home-banner">
         <Carousel>
@@ -90,7 +90,7 @@ const profile = useSelector(state => state.profileReducer.data)
             })}
         </Carousel>
       </section>
-      <section className="home-content">
+      <section className="home-content mt-4">
         <div className="home-leftContent">
           <div className="home-leftContainer">
             <div className="home-leftTitleContainer">
