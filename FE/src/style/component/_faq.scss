@@ -1,6 +1,8 @@
 .faq-text {
   font-weight: bolder;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  display: inline;
+  vertical-align: bottom;
 }
 .title-accordion {
   color: $cl_primary;

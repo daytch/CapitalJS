@@ -20,7 +20,7 @@ function Carrer(){
           </div>
 
           <div className="img-carrer">
-            <div className="">
+            <div className="img-carrer-sub">
                 <img className="img-content" src={public_path('/assets/img/carrer-1.png')} alt=""/>
                 <Link to="/workplace" className="carrer-link">
                   <h5 className="font-bold">OUR WORKPLACE</h5>
@@ -34,11 +34,11 @@ function Carrer(){
                 
             </div>
 
-            <div className="img-center">
+            <div className="img-center img-carrer-sub">
               <img className="img-content" src={public_path('/assets/img/carrer-5.png')} alt=""/>
             </div>
 
-            <div className="">
+            <div className="img-carrer-sub">
               <img className="img-content" src={public_path('/assets/img/carrer-5.png')} alt=""/>
               <Link to="/tips" className="carrer-link">
                   <h5 className="font-bold">TIPS BEFORE YOU APPLY</h5>
