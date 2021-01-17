@@ -36,7 +36,7 @@ function Payment() {
             </div>
           </div>
           <div className="col-md-12 payment-animasi">
-            ANIMASI
+            <center><h1>ANIMASI</h1></center>
           </div>
         </div>
 
