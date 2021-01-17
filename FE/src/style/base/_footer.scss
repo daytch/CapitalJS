@@ -46,17 +46,18 @@ footer {
 }
 .footer-leftImage {
   margin-right: 20px;
+  height: 7rem;
 }
 .footer-leftImage > img {
-  height: 15 0px;
+  // height: 15 0px;
+  height: 7rem;
 }
 
 .footer-rightContent {
   width: 100%;
   text-align: left;
 }
-.footer-address {
-}
+
 .footer-securePayment > img {
   height: 50px;
 }
@@ -87,6 +88,7 @@ footer {
     display: block;
   }
   .footer-container {
+    padding-bottom: 2rem;
     padding-right: 60px;
   }
   .footer-content {
@@ -112,6 +114,7 @@ footer {
 @media (min-width: 900px) {
   .footer-leftImageContainer {
     display: flex;
+    margin-bottom: -30px;
   }
 }
 @media (min-width: 901px) and (max-width: 987px) {

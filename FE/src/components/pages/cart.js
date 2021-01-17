@@ -206,9 +206,9 @@ console.log(form.telp)
           {
             outlet.map(v=>{
               return (
-                <div class="form-check cart-check">
-            <input class="form-check-input" value={v.Name} type="radio" name="exampleRadios" id="exampleRadios1"/>
-            <label class="form-check-label" for="exampleRadios1">
+                <div className="form-check cart-check">
+            <input className="form-check-input" value={v.Name} type="radio" name="exampleRadios" id="exampleRadios1"/>
+            <label className="form-check-label" for="exampleRadios1">
               <h5 className="font-weight-bold">{v.Name}</h5>
               <h6 className="font-weight-bold">
                 {v.Address}

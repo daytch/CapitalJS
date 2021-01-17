@@ -1,4 +1,4 @@
-export const API_URL = 'http://localhost:8080/api';
+export const API_URL = 'http://5.189.134.84:8080/api';
 export const URL = {
   DATA_HOME: API_URL + "/home",
   GET_SLIDER: API_URL + "/sliderWebsite/load",

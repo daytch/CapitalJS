@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { public_path } from '../../utils/common';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Carousel from '../carousel';
@@ -18,13 +18,13 @@ const imagei = [
   "/assets/img/banner-9.jpg",
 ]
 function Dot(props) {
-  const {active, onClick} = props;
-  return(
+  const { active, onClick } = props;
+  return (
     <li className={"dot " + (active && "selected")} onClick={onClick}></li>
   )
 }
 function CategoryItem(props) {
-  const {active, onClick, text} = props;
+  const { active, onClick, text } = props;
   return (
     <div className={"home-categoryItem " + (active && "active")} onClick={onClick}>
       <span>{text}</span>
@@ -33,9 +33,9 @@ function CategoryItem(props) {
   )
 }
 
-function CarouselItemCake(props){
-  const {name, description, key, index} = props;
-  return(
+function CarouselItemCake(props) {
+  const { name, description, key, index } = props;
+  return (
     <div key={key} index={index} className="home-cakeContent">
       <div className="home-cakeName">{name}</div>
       <div className="home-cakeDescription">{description}</div>
@@ -45,16 +45,16 @@ function CarouselItemCake(props){
 
 function CarouselItem(props) {
   return (
-    <div key={props.index} {...props} style={{pointerEvents: "none"}}>
+    <div key={props.index} {...props} style={{ pointerEvents: "none" }}>
       <img src={public_path(props.url)} key={props.index} />
     </div>
   )
 }
 
 function Home(props) {
-  const [categories, setCategories] = React.useState([true,false,false])
+  const [categories, setCategories] = useState([true, true, true]) //React.useState([true,false,false])
   const clickCategory = (index) => {
-    let cats = [false,false,false];
+    let cats = [true, true, true]; //[false,false,false];
     cats[index] = true;
     setCategories(cats);
   }
@@ -65,29 +65,29 @@ function Home(props) {
     }
   };
 
-  
-  
+
+
   const dispatch = useDispatch()
-useEffect(() => {
-  dispatch(getSlider())
-  dispatch(getProfile())
-  if(props.location.search == '?authorized=0'){
-    toast.error('Anda Harus Login Dahulu!')
-  }
-}, []);
-const images = useSelector(state => state.sliderReducer.data)
-const profile = useSelector(state => state.profileReducer.data)
+  useEffect(() => {
+    dispatch(getSlider())
+    dispatch(getProfile())
+    if (props.location.search == '?authorized=0') {
+      toast.error('Anda Harus Login Dahulu!')
+    }
+  }, []);
+  const images = useSelector(state => state.sliderReducer.data)
+  const profile = useSelector(state => state.profileReducer.data)
   return (
-    
+
     <div className="home-bg">
       <ToastContainer />
       <section className="home-banner">
         <Carousel>
-            {images.map((url,key) => {
-              return(
-                <CarouselItem key={key} index={key} url={url.Picture} />
-              )
-            })}
+          {images.map((url, key) => {
+            return (
+              <CarouselItem key={key} index={key} url={url.Picture} />
+            )
+          })}
         </Carousel>
       </section>
       <section className="home-content mt-4">
@@ -95,7 +95,7 @@ const profile = useSelector(state => state.profileReducer.data)
           <div className="home-leftContainer">
             <div className="home-leftTitleContainer">
               <h2 className="home-leftTitle">Capital start with the art of traditional Baking</h2>
-              <p className="home-leftDescription" style={{wordWrap: 'break-word'}} dangerouslySetInnerHTML={{__html: profile.Profile}}/>
+              <p className="home-leftDescription" style={{ wordWrap: 'break-word' }} dangerouslySetInnerHTML={{ __html: profile.Profile }} />
             </div>
             <div className="divider"></div>
             <div className="home-categoryContainer">
@@ -147,9 +147,9 @@ const profile = useSelector(state => state.profileReducer.data)
                 <span>COKLAT PREMIUM</span>
               </div>
               <ul className="control-dots">
-                <Dot active={currentSlide===0} onClick={() => updateCurrentSlide(0)} />
-                <Dot active={currentSlide===1} onClick={() => updateCurrentSlide(1)} />
-                <Dot active={currentSlide===2} onClick={() => updateCurrentSlide(2)} />
+                <Dot active={currentSlide === 0} onClick={() => updateCurrentSlide(0)} />
+                <Dot active={currentSlide === 1} onClick={() => updateCurrentSlide(1)} />
+                <Dot active={currentSlide === 2} onClick={() => updateCurrentSlide(2)} />
               </ul>
             </div>
           </div>

@@ -15,33 +15,35 @@ import {
   Workplace,
   Tips,
   Operational,
-  DetailBlog,   
+  DetailBlog,
   Faq,
   Cart,
   Order,
-  Contact
+  Contact,
 } from './components/pages';
+import OrderWebsite from './components/pages/orderWebsite'
+import Payment from './components/pages/payment'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faPlus,faSortDown,faArrowRight,faArrowLeft,faMinus } from '@fortawesome/free-solid-svg-icons'
-import { useDispatch } from 'react-redux';
+import { faPlus, faSortDown, faArrowRight, faArrowLeft, faMinus } from '@fortawesome/free-solid-svg-icons'
+// import { useDispatch } from 'react-redux';
 import { PrivateRoute } from './services/route';
-library.add(faPlus,faSortDown,faArrowRight,faArrowLeft,faMinus);
+library.add(faPlus, faSortDown, faArrowRight, faArrowLeft, faMinus);
 
 function App() {
   return (
     <div className="app-container">
       <Switch>
-        <Route exact path={["/","/faq","/order","/contact" ,"/cart","/about","/carrer","/blog/:id","/operational","/tips","/team","/workplace" ,"/product","/home" ,"/product/:id", "/blog", "/delivery", "/outlet"]}>
+        <Route exact path={["/", "/faq", "/order", "/contact", "/cart", "/about", "/carrer", "/blog/:id", "/operational", "/tips", "/team", "/workplace", "/product", "/home", "/product/:id", "/blog", "/delivery", "/outlet", "/payment", "/orderbywebsite"]}>
           <Application>
             <PrivateRoute exact path="/order" component={Order} />
             <PrivateRoute exact path="/cart" component={Cart} />
             <Route exact path="/faq" component={Faq} />
             <Route exact path="/contact" component={Contact} />
             <Route exact path="/blog/:id" component={DetailBlog} />
-            <Route exact path="/operational" component={Operational}/>
-            <Route exact path="/tips" component={Tips}/>
-            <Route exact path="/team" component={Team}/>
-            <Route exact path="/workplace" component={Workplace}/>
+            <Route exact path="/operational" component={Operational} />
+            <Route exact path="/tips" component={Tips} />
+            <Route exact path="/team" component={Team} />
+            <Route exact path="/workplace" component={Workplace} />
             <Route exact path="/carrer" component={Carrer} />
             <Route exact path="/product" component={Product} />
             <Route exact path="/product/:id" component={ProductDetail} />
@@ -49,9 +51,11 @@ function App() {
             <Route exact path="/delivery" component={Delivery} />
             <Route exact path="/outlet" component={Outlet} />
             <Route exact path="/about" component={About} />
-            <Route exact path="/home" component={Home}/>
+            <Route exact path="/home" component={Home} />
             <Route exact path="/" component={Home} />
 
+            <Route exact path="/payment" component={Payment} />
+            <Route exact path="/orderbywebsite" component={OrderWebsite} />
           </Application>
         </Route>
       </Switch>

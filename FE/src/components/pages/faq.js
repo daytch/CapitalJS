@@ -22,22 +22,22 @@ function Faq(props) {
             <img src={public_path('/assets/img/faq-1.png')} alt=""/>
           <h1 className="faq-text">FAQ</h1>
 
-          <div class="accordion" id="accordionExample">
+          <div className="accordion" id="accordionExample">
             {
               faq.map((e, i) => {
                 return (
-                  <div class="card ">
-                    <div class="card-header bg-white" id={"heading" + i}>
-                      <h2 class="mb-0">
-                        <button class="btn  btn-block text-left" type="button" data-toggle="collapse" data-target={"#collapseOne" + i} aria-expanded="true" aria-controls={"collapseOne" + i}>
+                  <div className="card ">
+                    <div className="card-header bg-white" id={"heading" + i}>
+                      <h2 className="mb-0">
+                        <button className="btn  btn-block text-left" type="button" data-toggle="collapse" data-target={"#collapseOne" + i} aria-expanded="true" aria-controls={"collapseOne" + i}>
 
                           <h4 className="title-accordion">{e.sequence + '. ' + e.question}</h4>
                         </button>
                       </h2>
                     </div>
 
-                    <div id={"collapseOne" + i} class="collapse" aria-labelledby={"heading" + i} data-parent="#accordionExample">
-                      <div class="card-body" style={{ wordWrap: 'break-word' }}>
+                    <div id={"collapseOne" + i} className="collapse" aria-labelledby={"heading" + i} data-parent="#accordionExample">
+                      <div className="card-body" style={{ wordWrap: 'break-word' }}>
                         {parse(e.answer)}
                       </div>
                     </div>
