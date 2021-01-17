@@ -5,6 +5,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getDetailProduct } from '../../redux/actions/productAction';
 import { toast, ToastContainer } from 'react-toastify';
 
+function getAddOnsSum(addOns){
+  let total = 0;
+  Object.keys(addOns).forEach((key) => {
+    const addOn = addOns[key]
+    total += addOn.total
+  })
+  return total;
+}
+
 function ProductDetailExtraItem(props) {
   return (
     <div className={"productDetail-extraItem " + ((props.active || "") && "active")}>
@@ -49,10 +58,19 @@ function ProductDetail(props) {
   const [candlePrice, setCandlePrice] = React.useState(0);
   const [lilin, setLilin] = React.useState({
   })
-  const AddOnsOnChange = (id, value) => {
+  const AddOnsOnChange = (addOns, value) => {
+    const id = addOns._id;
+    const quantity = (value < 0 ? 0 : value)
+    
     setLilin({
       ...lilin,
-      [id]: (value < 0 ? 0 : value)
+      [id]: {
+        name: addOns.Name,
+        picture: addOns.Pictures,
+        price: addOns.SellingPrice,
+        total: addOns.SellingPrice * quantity,
+        value: quantity
+      }
     })
   }
 
@@ -115,25 +133,57 @@ function ExtraPriceListItem(props) {
 }
 
 //add to cart
-  const addToCart = ()=>{
+  const addToCart = () => {
     const data = {
       id: Date.now(),
       idProduct: product._id,
       name: product.Name,
-      total: total + priceCake,
+      total: priceCake,
+      price: product.SellingPrice,
       note: form.note,
       quantity: quantity,
-      addOns: Object.keys(lilin).map((key) => [key, lilin[key]]),
+      addOns: Object.keys(lilin).map((key) => [lilin[key].name, lilin[key].value]),
       picture: product.Pictures[0],
     }
-  if(quantity >= 1){
-    const cart = JSON.parse(localStorage.getItem('cart') || "[]");
-  cart.push(data)
-  localStorage.setItem('cart', JSON.stringify(cart));
-  props.history.push('/cart')
-  }else{
-    toast.error('Minimal pembelian 1 Quantity')
-  }
+    if (quantity >= 1) {
+      const cart = JSON.parse(localStorage.getItem('cart') || "[]");
+      const productInCart = cart.find((v) => v.id==data.id)
+      if(productInCart){
+        productInCart.total += data.total;
+        productInCart.note = data.note;
+        productInCart.quantity += data.quantity;
+      } else {
+        cart.push(data);
+      }
+
+      // add addons to cart
+      Object.keys(lilin).forEach((key) => {
+        const item = lilin[key]
+        const addOnsInCart = cart.find((v) => v.id==item.id)
+        if(addOnsInCart){
+          addOnsInCart.total += item.total
+          addOnsInCart.quantity += item.value
+        } else {
+          cart.push({
+            id: key,
+            idProduct: item.id,
+            name: item.name,
+            total: item.total,
+            price: item.price,
+            note: "",
+            quantity: item.value,
+            addOns: [],
+            picture: item.picture,
+          })
+        }
+      })
+      
+      // cart.push(data)
+      localStorage.setItem('cart', JSON.stringify(cart));
+      props.history.push('/cart')
+    } else {
+      toast.error('Minimal pembelian 1 Quantity')
+    }
   
   }
   return (
@@ -155,8 +205,7 @@ function ExtraPriceListItem(props) {
                 product.Pictures.map((v,i)=>{
                   if(i <= 4){
                     return (
-                    
-                    <ProductDetailPreviewItem url={v}/>
+                    <ProductDetailPreviewItem key={i} url={v}/>
                   )
                   }
                   
@@ -182,7 +231,6 @@ function ExtraPriceListItem(props) {
                   if(e.target.value > 0){
                     setQuantity(e.target.value)
                     setPriceCake(product.SellingPrice * e.target.value)
-                    
                   }
 
                   
@@ -230,9 +278,9 @@ function ExtraPriceListItem(props) {
                   </p>
                   <div className="productDetail-extraPriceList">
                     {
-                      product.AddOns.map(v=>{
+                      product.AddOns.map((v, i)=>{
                         return (
-                          <ExtraPriceListItem value={lilin[v.Name] ?? 0} id={v.Name} name={v.Name} price={v.SellingPrice} onChange={AddOnsOnChange} />
+                          <ExtraPriceListItem key={i} value={(lilin[v._id] && lilin[v._id].value) ?? 0} id={v._id} name={v.Name} price={v.SellingPrice} onChange={(id, value) => AddOnsOnChange(v, value)} />
                         )
                       })
                     }
@@ -245,7 +293,7 @@ function ExtraPriceListItem(props) {
                   </div>
                   <div className="productDetail-candlePriceContainer">
                 <div className="productDetail-candlePriceWrapper float-right">
-                  Total <label><strong>Rp {rupiah(total + priceCake)}</strong></label>
+                  Total <label><strong>Rp {rupiah(getAddOnsSum(lilin) + priceCake)}</strong></label>
                 </div>
               </div>
                 </div>
