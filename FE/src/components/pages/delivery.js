@@ -1,6 +1,5 @@
 import React from 'react';
 import {public_path} from '../../utils/common';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 function DeliveryTabItem(props){
   return(

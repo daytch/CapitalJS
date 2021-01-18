@@ -4,9 +4,9 @@ import {
   HANDLE_LOGIN, HANDLE_REGISTER, URL
 } from '../../constants';
 
-import { GET, POST, PUT, DELETE } from '../../services';
-import history from '../../utils/history'
-import { message } from '../actions/loginAction';
+import {  POST } from '../../services';
+// import history from '../../utils/history'
+// import { message } from '../actions/loginAction';
 import { createBrowserHistory } from 'history';
 
 const login = state => state.loginReducer;

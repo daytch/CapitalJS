@@ -1,7 +1,7 @@
 import React from 'react';
 import { public_path } from '../../utils/common';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight, faCoffee } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faArrowRight, faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 function Payment() {
   return (
@@ -32,7 +32,7 @@ function Payment() {
               </ul>
             </div>
             <div className="flex-1">
-              <img className="local-payment" src={public_path("/assets/img/local payment.png")} />
+              <img alt="local payment" className="local-payment" src={public_path('/assets/img/local-payment.png')} />
             </div>
           </div>
           <div className="col-md-12 payment-animasi">

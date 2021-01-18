@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrder } from '../../redux/actions/orderAction';
-import { getOutlet } from '../../redux/actions/outletAction';
+// import { getOutlet } from '../../redux/actions/outletAction';
 
 
 function Order(props){
@@ -9,6 +9,7 @@ function Order(props){
   React.useEffect(() => {
     window.scrollTo(0, 0)
     dispatch(getOrder())
+    // eslint-disable-next-line
   }, []);
 
   const order = useSelector(state => state.orderReducer.griddata)

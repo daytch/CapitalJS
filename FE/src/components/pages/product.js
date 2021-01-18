@@ -1,20 +1,20 @@
 import React, { useEffect } from 'react';
-import {public_path, rupiah} from '../../utils/common';
+import { public_path, rupiah } from '../../utils/common';
 import history from '../../utils/history';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Pagination from '../pagination';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProduct, getProductByName } from '../../redux/actions/productAction';
 import { Link } from 'react-router-dom';
 
-function ProductItem(props){
-  
+function ProductItem(props) {
+
   return (
-    <Link style={{ textDecoration: 'none' }} className="product-item" to={'/product/'+ props.link}>
+    <Link style={{ textDecoration: 'none' }} className="product-item" to={'/product/' + props.link}>
       <div className="product-itemContainer">
         <div className="product-itemImage">
-          <img src={props.url} alt=""/>
+          <img src={props.url} alt="" />
         </div>
         <div className="product-itemInfo">
           <div className="product-itemDescriptionContainer">
@@ -31,16 +31,16 @@ function ProductItem(props){
   )
 }
 
-function Product(props){
+function Product(props) {
   const dispatch = useDispatch()
   useEffect(() => {
     const data = props.history.location.state
-    if(data){
+    if (data) {
       dispatch(getProductByName(data.data))
-    }else{
-        dispatch(getProduct())
+    } else {
+      dispatch(getProduct())
     }
-    
+    // eslint-disable-next-line
   }, [])
   const product = useSelector(state => state.productReducer.data)
   const productSectionRef = React.useRef(null)
@@ -54,11 +54,11 @@ function Product(props){
   //   setCurrentPage(nextPage);
   //   // scrollToProduct(); // TODO
   // }
-  const goToDetail = () => history.push('/product/detail');
-  return(
+  // const goToDetail = () => history.push('/product/detail');
+  return (
     <div className="product-container">
       <section className="product-banner">
-        <img src={public_path('/assets/img/product-banner.png')} alt=""/>
+        <img src={public_path('/assets/img/product-banner.png')} alt="" />
       </section>
       <section ref={productSectionRef} className="product-content">
         <div className="product-contentContainer">
@@ -69,13 +69,13 @@ function Product(props){
           </div>
           <div className="product-gridContainer">
             {
-              product.map(v=>{
+              product.map(v => {
                 return (
                   <ProductItem url={v.Pictures[0]} name={v.Name} price={v.SellingPrice} link={v._id} />
                 )
               })
             }
-            
+
             <Pagination totalPage={3} />
           </div>
         </div>

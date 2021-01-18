@@ -10,7 +10,7 @@ const OrderWebsite = () => {
         <h1 className="title-carrer">ORDER BY WEBSITE</h1>
 
         <div className="box-carrer-content">
-          <div className="box-contain flex-1">
+          <div className="box-contain content-payment flex-1">
             <h6>Cara pemesanan melalui website langkah-langkah pemesanan produk capital bakery :</h6>
             <ol>
               <li>Pilihlah produk yang Anda Ingin beli.</li>
@@ -31,7 +31,7 @@ const OrderWebsite = () => {
             </ol>
           </div>
         </div>
-        <div className="col-md-12 payment-animasi">
+        <div style={{ height: '17rem' }} className="col-md-12 payment-animasi">
           <center><h1>ANIMASI</h1></center>
         </div>
 
